@@ -1,0 +1,22 @@
+Analyzing app...                                                
+
+   info - Use 'package:' imports for files in the 'lib' directory - lib\core\services\auth_service.dart:4:8 - always_use_package_imports
+   info - Missing a required trailing comma - lib\features\auth\presentation\pages\register_page.dart:149:33 - require_trailing_commas
+   info - Statements in an if should be enclosed in a block - lib\features\curriculum\presentation\pages\roadmap_page.dart:62:11 - curly_braces_in_flow_control_structures
+   info - Missing a required trailing comma - lib\features\curriculum\presentation\pages\roadmap_page.dart:63:79 - require_trailing_commas
+   info - Missing a required trailing comma - lib\features\curriculum\presentation\pages\roadmap_page.dart:131:79 - require_trailing_commas
+   info - Missing a required trailing comma - lib\features\curriculum\presentation\pages\roadmap_page.dart:148:74 - require_trailing_commas
+   info - Missing a required trailing comma - lib\features\curriculum\presentation\pages\roadmap_page.dart:365:53 - require_trailing_commas
+   info - Missing a required trailing comma - lib\features\curriculum\presentation\pages\roadmap_page.dart:399:50 - require_trailing_commas
+   info - Missing a required trailing comma - lib\features\curriculum\presentation\pages\roadmap_page.dart:402:50 - require_trailing_commas
+   info - Missing a required trailing comma - lib\features\curriculum\presentation\pages\roadmap_page.dart:405:52 - require_trailing_commas
+   info - Missing a required trailing comma - lib\features\curriculum\presentation\pages\roadmap_page.dart:501:77 - require_trailing_commas
+   info - Statements in an if should be enclosed in a block - lib\features\curriculum\presentation\pages\roadmap_preview_page.dart:36:9 - curly_braces_in_flow_control_structures
+   info - Statements in an if should be enclosed in a block - lib\features\curriculum\presentation\pages\roadmap_preview_page.dart:42:9 - curly_braces_in_flow_control_structures
+   info - Missing a required trailing comma - lib\features\curriculum\presentation\pages\roadmap_preview_page.dart:141:41 - require_trailing_commas
+   info - Missing a required trailing comma - lib\features\curriculum\presentation\pages\roadmap_preview_page.dart:257:54 - require_trailing_commas
+   info - Missing a required trailing comma - lib\features\curriculum\presentation\pages\roadmap_preview_page.dart:303:74 - require_trailing_commas
+warning - Unused import: 'package:pathly_app/infrastructure/models/user_model.dart' - lib\features\dashboard\providers\dashboard_provider.dart:3:8 - unused_import
+warning - Unused import: 'package:pathly_app/features/dashboard/providers/dashboard_provider.dart' - lib\features\profile\presentation\pages\profile_page.dart:7:8 - unused_import
+  error - The name 'MyApp' isn't a class - test\widget_test.dart:16:35 - creation_with_non_type
+

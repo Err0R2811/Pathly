@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<link href="https://fonts.googleapis.com/css2?family=Spline+Sans:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#ff8fab",
+                        "navy-dark": "#0a0f1e",
+                        "cream": "#fdf8e1",
+                        "neon-lavender": "#bd93f9",
+                        "neon-peach": "#ffb86c",
+                        "neon-mint": "#50fa7b",
+                        "neon-blue": "#8be9fd",
+                        "neon-pink": "#ff79c6",
+                        "neon-yellow": "#f1fa8c"
+                    },
+                    fontFamily: {
+                        "display": ["Spline Sans", "sans-serif"]
+                    },
+                    borderRadius: {
+                        "DEFAULT": "1rem",
+                        "lg": "2rem",
+                        "xl": "3rem",
+                        "full": "9999px"
+                    },
+                },
+            },
+        }
+    </script>
+<style type="text/tailwindcss">
+        .chunky-border {
+            border: 3px solid #000000;
+        }
+        .header-font {
+            font-family: 'Spline Sans', sans-serif;
+            font-weight: 800;
+        }.glow-lavender { box-shadow: 0 0 15px rgba(189, 147, 249, 0.4), 4px 4px 0px 0px #000000; }
+        .glow-peach { box-shadow: 0 0 15px rgba(255, 184, 108, 0.4), 4px 4px 0px 0px #000000; }
+        .glow-mint { box-shadow: 0 0 15px rgba(80, 250, 123, 0.4), 4px 4px 0px 0px #000000; }
+        .glow-blue { box-shadow: 0 0 15px rgba(139, 233, 253, 0.4), 4px 4px 0px 0px #000000; }
+        .glow-pink { box-shadow: 0 0 15px rgba(255, 121, 198, 0.4), 4px 4px 0px 0px #000000; }
+        .glow-yellow { box-shadow: 0 0 15px rgba(241, 250, 140, 0.4), 4px 4px 0px 0px #000000; }.icon-glow {
+            filter: drop-shadow(0 0 2px currentColor);
+            -webkit-text-stroke: 1px black;
+        }
+        .card-active:active {
+            transform: translate(2px, 2px);
+            box-shadow: 2px 2px 0px 0px #000000 !important;
+        }
+    </style>
+<style>
+        body {
+            min-height: max(884px, 100dvh);
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="font-display bg-navy-dark text-cream antialiased">
+<div class="relative flex h-screen w-full flex-col overflow-hidden max-w-[430px] mx-auto bg-navy-dark border-x border-slate-800">
+<div class="flex items-center p-6 pb-2 justify-between">
+<button class="text-navy-dark flex size-12 shrink-0 items-center justify-center chunky-border rounded-full bg-cream glow-yellow transition-transform active:scale-95">
+<span class="material-symbols-outlined font-bold">arrow_back</span>
+</button>
+<h2 class="text-cream text-lg font-bold leading-tight flex-1 text-center">Explore Learning</h2>
+<div class="flex w-12 items-center justify-end">
+<button class="flex size-12 items-center justify-center chunky-border rounded-full bg-cream glow-yellow transition-transform active:scale-95">
+<span class="material-symbols-outlined text-navy-dark font-bold">search</span>
+</button>
+</div>
+</div>
+<div class="px-6 pt-8 pb-4">
+<h1 class="text-cream text-4xl header-font leading-[1.1] tracking-tight">
+            Pick your next <br/>
+<span class="text-neon-yellow underline decoration-wavy decoration-2 underline-offset-8">adventure 🚀</span>
+</h1>
+</div>
+<div class="flex-1 overflow-y-auto px-6 pb-36">
+<div class="grid grid-cols-2 gap-5 py-4">
+<div class="bg-neon-lavender chunky-border rounded-xl p-4 flex flex-col gap-3 glow-lavender card-active cursor-pointer aspect-square justify-between transition-all">
+<div class="bg-black/20 w-12 h-12 rounded-lg flex items-center justify-center chunky-border">
+<span class="material-symbols-outlined text-3xl text-white icon-glow">magic_button</span>
+</div>
+<p class="text-black font-extrabold text-lg leading-tight">Magic Tricks</p>
+</div>
+<div class="bg-neon-peach chunky-border rounded-xl p-4 flex flex-col gap-3 glow-peach card-active cursor-pointer aspect-square justify-between transition-all">
+<div class="bg-black/20 w-12 h-12 rounded-lg flex items-center justify-center chunky-border">
+<span class="material-symbols-outlined text-3xl text-white icon-glow">terminal</span>
+</div>
+<p class="text-black font-extrabold text-lg leading-tight">Coding Basics</p>
+</div>
+<div class="bg-neon-mint chunky-border rounded-xl p-4 flex flex-col gap-3 glow-mint card-active cursor-pointer aspect-square justify-between transition-all">
+<div class="bg-black/20 w-12 h-12 rounded-lg flex items-center justify-center chunky-border">
+<span class="material-symbols-outlined text-3xl text-white icon-glow">psychology</span>
+</div>
+<p class="text-black font-extrabold text-lg leading-tight">Memory Hacks</p>
+</div>
+<div class="bg-neon-blue chunky-border rounded-xl p-4 flex flex-col gap-3 glow-blue card-active cursor-pointer aspect-square justify-between transition-all">
+<div class="bg-black/20 w-12 h-12 rounded-lg flex items-center justify-center chunky-border">
+<span class="material-symbols-outlined text-3xl text-white icon-glow">palette</span>
+</div>
+<p class="text-black font-extrabold text-lg leading-tight">Drawing</p>
+</div>
+<div class="bg-neon-pink chunky-border rounded-xl p-4 flex flex-col gap-3 glow-pink card-active cursor-pointer aspect-square justify-between transition-all">
+<div class="bg-black/20 w-12 h-12 rounded-lg flex items-center justify-center chunky-border">
+<span class="material-symbols-outlined text-3xl text-white icon-glow">record_voice_over</span>
+</div>
+<p class="text-black font-extrabold text-lg leading-tight">Public Speaking</p>
+</div>
+<div class="bg-neon-yellow chunky-border rounded-xl p-4 flex flex-col gap-3 glow-yellow card-active cursor-pointer aspect-square justify-between transition-all">
+<div class="bg-black/20 w-12 h-12 rounded-lg flex items-center justify-center chunky-border">
+<span class="material-symbols-outlined text-3xl text-white icon-glow">fitness_center</span>
+</div>
+<p class="text-black font-extrabold text-lg leading-tight">Fitness</p>
+</div>
+</div>
+</div>
+<div class="absolute bottom-0 left-0 right-0 bg-[#0a0f1e]/95 backdrop-blur-md border-t-4 border-black px-6 pb-8 pt-4">
+<div class="flex justify-between items-center max-w-[430px] mx-auto">
+<a class="flex flex-col items-center gap-1 text-neon-yellow" href="#">
+<div class="flex h-8 items-center justify-center">
+<span class="material-symbols-outlined text-3xl drop-shadow-[0_0_8px_currentColor]" style="font-variation-settings: 'FILL' 1">explore</span>
+</div>
+<p class="text-[10px] font-black uppercase tracking-widest">Explore</p>
+</a>
+<a class="flex flex-col items-center gap-1 text-slate-500 hover:text-white" href="#">
+<div class="flex h-8 items-center justify-center">
+<span class="material-symbols-outlined text-3xl">menu_book</span>
+</div>
+<p class="text-[10px] font-black uppercase tracking-widest">My Skills</p>
+</a>
+<a class="flex flex-col items-center gap-1 text-slate-500 hover:text-white" href="#">
+<div class="flex h-8 items-center justify-center">
+<span class="material-symbols-outlined text-3xl">insights</span>
+</div>
+<p class="text-[10px] font-black uppercase tracking-widest">Progress</p>
+</a>
+<a class="flex flex-col items-center gap-1 text-slate-500 hover:text-white" href="#">
+<div class="flex h-8 items-center justify-center">
+<span class="material-symbols-outlined text-3xl">person</span>
+</div>
+<p class="text-[10px] font-black uppercase tracking-widest">Profile</p>
+</a>
+</div>
+</div>
+</div>
+
+</body></html>

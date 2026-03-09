@@ -1,0 +1,364 @@
+================================================================================
+AVAILABLE SKILLS - Pathly App
+================================================================================
+
+Productivity & Automation
+-----------------------------------------------------------------
+- gmail-automation ................ Automate Gmail (send/reply, search, labels, drafts)
+- google-calendar-automation ..... Automate Google Calendar
+- google-drive-automation ....... Automate Google Drive
+- googlesheets-automation ...... Automate Google Sheets
+- slack-automation .............. Automate Slack messaging
+- telegram-automation ........... Automate Telegram
+- discord-automation ............ Automate Discord
+- whatsapp-automation ........... Automate WhatsApp Business
+- microsoft-teams-automation .... Automate Microsoft Teams
+- outlook-automation ............ Automate Outlook
+- zoom-automation .............. Automate Zoom
+
+CRM & Sales
+-----------------------------------------------------------------
+- hubspot-automation ............ HubSpot CRM automation
+- pipedrive-automation ......... Pipedrive CRM
+- salesforce-automation ........ Salesforce automation
+- zoho-crm-automation .......... Zoho CRM
+- close-automation ............ Close CRM
+- streak-automation ............ Streak CRM
+- freshdesk-automation ......... Freshdesk
+- freshservice-automation ...... Freshservice
+- zendesk-automation ........... Zendesk
+- helpdesk-automation .......... HelpDesk
+- intercom-automation .......... Intercom
+
+Project Management
+-----------------------------------------------------------------
+- asana-automation ............. Asana
+- trello-automation ............ Trello
+- monday-automation ............ Monday.com
+- clickup-automation .......... ClickUp
+- linear-claude-skill .......... Linear
+- jira-automation .............. Jira
+- basecamp-automation .......... Basecamp
+- wrike-automation ............. Wrike
+- todoist-automation ........... Todoist
+- notion-automation ............ Notion
+- coda-automation .............. Coda
+- airtable-automation .......... Airtable
+- gitlab-automation ............ GitLab
+- todoist-automation ........... Todoist
+
+Marketing & Social Media
+-----------------------------------------------------------------
+- twitter-automation ........... Twitter/X automation
+- linkedin-automation .......... LinkedIn automation
+- instagram-automation ......... Instagram automation
+- youtube-automation ........... YouTube automation
+- tiktok-automation ............ TikTok automation
+- facebook-automation ........... Facebook automation
+- reddit-automation ............ Reddit automation
+- mailchimp-automation ......... Mailchimp
+- klaviyo-automation .......... Klaviyo
+- sendgrid-automation .......... SendGrid
+- postmark-automation .......... Postmark
+- convertkit-automation ........ ConvertKit/Kit
+- activecampaign-automation ..... ActiveCampaign
+- brevo-automation ............ Brevo (Sendinblue)
+
+E-Commerce
+-----------------------------------------------------------------
+- shopify-automation ........... Shopify
+- woocommerce-development ..... WooCommerce
+- square-automation ............ Square
+- plaid-fintech ................ Plaid integration
+- stripe-integration ........... Stripe payments
+- stripe-automation ............ Stripe automation
+- paypal-integration ........... PayPal
+
+Cloud & Infrastructure
+-----------------------------------------------------------------
+- vercel-automation ............ Vercel deployment
+- vercel-deploy-claimable ..... Vercel deployment
+- netlify-automation .......... Netlify
+- render-automation ........... Render
+- railway-automation ........... Railway
+- flyio-automation ............ Fly.io
+- cloudflare-workers-expert .... Cloudflare Workers
+- docker-expert ................ Docker
+- kubernetes-architect .......... Kubernetes
+- terraform-skill .............. Terraform
+- terraform-infrastructure ..... Terraform IaC
+
+AWS Services
+-----------------------------------------------------------------
+- aws-skills ................... AWS development
+- aws-security-audit ............ AWS security audit
+- aws-penetration-testing ...... AWS pentesting
+- aws-compliance-checker ........ AWS compliance
+- aws-secrets-rotation ......... AWS secrets rotation
+- aws-cost-cleanup ............. AWS cost cleanup
+- aws-cost-optimizer ........... AWS cost optimizer
+- aws-iam-best-practices ....... AWS IAM
+
+Azure Services
+-----------------------------------------------------------------
+- azure-functions ............... Azure Functions
+- azure-cosmos-py .............. Azure Cosmos DB (Python)
+- azure-cosmos-ts .............. Azure Cosmos DB (TypeScript)
+- azure-cosmos-java ............ Azure Cosmos DB (Java)
+- azure-cosmos-rust ............ Azure Cosmos DB (Rust)
+- azure-storage-blob-py ........ Azure Blob Storage (Python)
+- azure-storage-blob-ts ........ Azure Blob Storage (TypeScript)
+- azure-storage-blob-java ....... Azure Blob Storage (Java)
+- azure-storage-blob-rust ....... Azure Blob Storage (Rust)
+- azure-eventhub-py ............ Azure Event Hubs (Python)
+- azure-eventhub-ts ............ Azure Event Hubs (TypeScript)
+- azure-eventhub-java .......... Azure Event Hubs (Java)
+- azure-eventhub-dotnet ........ Azure Event Hubs (.NET)
+- azure-servicebus-py ........... Azure Service Bus (Python)
+- azure-servicebus-ts ........... Azure Service Bus (TypeScript)
+- azure-servicebus-java ........ Azure Service Bus (Java)
+- azure-servicebus-dotnet ...... Azure Service Bus (.NET)
+- azure-keyvault-py ............ Azure Key Vault (Python)
+- azure-keyvault-ts ............ Azure Key Vault (TypeScript)
+- azure-keyvault-java .......... Azure Key Vault (Java)
+- azure-keyvault-keys-ts ....... Azure Key Vault Keys
+- azure-keyvault-keys-java ..... Azure Key Vault Keys
+- azure-keyvault-keys-rust ..... Azure Key Vault Keys
+- azure-keyvault-secrets-ts .... Azure Key Vault Secrets
+- azure-keyvault-secrets-rust .. Azure Key Vault Secrets
+- azure-identity-py ............ Azure Identity (Python)
+- azure-identity-ts ............ Azure Identity (TypeScript)
+- azure-identity-java .......... Azure Identity (Java)
+- azure-identity-dotnet ........ Azure Identity (.NET)
+- azure-identity-rust .......... Azure Identity (Rust)
+- azure-search-documents-py .... Azure AI Search (Python)
+- azure-search-documents-ts .... Azure AI Search (TypeScript)
+- azure-search-documents-dotnet Azure AI Search (.NET)
+- azure-ai-projects-py ........ Azure AI Projects (Python)
+- azure-ai-projects-ts ........ Azure AI Projects (TypeScript)
+- azure-ai-projects-java ....... Azure AI Projects (Java)
+- azure-ai-projects-dotnet .... Azure AI Projects (.NET)
+- azure-monitor-opentelemetry-py Azure Monitor OpenTelemetry
+- azure-monitor-opentelemetry-ts Azure Monitor OpenTelemetry
+- azure-ai-translation-text-py . Azure AI Translation
+- azure-ai-translation-ts ...... Azure AI Translation
+- azure-ai-formrecognizer-java . Azure Document Intelligence
+- azure-ai-document-intelligence-ts Azure Document Intelligence
+- azure-ai-document-intelligence-dotnet Azure Document Intelligence
+- azure-ai-vision-imageanalysis-py Azure AI Vision
+- azure-ai-vision-imageanalysis-java Azure AI Vision
+- azure-ai-contentsafety-py ... Azure AI Content Safety
+- azure-ai-contentsafety-ts ... Azure AI Content Safety
+- azure-ai-contentsafety-java . Azure AI Content Safety
+- azure-ai-anomalydetector-java Azure Anomaly Detector
+- azure-ai-transcription-py ... Azure AI Transcription
+- azure-ai-translation-document-py Azure Document Translation
+- azure-communication-sms-java . Azure Communication SMS
+- azure-communication-chat-java Azure Communication Chat
+- azure-eventgrid-py ........... Azure Event Grid
+- azure-eventgrid-java ......... Azure Event Grid
+- azure-eventgrid-dotnet ...... Azure Event Grid
+- azure-storage-queue-py ...... Azure Queue Storage
+- azure-storage-queue-ts ...... Azure Queue Storage
+- azure-storage-file-share-py . Azure File Share
+- azure-storage-file-share-ts . Azure File Share
+- azure-data-tables-py ........ Azure Data Tables
+- azure-data-tables-java ...... Azure Data Tables
+- azure-messaging-webpubsub-py Azure Web PubSub
+- azure-messaging-webpubsub-ts Azure Web PubSub
+- azure-messaging-webpubsub-java Azure Web PubSub
+- azure-monitor-ingestion-py ... Azure Monitor Ingestion
+- azure-monitor-ingestion-java . Azure Monitor Ingestion
+- azure-monitor-query-py ....... Azure Monitor Query
+- azure-monitor-query-java .... Azure Monitor Query
+- azure-monitor-opentelemetry-exporter-py Azure Monitor
+- azure-monitor-opentelemetry-exporter-java Azure Monitor
+- azure-monitor-opentelemetry-exporter-dotnet Azure Monitor
+- azure-postgres-ts ........... Azure Database for PostgreSQL
+
+DevOps & CI/CD
+-----------------------------------------------------------------
+- github-actions-templates ..... GitHub Actions
+- gitlab-ci-patterns .......... GitLab CI
+- circleci-automation ......... CircleCI
+- jenkins-automation ......... Jenkins
+- deployment-engineer ......... Deployment engineering
+- deployment-pipeline-design .. CI/CD pipeline design
+
+Development Frameworks & Languages
+-----------------------------------------------------------------
+- react-best-practices ......... React/Next.js best practices
+- react-modernization ......... React modernization
+- nextjs-best-practices ....... Next.js
+- nextjs-app-router-patterns . Next.js App Router
+- angular ..................... Angular (modern)
+- angular-best-practices ...... Angular optimization
+- angular-ui-patterns ......... Angular UI
+- angular-state-management .... Angular state
+- angular-migration .......... Angular migration
+- vue-3-composition-api ....... Vue 3
+- svelte ...................... Svelte
+- flutter-expert .............. Flutter/Dart
+- react-native-architecture ... React Native
+- ios-developer ............... iOS/Swift
+- android-jetpack-compose-expert Android Jetpack Compose
+
+Backend
+-----------------------------------------------------------------
+- python-pro .................. Python (modern)
+- python-fastapi-development .. FastAPI
+- fastapi-pro ................ FastAPI (advanced)
+- fastapi-router-py .......... FastAPI router
+- fastapi-templates .......... FastAPI templates
+- nodejs-best-practices ...... Node.js
+- nodejs-backend-patterns .... Node.js backend
+- express-js-patterns ........ Express.js
+- nestjs-expert .............. NestJS
+- golang-pro ................. Go (modern)
+- rust-pro ................... Rust
+- java-pro ................... Java (modern)
+- spring-boot ............... Spring Boot
+- csharp-pro ................. C#/.NET
+- dotnet-backend ............. .NET backend
+- dotnet-backend-patterns .... .NET backend patterns
+- php-pro .................... PHP
+- laravel-expert ............. Laravel
+- ruby-pro ................... Ruby
+- elixir-pro ................. Elixir
+- scala-pro .................. Scala
+- haskell-pro ................ Haskell
+
+Database
+-----------------------------------------------------------------
+- postgresql ................. PostgreSQL
+- postgresql-optimization ..... PostgreSQL optimization
+- postgres-best-practices .... PostgreSQL best practices
+- neon-postgres .............. Neon serverless Postgres
+- mysql ...................... MySQL
+- mongodb .................... MongoDB
+- nosql-expert ............... NoSQL (Cassandra, DynamoDB)
+- redis ...................... Redis
+- database-architect ......... Database architecture
+- database-design ............ Database design
+- database-migration ......... Database migrations
+- sql-pro ................... SQL (advanced)
+- sql-optimization-patterns .. SQL optimization
+- prisma-expert .............. Prisma ORM
+
+AI & Machine Learning
+-----------------------------------------------------------------
+- llm-app-patterns ........... LLM applications
+- langchain-architecture ..... LangChain
+- langgraph .................. LangGraph
+- rag-engineer ............... RAG systems
+- rag-implementation ......... RAG implementation
+- vector-database-engineer .... Vector databases
+- vector-index-tuning ........ Vector index tuning
+- embedding-strategies ....... Embedding strategies
+- similarity-search-patterns .. Similarity search
+- hybrid-search-implementation Hybrid search
+- ml-engineer ................. ML engineering
+- mlops-engineer ............. MLOps
+- ml-pipeline-workflow ...... ML pipelines
+- data-engineer .............. Data engineering
+- data-scientist ............. Data science
+- pytorch .................... PyTorch
+- tensorflow ................. TensorFlow
+
+Testing
+-----------------------------------------------------------------
+- testing-patterns ........... Jest testing patterns
+- playwright-skill ........... Playwright
+- e2e-testing ................ E2E testing
+- testing-qa ................. QA testing
+- unit-testing-test-generate .. Unit test generation
+
+Security
+-----------------------------------------------------------------
+- security-audit .............. Security auditing
+- security-bluebook-builder .. Security bluebook
+- pentest-checklist .......... Penetration testing
+- web-security-testing ........ Web security testing
+- network-101 ................ Network basics
+- top-web-vulnerabilities .... OWASP Top 10
+- sql-injection-testing ...... SQL injection
+- xss-html-injection ......... XSS/HTML injection
+- idor-testing ............... IDOR testing
+- broken-authentication ...... Authentication security
+- file-path-traversal ........ Path traversal
+- privilege-escalation-methods Privilege escalation
+- windows-privilege-escalation Windows privesc
+- linux-privilege-escalation Linux privesc
+- ssh-penetration-testing .... SSH pentesting
+- smtp-penetration-testing ... SMTP pentesting
+- burp-suite-testing ........ Burp Suite
+- cloud-penetration-testing .. Cloud pentesting
+- aws-penetration-testing .... AWS pentesting
+
+Utilities & Tools
+-----------------------------------------------------------------
+- code-refactoring-refactor-clean Clean code refactoring
+- debug ...................... Debugging
+- debugging-strategies ....... Debugging strategies
+- systematic-debugging ....... Systematic debugging
+- performance-profiling ...... Performance profiling
+- web-performance-optimization Web performance
+- performance-engineer ....... Performance engineering
+- observability-engineer ..... Observability
+- prometheus-configuration ... Prometheus
+- grafana-dashboards ......... Grafana
+- distributed-tracing ........ Distributed tracing
+- error-handling-patterns .... Error handling
+
+Documentation & Writing
+-----------------------------------------------------------------
+- documentation .............. Documentation
+- readme .................... README
+- docx-official ............ Word documents
+- pptx-official ............ PowerPoint
+- pdf-official ............. PDF
+- xlsx-official ............ Excel
+- calc ..................... LibreOffice Calc
+- writer ................... LibreOffice Writer
+- impress .................. LibreOffice Impress
+- draw ..................... LibreOffice Draw
+
+Specialized Skills
+-----------------------------------------------------------------
+- wordpress .................. WordPress
+- wordpress-plugin-development WordPress plugins
+- wordpress-theme-development WordPress themes
+- woocommerce-development .... WooCommerce
+- shopify-development ....... Shopify
+- shopify-apps .............. Shopify apps
+- magento-automation ........ Magento
+
+File & Data Processing
+-----------------------------------------------------------------
+- firecrawl-scraper ......... Firecrawl web scraping
+- apify-lead-generation ..... Lead generation
+- apify-competitor-intelligence Competitor analysis
+- apify-market-research ..... Market research
+- apify-ecommerce ........... E-commerce scraping
+- apify-actorization ........ Apify Actors
+- apify-actor-development ... Apify Actor dev
+
+Communication & Collaboration
+-----------------------------------------------------------------
+- slack-bot-builder .......... Slack bots
+- telegram-bot-builder ...... Telegram bots
+- discord-bot-architect ..... Discord bots
+- miro-automation ........... Miro
+- figma-automation .......... Figma
+
+Miscellaneous
+-----------------------------------------------------------------
+- claude-code-guide ......... Claude Code guide
+- skill-creator ............. Skill creation
+- opencode ..................
+- workflow-automation ....... Workflow automation
+- workflow-orchestration-patterns Workflow patterns
+
+================================================================================
+TOTAL: 250+ Skills Available
+================================================================================

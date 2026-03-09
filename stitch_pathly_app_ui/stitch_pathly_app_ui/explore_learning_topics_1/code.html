@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<link href="https://fonts.googleapis.com/css2?family=Spline+Sans:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#ff8fab",
+                        "background-light": "#f8f5f6",
+                        "background-dark": "#230f14",
+                        "card-lavender": "#e2d5f8",
+                        "card-peach": "#ffd6ba",
+                        "card-mint": "#b9f3e4",
+                        "card-blue": "#bee1e6",
+                    },
+                    fontFamily: {
+                        "display": ["Spline Sans", "sans-serif"]
+                    },
+                    borderRadius: {
+                        "DEFAULT": "1rem",
+                        "lg": "2rem",
+                        "xl": "3rem",
+                        "full": "9999px"
+                    },
+                },
+            },
+        }
+    </script>
+<style>
+        .chunky-border {
+            border: 3px solid #1d0c10;
+        }
+        .soft-shadow {
+            box-shadow: 4px 4px 0px 0px #1d0c10;
+        }
+        .card-active:active {
+            transform: translate(2px, 2px);
+            box-shadow: 2px 2px 0px 0px #1d0c10;
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="font-display bg-background-light dark:bg-background-dark text-slate-900 dark:text-slate-100 antialiased">
+<div class="relative flex h-screen w-full flex-col overflow-hidden max-w-[430px] mx-auto bg-background-light dark:bg-background-dark">
+<!-- Header -->
+<div class="flex items-center p-6 pb-2 justify-between">
+<div class="text-slate-900 dark:text-slate-100 flex size-12 shrink-0 items-center justify-center chunky-border rounded-full bg-white dark:bg-slate-800 soft-shadow">
+<span class="material-symbols-outlined">arrow_back</span>
+</div>
+<h2 class="text-slate-900 dark:text-slate-100 text-lg font-bold leading-tight flex-1 text-center">Explore Learning</h2>
+<div class="flex w-12 items-center justify-end">
+<button class="flex size-12 items-center justify-center chunky-border rounded-full bg-white dark:bg-slate-800 soft-shadow">
+<span class="material-symbols-outlined text-slate-900 dark:text-slate-100">search</span>
+</button>
+</div>
+</div>
+<!-- Hero Title -->
+<div class="px-6 pt-8 pb-4">
+<h1 class="text-slate-900 dark:text-slate-100 text-3xl font-bold leading-tight tracking-tight">
+                Pick your next <br/>adventure 🚀
+            </h1>
+</div>
+<!-- Topics Grid -->
+<div class="flex-1 overflow-y-auto px-6 pb-24">
+<div class="grid grid-cols-2 gap-5 py-4">
+<!-- Magic Tricks Card -->
+<div class="bg-card-lavender chunky-border rounded-xl p-4 flex flex-col gap-3 soft-shadow card-active cursor-pointer aspect-square justify-between">
+<div class="bg-white/50 w-12 h-12 rounded-lg flex items-center justify-center chunky-border">
+<span class="material-symbols-outlined text-3xl text-slate-800">magic_button</span>
+</div>
+<p class="text-slate-900 font-bold text-lg leading-tight">Magic Tricks</p>
+</div>
+<!-- Coding Basics Card -->
+<div class="bg-card-peach chunky-border rounded-xl p-4 flex flex-col gap-3 soft-shadow card-active cursor-pointer aspect-square justify-between">
+<div class="bg-white/50 w-12 h-12 rounded-lg flex items-center justify-center chunky-border">
+<span class="material-symbols-outlined text-3xl text-slate-800">terminal</span>
+</div>
+<p class="text-slate-900 font-bold text-lg leading-tight">Coding Basics</p>
+</div>
+<!-- Memory Hacks Card -->
+<div class="bg-card-mint chunky-border rounded-xl p-4 flex flex-col gap-3 soft-shadow card-active cursor-pointer aspect-square justify-between">
+<div class="bg-white/50 w-12 h-12 rounded-lg flex items-center justify-center chunky-border">
+<span class="material-symbols-outlined text-3xl text-slate-800">psychology</span>
+</div>
+<p class="text-slate-900 font-bold text-lg leading-tight">Memory Hacks</p>
+</div>
+<!-- Drawing Card -->
+<div class="bg-card-blue chunky-border rounded-xl p-4 flex flex-col gap-3 soft-shadow card-active cursor-pointer aspect-square justify-between">
+<div class="bg-white/50 w-12 h-12 rounded-lg flex items-center justify-center chunky-border">
+<span class="material-symbols-outlined text-3xl text-slate-800">palette</span>
+</div>
+<p class="text-slate-900 font-bold text-lg leading-tight">Drawing</p>
+</div>
+<!-- Public Speaking Card -->
+<div class="bg-primary/30 chunky-border rounded-xl p-4 flex flex-col gap-3 soft-shadow card-active cursor-pointer aspect-square justify-between">
+<div class="bg-white/50 w-12 h-12 rounded-lg flex items-center justify-center chunky-border">
+<span class="material-symbols-outlined text-3xl text-slate-800">record_voice_over</span>
+</div>
+<p class="text-slate-900 font-bold text-lg leading-tight">Public Speaking</p>
+</div>
+<!-- Fitness Card -->
+<div class="bg-card-lavender chunky-border rounded-xl p-4 flex flex-col gap-3 soft-shadow card-active cursor-pointer aspect-square justify-between">
+<div class="bg-white/50 w-12 h-12 rounded-lg flex items-center justify-center chunky-border">
+<span class="material-symbols-outlined text-3xl text-slate-800">fitness_center</span>
+</div>
+<p class="text-slate-900 font-bold text-lg leading-tight">Fitness</p>
+</div>
+</div>
+</div>
+<!-- Bottom Navigation Bar -->
+<div class="absolute bottom-0 left-0 right-0 bg-white dark:bg-slate-900 border-t-4 border-slate-900 px-6 pb-8 pt-4">
+<div class="flex justify-between items-center max-w-[430px] mx-auto">
+<a class="flex flex-col items-center gap-1 text-primary" href="#">
+<div class="flex h-8 items-center justify-center">
+<span class="material-symbols-outlined text-3xl" style="font-variation-settings: 'FILL' 1">explore</span>
+</div>
+<p class="text-xs font-bold uppercase tracking-wider">Explore</p>
+</a>
+<a class="flex flex-col items-center gap-1 text-slate-400 dark:text-slate-500" href="#">
+<div class="flex h-8 items-center justify-center">
+<span class="material-symbols-outlined text-3xl">menu_book</span>
+</div>
+<p class="text-xs font-bold uppercase tracking-wider">My Skills</p>
+</a>
+<a class="flex flex-col items-center gap-1 text-slate-400 dark:text-slate-500" href="#">
+<div class="flex h-8 items-center justify-center">
+<span class="material-symbols-outlined text-3xl">insights</span>
+</div>
+<p class="text-xs font-bold uppercase tracking-wider">Progress</p>
+</a>
+<a class="flex flex-col items-center gap-1 text-slate-400 dark:text-slate-500" href="#">
+<div class="flex h-8 items-center justify-center">
+<span class="material-symbols-outlined text-3xl">person</span>
+</div>
+<p class="text-xs font-bold uppercase tracking-wider">Profile</p>
+</a>
+</div>
+</div>
+</div>
+</body></html>

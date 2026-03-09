@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Neon Glow Lesson Screen</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Spline+Sans:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#ff3b8b",
+                        "neon-pink": "#ff2e8c",
+                        "neon-yellow": "#faff00",
+                        "neon-green": "#00ff9d",
+                        "background-dark": "#0d0d0d",
+                        "card-dark": "#1a1a1a",
+                        "accent-border": "#000000",
+                        "text-light": "#f0f0f0",
+                    },
+                    fontFamily: {
+                        "display": ["Spline Sans", "sans-serif"]
+                    },
+                    borderRadius: {"DEFAULT": "1rem", "lg": "2rem", "xl": "3rem", "full": "9999px"},
+                },
+            },
+        }
+    </script>
+<style type="text/tailwindcss">
+        :root {
+            --glow-pink: rgba(255, 46, 140, 0.6);
+            --glow-yellow: rgba(250, 255, 0, 0.6);
+            --glow-green: rgba(0, 255, 157, 0.8);
+            --card-glow: rgba(167, 139, 250, 0.15);}
+        .bloom-pink {
+            filter: drop-shadow(0 0 12px var(--glow-pink)) drop-shadow(0 0 25px var(--glow-pink));
+        }
+        .bloom-yellow {
+            filter: drop-shadow(0 0 12px var(--glow-yellow)) drop-shadow(0 0 25px var(--glow-yellow));
+        }
+        .intense-glow-green {
+            box-shadow: 0 0 15px var(--glow-green), 0 0 30px rgba(0, 255, 157, 0.4);
+        }
+        .card-ambient-glow {
+            box-shadow: 0 0 40px 5px var(--card-glow);
+        }
+        .doodle-float {
+            position: absolute;
+            z-index: 0;
+        }
+    </style>
+<style>
+        body {
+            min-height: max(884px, 100dvh);
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background-dark font-display antialiased overflow-x-hidden text-text-light">
+<div class="relative flex min-h-screen w-full flex-col max-w-[430px] mx-auto shadow-2xl bg-background-dark overflow-hidden">
+<div class="doodle-float top-12 -left-6 bloom-pink text-neon-pink">
+<span class="material-symbols-outlined text-6xl rotate-12">auto_fix_high</span>
+</div>
+<div class="doodle-float top-24 -right-4 bloom-yellow text-neon-yellow">
+<span class="material-symbols-outlined text-5xl -rotate-12">star</span>
+</div>
+<div class="doodle-float bottom-40 -left-8 bloom-yellow opacity-60 text-neon-yellow">
+<span class="material-symbols-outlined text-7xl rotate-45">bolt</span>
+</div>
+<div class="doodle-float bottom-64 -right-6 bloom-pink text-neon-pink">
+<span class="material-symbols-outlined text-6xl -rotate-12">draw</span>
+</div>
+<header class="relative z-10 p-4 pt-6 space-y-6">
+<div class="flex items-center justify-between">
+<button class="flex items-center justify-center size-10 rounded-full bg-card-dark border-2 border-accent-border shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] active:translate-y-0.5 active:shadow-none transition-all">
+<span class="material-symbols-outlined text-text-light">arrow_back</span>
+</button>
+<h1 class="text-text-light text-lg font-bold flex-1 text-center px-2">Magic Trick #1: Coin Vanish</h1>
+<button class="flex items-center justify-center size-10 rounded-full bg-card-dark border-2 border-accent-border shadow-[4px_4px_0px_0px_rgba(0,0,0,1)]">
+<span class="material-symbols-outlined text-text-light">more_horiz</span>
+</button>
+</div>
+<div class="space-y-3 px-2">
+<div class="flex justify-between items-center text-text-light/70 font-bold text-xs uppercase tracking-[0.1em]">
+<span>Step Progress</span>
+<span class="text-neon-green">33% Complete</span>
+</div>
+<div class="h-5 w-full bg-black border-2 border-accent-border rounded-full overflow-hidden p-0.5 shadow-inner">
+<div class="h-full bg-neon-green rounded-full border-r-2 border-accent-border intense-glow-green" style="width: 33%;"></div>
+</div>
+</div>
+</header>
+<main class="relative z-10 flex-1 p-4 flex flex-col justify-center">
+<div class="bg-card-dark border-[4px] border-accent-border rounded-[2.5rem] card-ambient-glow overflow-hidden flex flex-col relative">
+<div class="aspect-video w-full bg-black/60 relative overflow-hidden border-b-[4px] border-accent-border flex items-center justify-center">
+<div class="absolute inset-0 opacity-20" style="background-image: radial-gradient(#ff3b8b 1px, transparent 1px); background-size: 16px 16px;"></div>
+<div class="relative z-10 w-full h-full p-4 flex items-center justify-center">
+<div class="w-full h-full bg-zinc-900 rounded-2xl border-2 border-accent-border overflow-hidden shadow-inner flex items-center justify-center bg-center bg-cover relative" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuCC8ccE0U25f11HZBjykeSkn3CY10r95dQsXKAl6w1YM6ovzS2r3IfSi_v-pS2FqCBMTOf-wxg2kUy7yyFkO_0ZA7EOfY6gGJEQIZB-RdhmoYoOTVIbw-Ka4oQ2bsrInPuDnMkx-12SmuOK7hccuddLS6Lk0QboZ3rX32u7IMIPopaZbuL2mWmTYLG3VuDq1vo_Y7qluXKe09yKaqchmfB2g-RyjdinXToRRbf3HKisV3UBLB0VGOZmYtybXfthR7SSQldmS7lAVjE');">
+<div class="absolute inset-0 bg-black/40"></div>
+<span class="material-symbols-outlined text-7xl text-white/90 bloom-pink relative z-20">play_circle</span>
+</div>
+</div>
+</div>
+<div class="p-8 space-y-5">
+<div class="inline-flex items-center px-4 py-1.5 bg-neon-pink/10 text-neon-pink border-2 border-neon-pink rounded-full text-xs font-black uppercase tracking-wider">
+                        Phase 1: The Conceal
+                    </div>
+<h2 class="text-3xl font-black text-text-light leading-[1.1]">Master the <span class="text-neon-yellow">Classic Palm</span></h2>
+<p class="text-text-light/70 leading-relaxed font-medium text-base">
+                        Hold the coin between your thumb and index finger. Keep your palm facing yourself to hide the movement from your audience. It's all about the angle!
+                    </p>
+<div class="pt-2">
+<div class="flex items-center gap-3 p-4 bg-black/40 rounded-2xl border border-white/5">
+<span class="material-symbols-outlined text-neon-yellow">lightbulb</span>
+<span class="text-sm font-semibold text-text-light/90">Pro Tip: Relax your fingers!</span>
+</div>
+</div>
+</div>
+</div>
+</main>
+<footer class="relative z-10 p-6 pb-12 flex gap-4 bg-background-dark/80 backdrop-blur-md">
+<button class="flex-1 h-16 rounded-2xl border-[3px] border-accent-border bg-card-dark text-text-light/60 font-bold text-lg shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] active:translate-y-1 active:shadow-none transition-all">
+                Prev
+            </button>
+<button class="flex-[2.5] h-16 rounded-2xl border-[3px] border-accent-border bg-neon-pink text-black font-black text-xl shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] active:translate-y-1 active:shadow-none transition-all flex items-center justify-center gap-3">
+<span>Continue</span>
+<span class="material-symbols-outlined font-black">arrow_forward</span>
+</button>
+</footer>
+</div>
+
+</body></html>

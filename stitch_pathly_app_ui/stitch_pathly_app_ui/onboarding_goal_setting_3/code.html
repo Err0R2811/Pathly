@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Spline+Sans:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#ff8fab",
+                        "neon-pink": "#ff7eb9",
+                        "neon-teal": "#4ade80",
+                        "neon-yellow": "#fbef5a",
+                        "background-dark": "#1A1A2E",
+                        "cream": "#F6F1E8",
+                        "dark-field": "#252545"
+                    },
+                    fontFamily: {
+                        "display": ["Spline Sans", "sans-serif"]
+                    },
+                    borderRadius: {
+                        "DEFAULT": "1rem",
+                        "lg": "2rem",
+                        "xl": "3rem",
+                        "full": "9999px"
+                    },
+                    boxShadow: {
+                        'cartoon': '4px 4px 0px 0px rgba(0,0,0,1)',
+                        'glow-pink': '0 0 20px rgba(255, 126, 185, 0.6)',
+                        'glow-teal': '0 0 20px rgba(74, 222, 128, 0.6)',
+                        'glow-yellow': '0 0 20px rgba(251, 239, 90, 0.6)',
+                    }
+                },
+            },
+        }
+    </script>
+<style type="text/tailwindcss">
+        .cartoon-border {
+            border: 3px solid #000000;
+        }
+        .floating-doodle {
+            position: absolute;
+            z-index: 0;
+            pointer-events: none;
+            filter: drop-shadow(0 0 12px currentColor);
+            opacity: 0.9;
+        }
+        body {
+            min-height: max(884px, 100dvh);
+            background-color: #1A1A2E;
+        }
+        .neon-glow-pink { filter: drop-shadow(0 0 10px #ff7eb9) drop-shadow(0 0 20px #ff7eb9); }
+        .neon-glow-teal { filter: drop-shadow(0 0 10px #4ade80) drop-shadow(0 0 20px #4ade80); }
+        .neon-glow-yellow { filter: drop-shadow(0 0 10px #fbef5a) drop-shadow(0 0 20px #fbef5a); }
+        .input-glow-pink:focus-within { box-shadow: 0 0 15px rgba(255, 126, 185, 0.4), 4px 4px 0px 0px rgba(0,0,0,1); }
+        .input-glow-yellow:focus-within { box-shadow: 0 0 15px rgba(251, 239, 90, 0.4), 4px 4px 0px 0px rgba(0,0,0,1); }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="font-display min-h-screen relative overflow-hidden text-cream bg-[#1A1A2E]">
+<div class="floating-doodle top-12 left-8 text-neon-pink neon-glow-pink rotate-12">
+<span class="material-symbols-outlined text-5xl">music_note</span>
+</div>
+<div class="floating-doodle top-32 right-12 text-neon-teal neon-glow-teal -rotate-12">
+<span class="material-symbols-outlined text-6xl">auto_stories</span>
+</div>
+<div class="floating-doodle bottom-32 left-6 text-neon-yellow neon-glow-yellow rotate-6">
+<span class="material-symbols-outlined text-5xl">star_rate</span>
+</div>
+<div class="floating-doodle top-1/2 right-4 text-neon-pink neon-glow-pink -rotate-12">
+<span class="material-symbols-outlined text-4xl">celebration</span>
+</div>
+<div class="floating-doodle bottom-10 right-20 text-neon-teal neon-glow-teal rotate-45">
+<span class="material-symbols-outlined text-4xl">edit_note</span>
+</div>
+<div class="floating-doodle top-1/4 left-1/2 -translate-x-1/2 text-neon-yellow/30 neon-glow-yellow">
+<span class="material-symbols-outlined text-2xl">blur_on</span>
+</div>
+<div class="relative z-10 flex flex-col min-h-screen max-w-[480px] mx-auto p-6">
+<div class="flex items-center justify-between mb-8">
+<button class="size-12 flex items-center justify-center bg-dark-field cartoon-border rounded-xl shadow-cartoon border-neon-pink active:scale-95 transition-transform">
+<span class="material-symbols-outlined text-cream font-bold">arrow_back</span>
+</button>
+<div class="h-4 flex-1 mx-4 bg-dark-field cartoon-border rounded-full overflow-hidden border-black relative">
+<div class="w-1/3 h-full bg-neon-pink shadow-[0_0_15px_#ff7eb9] relative z-10"></div>
+<div class="absolute inset-0 bg-neon-pink/10 blur-sm"></div>
+</div>
+<div class="text-neon-pink font-bold text-sm tracking-widest drop-shadow-[0_0_5px_rgba(255,126,185,0.5)]">1/3</div>
+</div>
+<div class="flex flex-col items-center text-center mb-10">
+<div class="w-36 h-36 bg-neon-teal cartoon-border rounded-2xl shadow-cartoon flex items-center justify-center mb-6 overflow-hidden border-black relative group">
+<div class="absolute inset-0 bg-black/10 group-hover:bg-transparent transition-colors"></div>
+<div class="relative z-10 flex items-center justify-center">
+<span class="material-symbols-outlined text-7xl text-white drop-shadow-[0_0_15px_rgba(255,255,255,0.8)]">rocket_launch</span>
+</div>
+</div>
+<h1 class="text-4xl font-extrabold text-cream leading-tight tracking-tight">
+                Let’s learn <br/>
+<span class="text-neon-teal drop-shadow-[0_0_8px_rgba(74,222,128,0.5)]">something cool!</span>
+</h1>
+</div>
+<div class="space-y-8">
+<div class="flex flex-col gap-3 group">
+<h2 class="text-xl font-bold text-cream flex items-center gap-2">
+                    What’s the goal?
+                    <span class="material-symbols-outlined text-neon-pink neon-glow-pink">target</span>
+</h2>
+<div class="relative input-glow-pink rounded-xl transition-all duration-300">
+<input class="w-full h-16 bg-dark-field cartoon-border border-neon-pink rounded-xl px-6 text-xl font-bold text-cream focus:ring-0 focus:border-neon-pink shadow-cartoon placeholder:text-slate-600 transition-all" type="text" value="Magic Tricks"/>
+</div>
+</div>
+<div class="flex flex-col gap-3 group">
+<h2 class="text-xl font-bold text-cream flex items-center gap-2">
+                    How long per day?
+                    <span class="material-symbols-outlined text-neon-yellow neon-glow-yellow">timer</span>
+</h2>
+<div class="relative input-glow-yellow rounded-xl transition-all duration-300">
+<input class="w-full h-16 bg-dark-field cartoon-border border-neon-yellow rounded-xl px-6 text-xl font-bold text-cream focus:ring-0 focus:border-neon-yellow shadow-cartoon placeholder:text-slate-600 transition-all" placeholder="Maybe 15 mins?" type="text"/>
+</div>
+<p class="text-sm font-bold text-neon-teal px-2 drop-shadow-[0_0_5px_rgba(74,222,128,0.4)]">
+                    Little steps lead to big jumps! 🐰
+                </p>
+</div>
+</div>
+<div class="flex-grow"></div>
+<div class="mt-8 pb-4">
+<button class="w-full h-16 bg-neon-pink cartoon-border rounded-xl shadow-cartoon flex items-center justify-center gap-3 active:translate-x-1 active:translate-y-1 active:shadow-none transition-all border-black hover:brightness-110 group">
+<span class="text-xl font-extrabold text-black">START MY JOURNEY</span>
+<span class="material-symbols-outlined text-black font-bold group-hover:translate-x-1 transition-transform">arrow_forward</span>
+</button>
+</div>
+</div>
+<div class="hidden">
+<img data-alt="Cartoon rocket flying through neon stars on dark background" src="https://lh3.googleusercontent.com/aida-public/AB6AXuChjpO_QBmOb1iEsDSZ0iBgUhEkfrqMbemk0TfwL9l1zoOIpNvUvTIzNln2SwvwnCKP-1rPfNIRIUt2TM4p7mRkrY5OvgvSria2uOR_sDShOhTkTEa_EVRcvA_zYPe9eda3QiNta1L0nA6NZB9oerAPZjVSsKx1gitrRryrXlUJpJjn9lPDfzoy6o-zVtIY7KRI_T937sI3SEoR-ztxsrYLIrzVlcU95e67kChaIcuOorw_RJkn9zb5I9M0Rsq96CSjiRpfVe-HNm4"/>
+</div>
+
+</body></html>

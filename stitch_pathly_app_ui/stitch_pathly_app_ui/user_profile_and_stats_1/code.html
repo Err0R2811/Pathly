@@ -1,0 +1,181 @@
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>User Profile and Stats</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Spline+Sans:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          colors: {
+            "primary": "#ff8fab",
+            "background-light": "#f8f5f6",
+            "background-dark": "#230f14",
+            "lavender": "#e2d1f9",
+            "mint": "#d1f9e8",
+            "peach": "#f9d1d1",
+            "sky": "#d1e9f9"
+          },
+          fontFamily: {
+            "display": ["Spline Sans", "sans-serif"]
+          },
+          borderRadius: {"DEFAULT": "1rem", "lg": "2rem", "xl": "3rem", "full": "9999px"},
+        },
+      },
+    }
+  </script>
+<style>
+    .thick-border {
+      border: 3px solid #230f14;
+    }
+    .soft-shadow {
+      box-shadow: 4px 4px 0px #230f14;
+    }
+  </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background-light dark:bg-background-dark font-display text-slate-900 dark:text-slate-100 min-h-screen flex justify-center">
+<div class="relative flex h-[844px] w-[390px] flex-col bg-background-light dark:bg-background-dark overflow-hidden border-x border-slate-200 dark:border-slate-800">
+<!-- Top Header -->
+<div class="flex items-center p-6 pb-2 justify-between">
+<div class="p-2 rounded-full bg-primary/20 thick-border">
+<span class="material-symbols-outlined text-slate-900">settings</span>
+</div>
+<h2 class="text-xl font-bold tracking-tight">Profile</h2>
+<div class="p-2 rounded-full bg-primary/20 thick-border">
+<span class="material-symbols-outlined text-slate-900">share</span>
+</div>
+</div>
+<!-- Main Profile Card -->
+<div class="p-6">
+<div class="bg-lavender thick-border rounded-xl soft-shadow p-8 flex flex-col items-center gap-4 text-slate-900">
+<div class="relative">
+<div class="w-32 h-32 rounded-full thick-border bg-white overflow-hidden bg-cover bg-center" data-alt="Cartoon wizard avatar with a pointy hat" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuCWR4KJtIZ55Ug6OMq8g7yJm6y--LAiwFb2cpVV3nVA5Gynq7N-TTkIik6VCaUJr3ggPQPQjwbqA5UF-Oxo-22mGIuQi1UNowRWDMYA_igxT3_y2Rwn-qmew3MblMgRs_OhbJu6XPHIv4Cv5Bf_xa4sK4Lgf6Z-I-Lzel22AN0NToYvwSvqOhDggY8OxUUOa8DSF-FYgG0Q2gc4T6EWbW9edEapf5tGBeWTxtlbNgOKTmMwJrH6qoskKhAR5kipCsjveF8k1582P1g')"></div>
+<div class="absolute bottom-0 right-0 bg-primary thick-border rounded-full p-1 flex items-center justify-center">
+<span class="material-symbols-outlined text-white text-sm">edit</span>
+</div>
+</div>
+<div class="text-center">
+<h1 class="text-2xl font-bold">Amit</h1>
+<p class="text-lg font-medium opacity-80">Beginner Wizard 🧙</p>
+<div class="mt-2 bg-white/40 px-4 py-1 rounded-full thick-border text-sm font-bold">
+            Level 5
+          </div>
+</div>
+</div>
+</div>
+<!-- Stats Section -->
+<div class="px-6 grid grid-cols-3 gap-3">
+<div class="bg-peach thick-border rounded-lg soft-shadow p-3 flex flex-col items-center justify-center text-center">
+<span class="text-xs font-bold uppercase tracking-wider mb-1">Streak</span>
+<p class="text-lg font-bold">7 Days</p>
+<span class="text-xl">🔥</span>
+</div>
+<div class="bg-mint thick-border rounded-lg soft-shadow p-3 flex flex-col items-center justify-center text-center">
+<span class="text-xs font-bold uppercase tracking-wider mb-1">Minutes</span>
+<p class="text-lg font-bold">240</p>
+<span class="material-symbols-outlined text-slate-900">schedule</span>
+</div>
+<div class="bg-sky thick-border rounded-lg soft-shadow p-3 flex flex-col items-center justify-center text-center">
+<span class="text-xs font-bold uppercase tracking-wider mb-1">Lessons</span>
+<p class="text-lg font-bold">12</p>
+<span class="material-symbols-outlined text-slate-900">auto_stories</span>
+</div>
+</div>
+<!-- Achievements Section -->
+<div class="px-6 mt-8 flex-1 overflow-y-auto pb-24">
+<h3 class="text-lg font-bold mb-4 flex items-center gap-2">
+<span class="material-symbols-outlined text-primary">military_tech</span>
+        Achievements
+      </h3>
+<div class="grid grid-cols-4 gap-4">
+<!-- Badge 1 -->
+<div class="flex flex-col items-center gap-1">
+<div class="w-16 h-16 rounded-full bg-primary/30 thick-border flex items-center justify-center text-3xl">
+            🌱
+          </div>
+<span class="text-[10px] font-bold text-center">Sprout</span>
+</div>
+<!-- Badge 2 -->
+<div class="flex flex-col items-center gap-1">
+<div class="w-16 h-16 rounded-full bg-lavender thick-border flex items-center justify-center text-3xl">
+            ✨
+          </div>
+<span class="text-[10px] font-bold text-center">Spark</span>
+</div>
+<!-- Badge 3 -->
+<div class="flex flex-col items-center gap-1 opacity-40 grayscale">
+<div class="w-16 h-16 rounded-full bg-slate-200 thick-border flex items-center justify-center text-3xl">
+            🦉
+          </div>
+<span class="text-[10px] font-bold text-center">Wise Owl</span>
+</div>
+<!-- Badge 4 -->
+<div class="flex flex-col items-center gap-1 opacity-40 grayscale">
+<div class="w-16 h-16 rounded-full bg-slate-200 thick-border flex items-center justify-center text-3xl">
+            🏰
+          </div>
+<span class="text-[10px] font-bold text-center">Keeper</span>
+</div>
+<!-- Badge 5 -->
+<div class="flex flex-col items-center gap-1">
+<div class="w-16 h-16 rounded-full bg-mint thick-border flex items-center justify-center text-3xl">
+            🧪
+          </div>
+<span class="text-[10px] font-bold text-center">Alchemist</span>
+</div>
+<!-- Badge 6 -->
+<div class="flex flex-col items-center gap-1">
+<div class="w-16 h-16 rounded-full bg-peach thick-border flex items-center justify-center text-3xl">
+            📜
+          </div>
+<span class="text-[10px] font-bold text-center">Scribe</span>
+</div>
+<!-- Badge 7 -->
+<div class="flex flex-col items-center gap-1 opacity-40 grayscale">
+<div class="w-16 h-16 rounded-full bg-slate-200 thick-border flex items-center justify-center text-3xl">
+            💎
+          </div>
+<span class="text-[10px] font-bold text-center">Gemstone</span>
+</div>
+<!-- Badge 8 -->
+<div class="flex flex-col items-center gap-1 opacity-40 grayscale">
+<div class="w-16 h-16 rounded-full bg-slate-200 thick-border flex items-center justify-center text-3xl">
+            ⚡
+          </div>
+<span class="text-[10px] font-bold text-center">Bolt</span>
+</div>
+</div>
+</div>
+<!-- Bottom Nav Bar -->
+<div class="absolute bottom-0 w-full bg-white dark:bg-background-dark border-t-4 border-slate-900 flex justify-around items-center py-4 px-2">
+<a class="flex flex-col items-center gap-1 text-slate-400" href="#">
+<span class="material-symbols-outlined">menu_book</span>
+<span class="text-[10px] font-bold uppercase tracking-widest">Learn</span>
+</a>
+<a class="flex flex-col items-center gap-1 text-slate-400" href="#">
+<span class="material-symbols-outlined">edit_note</span>
+<span class="text-[10px] font-bold uppercase tracking-widest">Practice</span>
+</a>
+<a class="flex flex-col items-center gap-1 text-slate-400" href="#">
+<span class="material-symbols-outlined">leaderboard</span>
+<span class="text-[10px] font-bold uppercase tracking-widest">Rank</span>
+</a>
+<a class="flex flex-col items-center gap-1 text-primary" href="#">
+<div class="bg-primary/20 p-2 rounded-xl thick-border">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1">person</span>
+</div>
+<span class="text-[10px] font-bold uppercase tracking-widest">Profile</span>
+</a>
+</div>
+</div>
+
+```</body></html>

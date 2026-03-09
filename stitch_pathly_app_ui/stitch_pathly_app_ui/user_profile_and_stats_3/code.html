@@ -1,0 +1,200 @@
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Neon Glow Profile Page</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Spline+Sans:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          colors: {
+            "primary": "#ff8fab",
+            "background-dark": "#0f051d",
+            "cream": "#fdf8e1",
+            "deep-lavender": "#8b5cf6",
+            "deep-mint": "#10b981",
+            "deep-peach": "#f43f5e",
+            "deep-sky": "#0ea5e9",
+            "card-border": "#000000"
+          },
+          fontFamily: {
+            "display": ["Spline Sans", "sans-serif"]
+          },
+          borderRadius: {"DEFAULT": "1rem", "lg": "2rem", "xl": "3rem", "full": "9999px"},
+        },
+      },
+    }
+  </script>
+<style type="text/tailwindcss">
+    .thick-border {
+      border: 3px solid #000000;
+    }
+    .soft-shadow {
+      box-shadow: 4px 4px 0px #000000;
+    }.glow-purple {
+      box-shadow: 0 0 20px rgba(139, 92, 246, 0.4), 4px 4px 0px #000000;
+    }
+    .glow-peach {
+      box-shadow: 0 0 15px rgba(244, 63, 94, 0.5), 4px 4px 0px #000000;
+    }
+    .glow-mint {
+      box-shadow: 0 0 15px rgba(16, 185, 129, 0.5), 4px 4px 0px #000000;
+    }
+    .glow-sky {
+      box-shadow: 0 0 15px rgba(14, 165, 233, 0.5), 4px 4px 0px #000000;
+    }
+    .badge-glow-pink {
+      filter: drop-shadow(0 0 10px rgba(255, 143, 171, 0.7));
+    }
+    .badge-glow-lavender {
+      filter: drop-shadow(0 0 10px rgba(139, 92, 246, 0.7));
+    }
+    .badge-glow-mint {
+      filter: drop-shadow(0 0 10px rgba(16, 185, 129, 0.7));
+    }
+    .badge-glow-peach {
+      filter: drop-shadow(0 0 10px rgba(244, 63, 94, 0.7));
+    }
+    .fire-glow {
+      filter: drop-shadow(0 0 8px #fbbf24);
+      text-shadow: 0 0 10px rgba(251, 191, 36, 0.8);
+    }
+  </style>
+<style>
+    body {
+      min-height: max(844px, 100dvh);
+    }
+  </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background-dark font-display text-cream min-h-screen flex justify-center">
+<div class="relative flex h-[844px] w-[390px] flex-col bg-background-dark overflow-hidden border-x border-white/5">
+<div class="flex items-center p-6 pb-2 justify-between">
+<div class="p-2 rounded-full bg-primary/20 thick-border">
+<span class="material-symbols-outlined text-cream flex items-center justify-center">settings</span>
+</div>
+<h2 class="text-xl font-bold tracking-tight text-cream">Profile</h2>
+<div class="p-2 rounded-full bg-primary/20 thick-border">
+<span class="material-symbols-outlined text-cream flex items-center justify-center">share</span>
+</div>
+</div>
+<div class="p-6">
+<div class="bg-deep-lavender thick-border rounded-xl glow-purple p-8 flex flex-col items-center gap-4 text-cream">
+<div class="relative">
+<div class="w-32 h-32 rounded-full thick-border bg-slate-800 overflow-hidden bg-cover bg-center" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuCWR4KJtIZ55Ug6OMq8g7yJm6y--LAiwFb2cpVV3nVA5Gynq7N-TTkIik6VCaUJr3ggPQPQjwbqA5UF-Oxo-22mGIuQi1UNowRWDMYA_igxT3_y2Rwn-qmew3MblMgRs_OhbJu6XPHIv4Cv5Bf_xa4sK4Lgf6Z-I-Lzel22AN0NToYvwSvqOhDggY8OxUUOa8DSF-FYgG0Q2gc4T6EWbW9edEapf5tGBeWTxtlbNgOKTmMwJrH6qoskKhAR5kipCsjveF8k1582P1g')"></div>
+<div class="absolute bottom-0 right-0 bg-primary thick-border rounded-full p-2 flex items-center justify-center shadow-lg">
+<span class="material-symbols-outlined text-white text-[16px] font-bold">edit</span>
+</div>
+</div>
+<div class="text-center">
+<h1 class="text-2xl font-black tracking-tight">Amit</h1>
+<p class="text-lg font-semibold opacity-100 text-cream">Beginner Wizard 🧙</p>
+<div class="mt-2 bg-black/40 px-4 py-1 rounded-full thick-border text-sm font-black uppercase tracking-wider">
+            Level 5
+          </div>
+</div>
+</div>
+</div>
+<div class="px-6 grid grid-cols-3 gap-3">
+<div class="bg-deep-peach thick-border rounded-lg glow-peach p-3 flex flex-col items-center justify-center text-center">
+<span class="text-[10px] font-black uppercase tracking-wider mb-1 text-cream/90">Streak</span>
+<p class="text-lg font-black">7 Days</p>
+<span class="text-2xl fire-glow mt-1">🔥</span>
+</div>
+<div class="bg-deep-mint thick-border rounded-lg glow-mint p-3 flex flex-col items-center justify-center text-center">
+<span class="text-[10px] font-black uppercase tracking-wider mb-1 text-cream/90">Minutes</span>
+<p class="text-lg font-black">240</p>
+<span class="material-symbols-outlined text-cream mt-1 drop-shadow-[0_0_5px_rgba(255,255,255,0.5)]">schedule</span>
+</div>
+<div class="bg-deep-sky thick-border rounded-lg glow-sky p-3 flex flex-col items-center justify-center text-center">
+<span class="text-[10px] font-black uppercase tracking-wider mb-1 text-cream/90">Lessons</span>
+<p class="text-lg font-black">12</p>
+<span class="material-symbols-outlined text-cream mt-1 drop-shadow-[0_0_5px_rgba(255,255,255,0.5)]">auto_stories</span>
+</div>
+</div>
+<div class="px-6 mt-8 flex-1 overflow-y-auto pb-28">
+<h3 class="text-lg font-black mb-4 flex items-center gap-2 text-cream uppercase tracking-wide">
+<span class="material-symbols-outlined text-primary" style="font-variation-settings: 'FILL' 1">military_tech</span>
+        Achievements
+      </h3>
+<div class="grid grid-cols-4 gap-4 pb-4">
+<div class="flex flex-col items-center gap-1">
+<div class="w-16 h-16 rounded-full bg-primary/40 thick-border flex items-center justify-center text-3xl badge-glow-pink">
+            🌱
+          </div>
+<span class="text-[10px] font-black text-center uppercase">Sprout</span>
+</div>
+<div class="flex flex-col items-center gap-1">
+<div class="w-16 h-16 rounded-full bg-deep-lavender thick-border flex items-center justify-center text-3xl badge-glow-lavender">
+            ✨
+          </div>
+<span class="text-[10px] font-black text-center uppercase">Spark</span>
+</div>
+<div class="flex flex-col items-center gap-1 opacity-20 grayscale">
+<div class="w-16 h-16 rounded-full bg-slate-800 thick-border flex items-center justify-center text-3xl">
+            🦉
+          </div>
+<span class="text-[10px] font-black text-center uppercase">Wise Owl</span>
+</div>
+<div class="flex flex-col items-center gap-1 opacity-20 grayscale">
+<div class="w-16 h-16 rounded-full bg-slate-800 thick-border flex items-center justify-center text-3xl">
+            🏰
+          </div>
+<span class="text-[10px] font-black text-center uppercase">Keeper</span>
+</div>
+<div class="flex flex-col items-center gap-1">
+<div class="w-16 h-16 rounded-full bg-deep-mint thick-border flex items-center justify-center text-3xl badge-glow-mint">
+            🧪
+          </div>
+<span class="text-[10px] font-black text-center uppercase">Alchemist</span>
+</div>
+<div class="flex flex-col items-center gap-1">
+<div class="w-16 h-16 rounded-full bg-deep-peach thick-border flex items-center justify-center text-3xl badge-glow-peach">
+            📜
+          </div>
+<span class="text-[10px] font-black text-center uppercase">Scribe</span>
+</div>
+<div class="flex flex-col items-center gap-1 opacity-20 grayscale">
+<div class="w-16 h-16 rounded-full bg-slate-800 thick-border flex items-center justify-center text-3xl">
+            💎
+          </div>
+<span class="text-[10px] font-black text-center uppercase">Gemstone</span>
+</div>
+<div class="flex flex-col items-center gap-1 opacity-20 grayscale">
+<div class="w-16 h-16 rounded-full bg-slate-800 thick-border flex items-center justify-center text-3xl">
+            ⚡
+          </div>
+<span class="text-[10px] font-black text-center uppercase">Bolt</span>
+</div>
+</div>
+</div>
+<div class="absolute bottom-0 w-full bg-black/60 backdrop-blur-xl border-t-4 border-black flex justify-around items-center py-4 px-2 z-10">
+<a class="flex flex-col items-center gap-1 text-slate-400" href="#">
+<span class="material-symbols-outlined">menu_book</span>
+<span class="text-[10px] font-black uppercase tracking-widest">Learn</span>
+</a>
+<a class="flex flex-col items-center gap-1 text-slate-400" href="#">
+<span class="material-symbols-outlined">edit_note</span>
+<span class="text-[10px] font-black uppercase tracking-widest">Practice</span>
+</a>
+<a class="flex flex-col items-center gap-1 text-slate-400" href="#">
+<span class="material-symbols-outlined">leaderboard</span>
+<span class="text-[10px] font-black uppercase tracking-widest">Rank</span>
+</a>
+<a class="flex flex-col items-center gap-1 text-primary" href="#">
+<div class="bg-primary/20 p-2 rounded-xl thick-border shadow-[0_0_15px_rgba(255,143,171,0.3)]">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1">person</span>
+</div>
+<span class="text-[10px] font-black uppercase tracking-widest">Profile</span>
+</a>
+</div>
+</div>
+
+</body></html>

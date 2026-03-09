@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Dark Learning Home Dashboard</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Spline+Sans:wght@300;400;500;600;700;800;900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#ff8fab",
+                        "secondary-teal": "#2D6A6A","secondary-yellow": "#5C4D1A","accent-teal": "#b2f0e8",
+                        "accent-yellow": "#ffecb3",
+                        "background-dark": "#1A1A2E",
+                        "card-dark": "#16213E",
+                        "border-thick": "#0F0F1B",
+                        "cream-text": "#FFFDF5",
+                    },
+                    fontFamily: {
+                        "display": ["Spline Sans", "sans-serif"]
+                    },
+                    borderRadius: {
+                        "DEFAULT": "1rem",
+                        "lg": "1.5rem",
+                        "xl": "2rem",
+                        "full": "9999px"
+                    },
+                },
+            },
+        }
+    </script>
+<style type="text/tailwindcss">
+        .cartoon-border {
+            border: 3px solid #0F0F1B;
+            box-shadow: 6px 6px 0px #0F0F1B;}
+        .cartoon-border-sm {
+            border: 2px solid #0F0F1B;
+            box-shadow: 3px 3px 0px #0F0F1B;
+        }
+        .no-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        .no-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+        .fill-1 {
+            font-variation-settings: 'FILL' 1;
+        }
+        body {
+            min-height: max(884px, 100dvh);
+            background-color: #1A1A2E;
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background-dark font-display text-cream-text antialiased">
+<div class="relative flex h-screen w-full max-w-[430px] mx-auto flex-col overflow-hidden bg-background-dark border-x border-slate-800">
+<header class="flex items-center justify-between p-6 pb-2">
+<div class="flex items-center gap-3">
+<div class="cartoon-border-sm size-12 overflow-hidden rounded-full bg-primary/20">
+<img alt="User Profile" class="h-full w-full object-cover" data-alt="Cartoon avatar of a smiling young person" src="https://lh3.googleusercontent.com/aida-public/AB6AXuC_vkJLoBwrjNi-CPLH2NJDYZwF9QZAMAkgqhRobFU1C4DOD8LQmYG993di7rGS4olS4rz7xFOQACrrS2Q0l5pEvEfl1nMOclWUC9BdIrOS8kfiPAIJ6_63YoY0EndLIwnSfImoBfymPiMJrScLd9hm0ZBJ5BpiLVoqLmJsagfRDlWE0hB58ELmr-sRem_POElr4U2CnheKyZBtut0seU30abdVVVUzrPwhnrmfhBH0-aPWgvf3ZjIs3upNZIpmYcIINmv-pSyK-b0"/>
+</div>
+<div class="flex flex-col">
+<h1 class="text-2xl font-bold leading-tight tracking-tight text-cream-text">Hey Amit 👋</h1>
+<p class="text-slate-400 text-sm font-medium">Ready to grow today?</p>
+</div>
+</div>
+<button class="cartoon-border-sm flex size-10 items-center justify-center rounded-full bg-card-dark">
+<span class="material-symbols-outlined text-cream-text">notifications</span>
+</button>
+</header>
+<main class="flex-1 overflow-y-auto px-6 py-4 space-y-8">
+<section class="cartoon-border relative overflow-hidden rounded-xl bg-secondary-teal p-6">
+<div class="flex justify-between items-start mb-4">
+<div class="z-10">
+<span class="inline-block px-3 py-1 rounded-full bg-accent-teal/20 border-2 border-border-thick text-[10px] font-black uppercase tracking-wider mb-2 text-accent-teal">Current Skill</span>
+<h2 class="text-3xl font-black text-cream-text italic tracking-tighter">Magic Tricks</h2>
+</div>
+<div class="bg-card-dark cartoon-border-sm p-2 rounded-lg">
+<span class="material-symbols-outlined text-4xl text-accent-teal">rocket_launch</span>
+</div>
+</div>
+<div class="space-y-3">
+<div class="flex justify-between items-end">
+<p class="text-cream-text font-bold">65% Complete</p>
+<p class="text-cream-text/60 text-xs font-bold">12/18 Lessons</p>
+</div>
+<div class="cartoon-border-sm h-5 w-full rounded-full bg-border-thick overflow-hidden">
+<div class="h-full bg-accent-teal rounded-full" style="width: 65%;"></div>
+</div>
+</div>
+<button class="mt-6 w-full cartoon-border-sm bg-accent-teal py-3 font-black text-border-thick uppercase tracking-wide hover:brightness-110 transition-all">
+                Continue Learning
+            </button>
+</section>
+<section class="cartoon-border flex items-center justify-between rounded-xl bg-secondary-yellow p-6">
+<div class="flex items-center gap-4">
+<div class="cartoon-border-sm flex size-12 items-center justify-center rounded-xl bg-card-dark">
+<span class="material-symbols-outlined text-accent-yellow">timer</span>
+</div>
+<div>
+<p class="text-[10px] font-black uppercase tracking-wider text-accent-yellow/80 leading-none mb-1">Daily Goal</p>
+<p class="text-3xl font-black text-cream-text italic">15:00</p>
+</div>
+</div>
+<button class="cartoon-border-sm bg-primary px-6 py-2 font-black text-border-thick uppercase tracking-tighter">
+                Start
+            </button>
+</section>
+<section>
+<h3 class="text-lg font-black text-cream-text mb-4 uppercase tracking-tight">Quick Actions</h3>
+<div class="flex gap-4 overflow-x-auto pb-4 no-scrollbar">
+<div class="cartoon-border min-w-[125px] flex flex-col items-center gap-3 rounded-xl bg-slate-800/50 p-4">
+<div class="size-12 rounded-full bg-card-dark flex items-center justify-center cartoon-border-sm">
+<span class="material-symbols-outlined text-blue-400">search</span>
+</div>
+<p class="text-xs font-black text-center text-cream-text">Explore Topics</p>
+</div>
+<div class="cartoon-border min-w-[125px] flex flex-col items-center gap-3 rounded-xl bg-slate-800/50 p-4">
+<div class="size-12 rounded-full bg-card-dark flex items-center justify-center cartoon-border-sm">
+<span class="material-symbols-outlined text-purple-400">edit_note</span>
+</div>
+<p class="text-xs font-black text-center text-cream-text">Practice</p>
+</div>
+<div class="cartoon-border min-w-[125px] flex flex-col items-center gap-3 rounded-xl bg-slate-800/50 p-4">
+<div class="size-12 rounded-full bg-card-dark flex items-center justify-center cartoon-border-sm">
+<span class="material-symbols-outlined text-orange-400">military_tech</span>
+</div>
+<p class="text-xs font-black text-center text-cream-text">Challenges</p>
+</div>
+</div>
+</section>
+<section class="pb-24">
+<div class="flex justify-between items-center mb-4">
+<h3 class="text-lg font-black text-cream-text uppercase tracking-tight">Achievements</h3>
+<button class="text-primary font-black text-xs uppercase">View all</button>
+</div>
+<div class="cartoon-border bg-card-dark p-4 rounded-xl flex items-center gap-4">
+<div class="size-14 bg-accent-yellow/10 rounded-lg flex items-center justify-center text-3xl cartoon-border-sm">🔥</div>
+<div>
+<p class="font-black text-cream-text leading-tight text-lg">7 Day Streak!</p>
+<p class="text-xs text-slate-400 font-bold uppercase tracking-tight">You're on fire, keep it up!</p>
+</div>
+</div>
+</section>
+</main>
+<nav class="absolute bottom-0 left-0 right-0 border-t-[3px] border-border-thick bg-card-dark px-6 py-4">
+<div class="flex items-center justify-between">
+<a class="flex flex-col items-center gap-1 text-primary" href="#">
+<span class="material-symbols-outlined fill-1">home</span>
+<span class="text-[9px] font-black uppercase tracking-widest">Home</span>
+</a>
+<a class="flex flex-col items-center gap-1 text-slate-500" href="#">
+<span class="material-symbols-outlined">menu_book</span>
+<span class="text-[9px] font-black uppercase tracking-widest">Library</span>
+</a>
+<div class="relative -mt-12">
+<button class="cartoon-border size-14 bg-primary rounded-full flex items-center justify-center text-border-thick">
+<span class="material-symbols-outlined text-3xl font-black">add</span>
+</button>
+</div>
+<a class="flex flex-col items-center gap-1 text-slate-500" href="#">
+<span class="material-symbols-outlined">leaderboard</span>
+<span class="text-[9px] font-black uppercase tracking-widest">Stats</span>
+</a>
+<a class="flex flex-col items-center gap-1 text-slate-500" href="#">
+<span class="material-symbols-outlined">person</span>
+<span class="text-[9px] font-black uppercase tracking-widest">Profile</span>
+</a>
+</div>
+</nav>
+</div>
+
+</body></html>
