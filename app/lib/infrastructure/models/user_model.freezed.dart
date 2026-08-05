@@ -30,6 +30,7 @@ mixin _$UserModel {
   int get streakDays => throw _privateConstructorUsedError;
   int get totalMinutes => throw _privateConstructorUsedError;
   int get lessonsCompleted => throw _privateConstructorUsedError;
+  bool get isDemo => throw _privateConstructorUsedError;
   DateTime? get createdAt => throw _privateConstructorUsedError;
 
   /// Serializes this UserModel to a JSON map.
@@ -58,6 +59,7 @@ abstract class $UserModelCopyWith<$Res> {
       int streakDays,
       int totalMinutes,
       int lessonsCompleted,
+      bool isDemo,
       DateTime? createdAt});
 }
 
@@ -86,6 +88,7 @@ class _$UserModelCopyWithImpl<$Res, $Val extends UserModel>
     Object? streakDays = null,
     Object? totalMinutes = null,
     Object? lessonsCompleted = null,
+    Object? isDemo = null,
     Object? createdAt = freezed,
   }) {
     return _then(_value.copyWith(
@@ -129,6 +132,10 @@ class _$UserModelCopyWithImpl<$Res, $Val extends UserModel>
           ? _value.lessonsCompleted
           : lessonsCompleted // ignore: cast_nullable_to_non_nullable
               as int,
+      isDemo: null == isDemo
+          ? _value.isDemo
+          : isDemo // ignore: cast_nullable_to_non_nullable
+              as bool,
       createdAt: freezed == createdAt
           ? _value.createdAt
           : createdAt // ignore: cast_nullable_to_non_nullable
@@ -156,6 +163,7 @@ abstract class _$$UserModelImplCopyWith<$Res>
       int streakDays,
       int totalMinutes,
       int lessonsCompleted,
+      bool isDemo,
       DateTime? createdAt});
 }
 
@@ -182,6 +190,7 @@ class __$$UserModelImplCopyWithImpl<$Res>
     Object? streakDays = null,
     Object? totalMinutes = null,
     Object? lessonsCompleted = null,
+    Object? isDemo = null,
     Object? createdAt = freezed,
   }) {
     return _then(_$UserModelImpl(
@@ -225,6 +234,10 @@ class __$$UserModelImplCopyWithImpl<$Res>
           ? _value.lessonsCompleted
           : lessonsCompleted // ignore: cast_nullable_to_non_nullable
               as int,
+      isDemo: null == isDemo
+          ? _value.isDemo
+          : isDemo // ignore: cast_nullable_to_non_nullable
+              as bool,
       createdAt: freezed == createdAt
           ? _value.createdAt
           : createdAt // ignore: cast_nullable_to_non_nullable
@@ -247,6 +260,7 @@ class _$UserModelImpl implements _UserModel {
       this.streakDays = 0,
       this.totalMinutes = 0,
       this.lessonsCompleted = 0,
+      this.isDemo = false,
       this.createdAt});
 
   factory _$UserModelImpl.fromJson(Map<String, dynamic> json) =>
@@ -280,11 +294,14 @@ class _$UserModelImpl implements _UserModel {
   @JsonKey()
   final int lessonsCompleted;
   @override
+  @JsonKey()
+  final bool isDemo;
+  @override
   final DateTime? createdAt;
 
   @override
   String toString() {
-    return 'UserModel(id: $id, email: $email, name: $name, avatarUrl: $avatarUrl, title: $title, level: $level, xp: $xp, streakDays: $streakDays, totalMinutes: $totalMinutes, lessonsCompleted: $lessonsCompleted, createdAt: $createdAt)';
+    return 'UserModel(id: $id, email: $email, name: $name, avatarUrl: $avatarUrl, title: $title, level: $level, xp: $xp, streakDays: $streakDays, totalMinutes: $totalMinutes, lessonsCompleted: $lessonsCompleted, isDemo: $isDemo, createdAt: $createdAt)';
   }
 
   @override
@@ -306,14 +323,27 @@ class _$UserModelImpl implements _UserModel {
                 other.totalMinutes == totalMinutes) &&
             (identical(other.lessonsCompleted, lessonsCompleted) ||
                 other.lessonsCompleted == lessonsCompleted) &&
+            (identical(other.isDemo, isDemo) || other.isDemo == isDemo) &&
             (identical(other.createdAt, createdAt) ||
                 other.createdAt == createdAt));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode => Object.hash(runtimeType, id, email, name, avatarUrl,
-      title, level, xp, streakDays, totalMinutes, lessonsCompleted, createdAt);
+  int get hashCode => Object.hash(
+      runtimeType,
+      id,
+      email,
+      name,
+      avatarUrl,
+      title,
+      level,
+      xp,
+      streakDays,
+      totalMinutes,
+      lessonsCompleted,
+      isDemo,
+      createdAt);
 
   /// Create a copy of UserModel
   /// with the given fields replaced by the non-null parameter values.
@@ -343,6 +373,7 @@ abstract class _UserModel implements UserModel {
       final int streakDays,
       final int totalMinutes,
       final int lessonsCompleted,
+      final bool isDemo,
       final DateTime? createdAt}) = _$UserModelImpl;
 
   factory _UserModel.fromJson(Map<String, dynamic> json) =
@@ -368,6 +399,8 @@ abstract class _UserModel implements UserModel {
   int get totalMinutes;
   @override
   int get lessonsCompleted;
+  @override
+  bool get isDemo;
   @override
   DateTime? get createdAt;
 

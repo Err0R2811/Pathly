@@ -1,23 +1,27 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:pathly_app/core/theme/app_colors.dart';
 import 'package:pathly_app/core/theme/app_text_styles.dart';
 import 'package:pathly_app/core/constants/app_constants.dart';
 import 'package:pathly_app/core/services/curriculum_service.dart';
 import 'package:pathly_app/shared/widgets/pathly_button.dart';
+import 'package:pathly_app/features/auth/providers/auth_provider.dart';
+import 'package:pathly_app/features/dashboard/presentation/widgets/custom_course_dialog.dart';
 
 /// Shows an instant draft roadmap (no reviewer pass).
 /// Tapping "Generate Full Roadmap" kicks off the async job and navigates
 /// to [RoadmapPage] which polls for completion.
-class RoadmapPreviewPage extends StatefulWidget {
+/// For real users, redirects to custom course dialog instead.
+class RoadmapPreviewPage extends ConsumerStatefulWidget {
   final String skillName;
   const RoadmapPreviewPage({super.key, required this.skillName});
 
   @override
-  State<RoadmapPreviewPage> createState() => _RoadmapPreviewPageState();
+  ConsumerState<RoadmapPreviewPage> createState() => _RoadmapPreviewPageState();
 }
 
-class _RoadmapPreviewPageState extends State<RoadmapPreviewPage> {
+class _RoadmapPreviewPageState extends ConsumerState<RoadmapPreviewPage> {
   Map<String, dynamic>? _preview;
   String? _error;
   bool _loading = true;
@@ -26,7 +30,28 @@ class _RoadmapPreviewPageState extends State<RoadmapPreviewPage> {
   @override
   void initState() {
     super.initState();
-    _loadPreview();
+    _checkUserAndLoad();
+  }
+
+  void _checkUserAndLoad() {
+    final authState = ref.read(authStateProvider);
+    final isDemo = authState.user?.isDemo ?? false;
+    
+    if (!isDemo) {
+      // Real users should use custom course dialog
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        Navigator.of(context).pop();
+        showDialog(
+          context: context,
+          builder: (context) => CustomCourseDialog(
+            initialSkill: widget.skillName,
+          ),
+        );
+      });
+    } else {
+      // Demo users can see preview
+      _loadPreview();
+    }
   }
 
   Future<void> _loadPreview() async {

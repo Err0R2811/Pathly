@@ -4,8 +4,15 @@ from fastapi.middleware.cors import CORSMiddleware
 
 from .database import engine
 from .models import Base
-from .routers import preview
 from .routers import curriculum
+from .routers import auth
+from .routers import progress
+from .routers import badges
+from .routers import leaderboard
+from .routers import search
+from .routers import ai
+from .routers import adaptive
+from .routers import lessons
 
 # Create all tables on startup (SQLite)
 Base.metadata.create_all(bind=engine)
@@ -25,8 +32,15 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-app.include_router(preview.router)
 app.include_router(curriculum.router)
+app.include_router(auth.router)
+app.include_router(progress.router)
+app.include_router(badges.router)
+app.include_router(leaderboard.router)
+app.include_router(search.router)
+app.include_router(ai.router)
+app.include_router(adaptive.router)
+app.include_router(lessons.router)
 
 
 @app.get("/health")

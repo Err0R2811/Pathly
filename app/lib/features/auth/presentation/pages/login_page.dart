@@ -173,7 +173,11 @@ class _LoginPageState extends ConsumerState<LoginPage> {
               Align(
                 alignment: Alignment.centerRight,
                 child: TextButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      const SnackBar(content: Text('Password reset coming soon!')),
+                    );
+                  },
                   child: Text(
                     'Forgot password?',
                     style: AppTextStyles.bodySmall

@@ -1,10 +1,16 @@
 import 'dart:convert';
+import 'package:flutter/foundation.dart';
 import 'package:http/http.dart' as http;
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:pathly_app/infrastructure/models/user_model.dart';
 
 class AuthService {
-  static const String baseUrl = 'http://10.0.2.2:8000';
+  static String get baseUrl {
+    if (kIsWeb) {
+      return 'http://127.0.0.1:8000';
+    }
+    return 'http://10.0.2.2:8000';
+  }
   static const String _tokenBox = 'auth_token';
   static const String _userBox = 'current_user';
 
@@ -68,7 +74,7 @@ class AuthService {
         await _saveUser(UserModel.fromJson(userData));
 
         return AuthResult.success(UserModel.fromJson(userData));
-      } else if (response.statusCode == 400) {
+      } else if (response.statusCode == 409) {
         return AuthResult.failure('Email already exists');
       }
       return AuthResult.failure('Registration failed: ${response.statusCode}');
@@ -129,6 +135,7 @@ class AuthService {
       streakDays: 7,
       totalMinutes: 240,
       lessonsCompleted: 12,
+      isDemo: true,
       createdAt: DateTime.now().subtract(const Duration(days: 30)),
     );
 

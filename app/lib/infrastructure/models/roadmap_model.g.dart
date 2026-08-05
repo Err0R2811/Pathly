@@ -18,6 +18,24 @@ _$RoadmapModelImpl _$$RoadmapModelImplFromJson(Map<String, dynamic> json) =>
               ?.map((e) => ModuleModel.fromJson(e as Map<String, dynamic>))
               .toList() ??
           const [],
+      certificationInfo: json['certificationInfo'] == null
+          ? null
+          : CertificationInfo.fromJson(
+              json['certificationInfo'] as Map<String, dynamic>),
+      prerequisites: (json['prerequisites'] as List<dynamic>?)
+              ?.map((e) => e as String)
+              .toList() ??
+          const [],
+      learningObjectives: (json['learningObjectives'] as List<dynamic>?)
+              ?.map((e) => e as String)
+              .toList() ??
+          const [],
+      careerOutcomes: (json['careerOutcomes'] as List<dynamic>?)
+              ?.map((e) => e as String)
+              .toList() ??
+          const [],
+      salaryRange: json['salaryRange'] as String?,
+      marketDemand: json['marketDemand'] as String?,
     );
 
 Map<String, dynamic> _$$RoadmapModelImplToJson(_$RoadmapModelImpl instance) =>
@@ -29,6 +47,32 @@ Map<String, dynamic> _$$RoadmapModelImplToJson(_$RoadmapModelImpl instance) =>
       'verificationScore': instance.verificationScore,
       'createdAt': instance.createdAt,
       'modules': instance.modules,
+      'certificationInfo': instance.certificationInfo,
+      'prerequisites': instance.prerequisites,
+      'learningObjectives': instance.learningObjectives,
+      'careerOutcomes': instance.careerOutcomes,
+      'salaryRange': instance.salaryRange,
+      'marketDemand': instance.marketDemand,
+    };
+
+_$CertificationInfoImpl _$$CertificationInfoImplFromJson(
+        Map<String, dynamic> json) =>
+    _$CertificationInfoImpl(
+      availableCertifications:
+          (json['availableCertifications'] as List<dynamic>?)
+                  ?.map((e) => e as String)
+                  .toList() ??
+              const [],
+      recommendedCertification: json['recommendedCertification'] as String?,
+      certificationBody: json['certificationBody'] as String?,
+    );
+
+Map<String, dynamic> _$$CertificationInfoImplToJson(
+        _$CertificationInfoImpl instance) =>
+    <String, dynamic>{
+      'availableCertifications': instance.availableCertifications,
+      'recommendedCertification': instance.recommendedCertification,
+      'certificationBody': instance.certificationBody,
     };
 
 _$ModuleModelImpl _$$ModuleModelImplFromJson(Map<String, dynamic> json) =>
@@ -42,6 +86,19 @@ _$ModuleModelImpl _$$ModuleModelImplFromJson(Map<String, dynamic> json) =>
           (json['verificationAlignmentScore'] as num?)?.toInt() ?? 0,
       estimatedHours: (json['estimatedHours'] as num?)?.toInt() ?? 0,
       pedagogicalBasis: json['pedagogicalBasis'] as String?,
+      learningObjectives: (json['learningObjectives'] as List<dynamic>?)
+              ?.map((e) => e as String)
+              .toList() ??
+          const [],
+      skillsGained: (json['skillsGained'] as List<dynamic>?)
+              ?.map((e) => e as String)
+              .toList() ??
+          const [],
+      projects: (json['projects'] as List<dynamic>?)
+              ?.map((e) => e as String)
+              .toList() ??
+          const [],
+      assessmentCriteria: json['assessmentCriteria'] as String?,
       sources: (json['sources'] as List<dynamic>?)
               ?.map((e) =>
                   ResearchSourceModel.fromJson(e as Map<String, dynamic>))
@@ -59,6 +116,10 @@ Map<String, dynamic> _$$ModuleModelImplToJson(_$ModuleModelImpl instance) =>
       'verificationAlignmentScore': instance.verificationAlignmentScore,
       'estimatedHours': instance.estimatedHours,
       'pedagogicalBasis': instance.pedagogicalBasis,
+      'learningObjectives': instance.learningObjectives,
+      'skillsGained': instance.skillsGained,
+      'projects': instance.projects,
+      'assessmentCriteria': instance.assessmentCriteria,
       'sources': instance.sources,
     };
 
@@ -71,6 +132,11 @@ _$ResearchSourceModelImpl _$$ResearchSourceModelImplFromJson(
       doi: json['doi'] as String?,
       url: json['url'] as String?,
       abstract_: json['abstract_'] as String?,
+      sourceType: json['sourceType'] as String?,
+      author: json['author'] as String?,
+      relevanceScore: (json['relevanceScore'] as num?)?.toInt() ?? 5,
+      videoDuration: (json['videoDuration'] as num?)?.toInt(),
+      thumbnail: json['thumbnail'] as String?,
     );
 
 Map<String, dynamic> _$$ResearchSourceModelImplToJson(
@@ -82,4 +148,9 @@ Map<String, dynamic> _$$ResearchSourceModelImplToJson(
       'doi': instance.doi,
       'url': instance.url,
       'abstract_': instance.abstract_,
+      'sourceType': instance.sourceType,
+      'author': instance.author,
+      'relevanceScore': instance.relevanceScore,
+      'videoDuration': instance.videoDuration,
+      'thumbnail': instance.thumbnail,
     };

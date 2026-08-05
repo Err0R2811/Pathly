@@ -1,12 +1,21 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import 'package:pathly_app/core/services/curriculum_service.dart';
 import 'package:pathly_app/core/theme/app_colors.dart';
 import 'package:pathly_app/core/theme/app_text_styles.dart';
 import 'package:pathly_app/core/constants/app_constants.dart';
+import 'package:pathly_app/features/auth/providers/auth_provider.dart';
+import 'package:pathly_app/features/dashboard/presentation/widgets/custom_course_dialog.dart';
 
-class ExplorePage extends StatelessWidget {
+class ExplorePage extends ConsumerStatefulWidget {
   const ExplorePage({super.key});
 
+  @override
+  ConsumerState<ExplorePage> createState() => _ExplorePageState();
+}
+
+class _ExplorePageState extends ConsumerState<ExplorePage> {
   static const _skills = [
     _SkillData('Magic Tricks', Icons.auto_awesome, AppColors.pastelPurple),
     _SkillData('Coding Basics', Icons.terminal, AppColors.pastelPeach),
@@ -20,9 +29,74 @@ class ExplorePage extends StatelessWidget {
     _SkillData('Fitness', Icons.fitness_center, AppColors.pastelLavender),
   ];
 
+  List<Map<String, dynamic>> _roadmaps = [];
+  bool _isLoading = true;
+  String? _roadmapsError;
+
+  @override
+  void initState() {
+    super.initState();
+    _loadRoadmaps();
+  }
+
+  Future<void> _loadRoadmaps() async {
+    try {
+      final roadmaps = await CurriculumService.listRoadmaps();
+      if (mounted) {
+        setState(() {
+          _roadmaps = roadmaps;
+          _isLoading = false;
+        });
+      }
+    } catch (e) {
+      if (mounted) {
+        setState(() {
+          _roadmapsError = e.toString();
+          _isLoading = false;
+        });
+      }
+    }
+  }
+
+  Future<void> _deleteRoadmap(String roadmapId) async {
+    final confirmed = await showDialog<bool>(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: const Text('Delete roadmap?'),
+        content: const Text('This cannot be undone.'),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.of(context).pop(false),
+            child: const Text('Cancel'),
+          ),
+          TextButton(
+            onPressed: () => Navigator.of(context).pop(true),
+            child: const Text('Delete', style: TextStyle(color: Colors.red)),
+          ),
+        ],
+      ),
+    );
+
+    if (confirmed != true) return;
+
+    try {
+      await CurriculumService.deleteRoadmap(roadmapId);
+      await _loadRoadmaps();
+    } catch (e) {
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('Failed to delete: $e')),
+        );
+      }
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
+    final authState = ref.watch(authStateProvider);
+    final isDemo = authState.user?.isDemo ?? false;
+
     return Scaffold(
       body: SafeArea(
         child: Padding(
@@ -67,6 +141,48 @@ class ExplorePage extends StatelessWidget {
               ),
               const SizedBox(height: AppConstants.spacingLg),
 
+              // ─── My Roadmaps ──────────────────────────────
+              if (_isLoading) ...[
+                const Center(child: CircularProgressIndicator()),
+                const SizedBox(height: AppConstants.spacingLg),
+              ] else if (_roadmapsError != null) ...[
+                Text(
+                  'Could not load your roadmaps.',
+                  style: AppTextStyles.bodyMedium.copyWith(
+                    color: AppColors.error,
+                  ),
+                ),
+                const SizedBox(height: AppConstants.spacingLg),
+              ] else if (_roadmaps.isNotEmpty) ...[
+                Text(
+                  'Your Roadmaps',
+                  style: AppTextStyles.h3.copyWith(
+                    color: isDark
+                        ? AppColors.textPrimaryDark
+                        : AppColors.textPrimaryLight,
+                  ),
+                ),
+                const SizedBox(height: AppConstants.spacingMd),
+                SizedBox(
+                  height: 120,
+                  child: ListView.separated(
+                    scrollDirection: Axis.horizontal,
+                    itemCount: _roadmaps.length,
+                    separatorBuilder: (_, __) => const SizedBox(width: 12),
+                    itemBuilder: (context, index) {
+                      final roadmap = _roadmaps[index];
+                      return _RoadmapCard(
+                        roadmap: roadmap,
+                        isDark: isDark,
+                        onTap: () => context.push('/roadmap/${roadmap['id']}'),
+                        onDelete: () => _deleteRoadmap(roadmap['id'] as String),
+                      );
+                    },
+                  ),
+                ),
+                const SizedBox(height: AppConstants.spacingLg),
+              ],
+
               // ─── Skill Grid ───────────────────────────────
               Expanded(
                 child: GridView.builder(
@@ -82,9 +198,22 @@ class ExplorePage extends StatelessWidget {
                     return _SkillCard(
                       skill: skill,
                       isDark: isDark,
-                      onTap: () => context.push(
-                        '/curriculum/preview/${Uri.encodeComponent(skill.title)}',
-                      ),
+                      onTap: () {
+                        if (isDemo) {
+                          // Demo users can see preview content
+                          context.push(
+                            '/curriculum/preview/${Uri.encodeComponent(skill.title)}',
+                          );
+                        } else {
+                          // Real users create custom course
+                          showDialog(
+                            context: context,
+                            builder: (context) => CustomCourseDialog(
+                              initialSkill: skill.title,
+                            ),
+                          );
+                        }
+                      },
                     );
                   },
                 ),
@@ -163,6 +292,90 @@ class _SkillCard extends StatelessWidget {
             ),
           ],
         ),
+      ),
+    );
+  }
+}
+
+class _RoadmapCard extends StatelessWidget {
+  final Map<String, dynamic> roadmap;
+  final bool isDark;
+  final VoidCallback onTap;
+  final VoidCallback? onDelete;
+
+  const _RoadmapCard({
+    required this.roadmap,
+    required this.isDark,
+    required this.onTap,
+    this.onDelete,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    final skillName = roadmap['skill_name'] as String? ?? 'Roadmap';
+    return Container(
+      width: 160,
+      padding: const EdgeInsets.all(AppConstants.spacingMd),
+      decoration: BoxDecoration(
+        color: AppColors.neonBlue.withValues(alpha: isDark ? 0.3 : 1.0),
+        borderRadius: BorderRadius.circular(AppConstants.radiusLg),
+        border: Border.all(
+          color: isDark ? AppColors.strokeDark : AppColors.strokeLight,
+          width: AppConstants.cardBorderWidth,
+        ),
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(
+            children: [
+              Container(
+                width: 40,
+                height: 40,
+                decoration: BoxDecoration(
+                  color: isDark ? AppColors.neonBlackBg : Colors.white,
+                  shape: BoxShape.circle,
+                  border: Border.all(
+                    color: isDark ? AppColors.strokeDark : AppColors.strokeLight,
+                    width: AppConstants.cardBorderWidth,
+                  ),
+                ),
+                child: Icon(
+                  Icons.map_rounded,
+                  size: 20,
+                  color: isDark
+                      ? AppColors.textPrimaryDark
+                      : AppColors.textPrimaryLight,
+                ),
+              ),
+              const Spacer(),
+              if (onDelete != null)
+                GestureDetector(
+                  onTap: onDelete,
+                  child: Icon(
+                    Icons.delete_rounded,
+                    size: 20,
+                    color: AppColors.error,
+                  ),
+                ),
+            ],
+          ),
+          const Spacer(),
+          GestureDetector(
+            onTap: onTap,
+            child: Text(
+              skillName,
+              style: AppTextStyles.h3.copyWith(
+                color: isDark
+                    ? AppColors.textPrimaryDark
+                    : AppColors.textPrimaryLight,
+                fontSize: 16,
+              ),
+              maxLines: 2,
+              overflow: TextOverflow.ellipsis,
+            ),
+          ),
+        ],
       ),
     );
   }

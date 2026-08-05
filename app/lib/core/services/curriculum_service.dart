@@ -5,13 +5,35 @@
 library;
 
 import 'dart:convert';
+import 'package:flutter/foundation.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 import 'package:http/http.dart' as http;
 
 class CurriculumService {
-  static const String baseUrl =
-      'http://10.0.2.2:8000'; // Android emulator → host localhost
+  static String get baseUrl {
+    if (kIsWeb) {
+      return 'http://127.0.0.1:8000';
+    }
+    return 'http://10.0.2.2:8000'; // Android emulator → host localhost
+  }
 
   // ── Preview (synchronous) ──────────────────────────────────────────────────
+
+  /// Lists saved roadmaps for the current user.
+  static Future<List<Map<String, dynamic>>> listRoadmaps() async {
+    final token = Hive.box<String>('auth_token').get('token');
+    final headers = <String, String>{};
+    if (token != null) {
+      headers['Authorization'] = 'Bearer $token';
+    }
+    final uri = Uri.parse('$baseUrl/curriculum/');
+    final response = await http.get(uri, headers: headers).timeout(const Duration(seconds: 15));
+    if (response.statusCode == 200) {
+      final body = jsonDecode(response.body) as List<dynamic>;
+      return body.cast<Map<String, dynamic>>();
+    }
+    throw Exception('List roadmaps failed: ${response.statusCode}');
+  }
 
   /// Fetches a fast draft roadmap preview for [skillName].
   /// Returns the full JSON map on success; throws on HTTP error.
@@ -31,18 +53,25 @@ class CurriculumService {
   /// Kicks off a full generate-review pipeline and returns the job_id.
   static Future<String> requestFullCurriculum(
     String skillName, {
-    String userId = 'anonymous',
     int maxRetries = 3,
+    String difficulty = 'beginner',
+    int deadlineWeeks = 4,
   }) async {
     final uri = Uri.parse('$baseUrl/curriculum/request');
+    final token = Hive.box<String>('auth_token').get('token');
+    final headers = <String, String>{'Content-Type': 'application/json'};
+    if (token != null) {
+      headers['Authorization'] = 'Bearer $token';
+    }
     final response = await http
         .post(
           uri,
-          headers: {'Content-Type': 'application/json'},
+          headers: headers,
           body: jsonEncode({
             'skill_name': skillName,
-            'user_id': userId,
             'max_retries': maxRetries,
+            'difficulty': difficulty,
+            'deadline_weeks': deadlineWeeks,
           }),
         )
         .timeout(const Duration(seconds: 15));
@@ -71,5 +100,20 @@ class CurriculumService {
       return jsonDecode(response.body) as Map<String, dynamic>;
     }
     throw Exception('Fetch roadmap failed: ${response.statusCode}');
+  }
+
+  /// Deletes a saved roadmap and all its associated data.
+  static Future<void> deleteRoadmap(String roadmapId) async {
+    final token = Hive.box<String>('auth_token').get('token');
+    final headers = <String, String>{};
+    if (token != null) {
+      headers['Authorization'] = 'Bearer $token';
+    }
+    final uri = Uri.parse('$baseUrl/curriculum/$roadmapId');
+    final response = await http.delete(uri, headers: headers).timeout(const Duration(seconds: 15));
+    if (response.statusCode == 204 || response.statusCode == 200) {
+      return;
+    }
+    throw Exception('Delete roadmap failed: ${response.statusCode}');
   }
 }

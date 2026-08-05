@@ -26,9 +26,16 @@ class ProfilePage extends ConsumerWidget {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  _CircleIconButton(
-                    icon: Icons.settings_rounded,
-                    isDark: isDark,
+                  GestureDetector(
+                    onTap: () {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        const SnackBar(content: Text('Settings page coming soon!')),
+                      );
+                    },
+                    child: _CircleIconButton(
+                      icon: Icons.settings_rounded,
+                      isDark: isDark,
+                    ),
                   ),
                   Text(
                     'Profile',
@@ -38,9 +45,16 @@ class ProfilePage extends ConsumerWidget {
                           : AppColors.textPrimaryLight,
                     ),
                   ),
-                  _CircleIconButton(
-                    icon: Icons.share_rounded,
-                    isDark: isDark,
+                  GestureDetector(
+                    onTap: () {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        const SnackBar(content: Text('Share profile coming soon!')),
+                      );
+                    },
+                    child: _CircleIconButton(
+                      icon: Icons.share_rounded,
+                      isDark: isDark,
+                    ),
                   ),
                 ],
               ),
@@ -145,22 +159,29 @@ class _ProfileCard extends StatelessWidget {
               Positioned(
                 right: 0,
                 bottom: 0,
-                child: Container(
-                  width: 32,
-                  height: 32,
-                  decoration: BoxDecoration(
-                    color: AppColors.neonPinkLight,
-                    shape: BoxShape.circle,
-                    border: Border.all(
-                      color:
-                          isDark ? AppColors.strokeDark : AppColors.strokeLight,
-                      width: AppConstants.cardBorderWidth,
+                child: GestureDetector(
+                  onTap: () {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      const SnackBar(content: Text('Avatar editing coming soon!')),
+                    );
+                  },
+                  child: Container(
+                    width: 32,
+                    height: 32,
+                    decoration: BoxDecoration(
+                      color: AppColors.neonPinkLight,
+                      shape: BoxShape.circle,
+                      border: Border.all(
+                        color:
+                            isDark ? AppColors.strokeDark : AppColors.strokeLight,
+                        width: AppConstants.cardBorderWidth,
+                      ),
                     ),
-                  ),
-                  child: const Icon(
-                    Icons.edit_rounded,
-                    color: Colors.white,
-                    size: 16,
+                    child: const Icon(
+                      Icons.edit_rounded,
+                      color: Colors.white,
+                      size: 16,
+                    ),
                   ),
                 ),
               ),

@@ -26,7 +26,15 @@ mixin _$RoadmapModel {
   String get domainType => throw _privateConstructorUsedError;
   int get verificationScore => throw _privateConstructorUsedError;
   String get createdAt => throw _privateConstructorUsedError;
-  List<ModuleModel> get modules => throw _privateConstructorUsedError;
+  List<ModuleModel> get modules =>
+      throw _privateConstructorUsedError; // Enhanced fields
+  CertificationInfo? get certificationInfo =>
+      throw _privateConstructorUsedError;
+  List<String> get prerequisites => throw _privateConstructorUsedError;
+  List<String> get learningObjectives => throw _privateConstructorUsedError;
+  List<String> get careerOutcomes => throw _privateConstructorUsedError;
+  String? get salaryRange => throw _privateConstructorUsedError;
+  String? get marketDemand => throw _privateConstructorUsedError;
 
   /// Serializes this RoadmapModel to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -51,7 +59,15 @@ abstract class $RoadmapModelCopyWith<$Res> {
       String domainType,
       int verificationScore,
       String createdAt,
-      List<ModuleModel> modules});
+      List<ModuleModel> modules,
+      CertificationInfo? certificationInfo,
+      List<String> prerequisites,
+      List<String> learningObjectives,
+      List<String> careerOutcomes,
+      String? salaryRange,
+      String? marketDemand});
+
+  $CertificationInfoCopyWith<$Res>? get certificationInfo;
 }
 
 /// @nodoc
@@ -76,6 +92,12 @@ class _$RoadmapModelCopyWithImpl<$Res, $Val extends RoadmapModel>
     Object? verificationScore = null,
     Object? createdAt = null,
     Object? modules = null,
+    Object? certificationInfo = freezed,
+    Object? prerequisites = null,
+    Object? learningObjectives = null,
+    Object? careerOutcomes = null,
+    Object? salaryRange = freezed,
+    Object? marketDemand = freezed,
   }) {
     return _then(_value.copyWith(
       id: null == id
@@ -106,7 +128,45 @@ class _$RoadmapModelCopyWithImpl<$Res, $Val extends RoadmapModel>
           ? _value.modules
           : modules // ignore: cast_nullable_to_non_nullable
               as List<ModuleModel>,
+      certificationInfo: freezed == certificationInfo
+          ? _value.certificationInfo
+          : certificationInfo // ignore: cast_nullable_to_non_nullable
+              as CertificationInfo?,
+      prerequisites: null == prerequisites
+          ? _value.prerequisites
+          : prerequisites // ignore: cast_nullable_to_non_nullable
+              as List<String>,
+      learningObjectives: null == learningObjectives
+          ? _value.learningObjectives
+          : learningObjectives // ignore: cast_nullable_to_non_nullable
+              as List<String>,
+      careerOutcomes: null == careerOutcomes
+          ? _value.careerOutcomes
+          : careerOutcomes // ignore: cast_nullable_to_non_nullable
+              as List<String>,
+      salaryRange: freezed == salaryRange
+          ? _value.salaryRange
+          : salaryRange // ignore: cast_nullable_to_non_nullable
+              as String?,
+      marketDemand: freezed == marketDemand
+          ? _value.marketDemand
+          : marketDemand // ignore: cast_nullable_to_non_nullable
+              as String?,
     ) as $Val);
+  }
+
+  /// Create a copy of RoadmapModel
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
+  $CertificationInfoCopyWith<$Res>? get certificationInfo {
+    if (_value.certificationInfo == null) {
+      return null;
+    }
+
+    return $CertificationInfoCopyWith<$Res>(_value.certificationInfo!, (value) {
+      return _then(_value.copyWith(certificationInfo: value) as $Val);
+    });
   }
 }
 
@@ -125,7 +185,16 @@ abstract class _$$RoadmapModelImplCopyWith<$Res>
       String domainType,
       int verificationScore,
       String createdAt,
-      List<ModuleModel> modules});
+      List<ModuleModel> modules,
+      CertificationInfo? certificationInfo,
+      List<String> prerequisites,
+      List<String> learningObjectives,
+      List<String> careerOutcomes,
+      String? salaryRange,
+      String? marketDemand});
+
+  @override
+  $CertificationInfoCopyWith<$Res>? get certificationInfo;
 }
 
 /// @nodoc
@@ -148,6 +217,12 @@ class __$$RoadmapModelImplCopyWithImpl<$Res>
     Object? verificationScore = null,
     Object? createdAt = null,
     Object? modules = null,
+    Object? certificationInfo = freezed,
+    Object? prerequisites = null,
+    Object? learningObjectives = null,
+    Object? careerOutcomes = null,
+    Object? salaryRange = freezed,
+    Object? marketDemand = freezed,
   }) {
     return _then(_$RoadmapModelImpl(
       id: null == id
@@ -178,6 +253,30 @@ class __$$RoadmapModelImplCopyWithImpl<$Res>
           ? _value._modules
           : modules // ignore: cast_nullable_to_non_nullable
               as List<ModuleModel>,
+      certificationInfo: freezed == certificationInfo
+          ? _value.certificationInfo
+          : certificationInfo // ignore: cast_nullable_to_non_nullable
+              as CertificationInfo?,
+      prerequisites: null == prerequisites
+          ? _value._prerequisites
+          : prerequisites // ignore: cast_nullable_to_non_nullable
+              as List<String>,
+      learningObjectives: null == learningObjectives
+          ? _value._learningObjectives
+          : learningObjectives // ignore: cast_nullable_to_non_nullable
+              as List<String>,
+      careerOutcomes: null == careerOutcomes
+          ? _value._careerOutcomes
+          : careerOutcomes // ignore: cast_nullable_to_non_nullable
+              as List<String>,
+      salaryRange: freezed == salaryRange
+          ? _value.salaryRange
+          : salaryRange // ignore: cast_nullable_to_non_nullable
+              as String?,
+      marketDemand: freezed == marketDemand
+          ? _value.marketDemand
+          : marketDemand // ignore: cast_nullable_to_non_nullable
+              as String?,
     ));
   }
 }
@@ -192,8 +291,17 @@ class _$RoadmapModelImpl implements _RoadmapModel {
       required this.domainType,
       this.verificationScore = 0,
       required this.createdAt,
-      final List<ModuleModel> modules = const []})
-      : _modules = modules;
+      final List<ModuleModel> modules = const [],
+      this.certificationInfo,
+      final List<String> prerequisites = const [],
+      final List<String> learningObjectives = const [],
+      final List<String> careerOutcomes = const [],
+      this.salaryRange,
+      this.marketDemand})
+      : _modules = modules,
+        _prerequisites = prerequisites,
+        _learningObjectives = learningObjectives,
+        _careerOutcomes = careerOutcomes;
 
   factory _$RoadmapModelImpl.fromJson(Map<String, dynamic> json) =>
       _$$RoadmapModelImplFromJson(json);
@@ -220,9 +328,45 @@ class _$RoadmapModelImpl implements _RoadmapModel {
     return EqualUnmodifiableListView(_modules);
   }
 
+// Enhanced fields
+  @override
+  final CertificationInfo? certificationInfo;
+  final List<String> _prerequisites;
+  @override
+  @JsonKey()
+  List<String> get prerequisites {
+    if (_prerequisites is EqualUnmodifiableListView) return _prerequisites;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_prerequisites);
+  }
+
+  final List<String> _learningObjectives;
+  @override
+  @JsonKey()
+  List<String> get learningObjectives {
+    if (_learningObjectives is EqualUnmodifiableListView)
+      return _learningObjectives;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_learningObjectives);
+  }
+
+  final List<String> _careerOutcomes;
+  @override
+  @JsonKey()
+  List<String> get careerOutcomes {
+    if (_careerOutcomes is EqualUnmodifiableListView) return _careerOutcomes;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_careerOutcomes);
+  }
+
+  @override
+  final String? salaryRange;
+  @override
+  final String? marketDemand;
+
   @override
   String toString() {
-    return 'RoadmapModel(id: $id, userId: $userId, skillName: $skillName, domainType: $domainType, verificationScore: $verificationScore, createdAt: $createdAt, modules: $modules)';
+    return 'RoadmapModel(id: $id, userId: $userId, skillName: $skillName, domainType: $domainType, verificationScore: $verificationScore, createdAt: $createdAt, modules: $modules, certificationInfo: $certificationInfo, prerequisites: $prerequisites, learningObjectives: $learningObjectives, careerOutcomes: $careerOutcomes, salaryRange: $salaryRange, marketDemand: $marketDemand)';
   }
 
   @override
@@ -240,7 +384,19 @@ class _$RoadmapModelImpl implements _RoadmapModel {
                 other.verificationScore == verificationScore) &&
             (identical(other.createdAt, createdAt) ||
                 other.createdAt == createdAt) &&
-            const DeepCollectionEquality().equals(other._modules, _modules));
+            const DeepCollectionEquality().equals(other._modules, _modules) &&
+            (identical(other.certificationInfo, certificationInfo) ||
+                other.certificationInfo == certificationInfo) &&
+            const DeepCollectionEquality()
+                .equals(other._prerequisites, _prerequisites) &&
+            const DeepCollectionEquality()
+                .equals(other._learningObjectives, _learningObjectives) &&
+            const DeepCollectionEquality()
+                .equals(other._careerOutcomes, _careerOutcomes) &&
+            (identical(other.salaryRange, salaryRange) ||
+                other.salaryRange == salaryRange) &&
+            (identical(other.marketDemand, marketDemand) ||
+                other.marketDemand == marketDemand));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
@@ -253,7 +409,13 @@ class _$RoadmapModelImpl implements _RoadmapModel {
       domainType,
       verificationScore,
       createdAt,
-      const DeepCollectionEquality().hash(_modules));
+      const DeepCollectionEquality().hash(_modules),
+      certificationInfo,
+      const DeepCollectionEquality().hash(_prerequisites),
+      const DeepCollectionEquality().hash(_learningObjectives),
+      const DeepCollectionEquality().hash(_careerOutcomes),
+      salaryRange,
+      marketDemand);
 
   /// Create a copy of RoadmapModel
   /// with the given fields replaced by the non-null parameter values.
@@ -279,7 +441,13 @@ abstract class _RoadmapModel implements RoadmapModel {
       required final String domainType,
       final int verificationScore,
       required final String createdAt,
-      final List<ModuleModel> modules}) = _$RoadmapModelImpl;
+      final List<ModuleModel> modules,
+      final CertificationInfo? certificationInfo,
+      final List<String> prerequisites,
+      final List<String> learningObjectives,
+      final List<String> careerOutcomes,
+      final String? salaryRange,
+      final String? marketDemand}) = _$RoadmapModelImpl;
 
   factory _RoadmapModel.fromJson(Map<String, dynamic> json) =
       _$RoadmapModelImpl.fromJson;
@@ -297,13 +465,237 @@ abstract class _RoadmapModel implements RoadmapModel {
   @override
   String get createdAt;
   @override
-  List<ModuleModel> get modules;
+  List<ModuleModel> get modules; // Enhanced fields
+  @override
+  CertificationInfo? get certificationInfo;
+  @override
+  List<String> get prerequisites;
+  @override
+  List<String> get learningObjectives;
+  @override
+  List<String> get careerOutcomes;
+  @override
+  String? get salaryRange;
+  @override
+  String? get marketDemand;
 
   /// Create a copy of RoadmapModel
   /// with the given fields replaced by the non-null parameter values.
   @override
   @JsonKey(includeFromJson: false, includeToJson: false)
   _$$RoadmapModelImplCopyWith<_$RoadmapModelImpl> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+CertificationInfo _$CertificationInfoFromJson(Map<String, dynamic> json) {
+  return _CertificationInfo.fromJson(json);
+}
+
+/// @nodoc
+mixin _$CertificationInfo {
+  List<String> get availableCertifications =>
+      throw _privateConstructorUsedError;
+  String? get recommendedCertification => throw _privateConstructorUsedError;
+  String? get certificationBody => throw _privateConstructorUsedError;
+
+  /// Serializes this CertificationInfo to a JSON map.
+  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
+
+  /// Create a copy of CertificationInfo
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  $CertificationInfoCopyWith<CertificationInfo> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class $CertificationInfoCopyWith<$Res> {
+  factory $CertificationInfoCopyWith(
+          CertificationInfo value, $Res Function(CertificationInfo) then) =
+      _$CertificationInfoCopyWithImpl<$Res, CertificationInfo>;
+  @useResult
+  $Res call(
+      {List<String> availableCertifications,
+      String? recommendedCertification,
+      String? certificationBody});
+}
+
+/// @nodoc
+class _$CertificationInfoCopyWithImpl<$Res, $Val extends CertificationInfo>
+    implements $CertificationInfoCopyWith<$Res> {
+  _$CertificationInfoCopyWithImpl(this._value, this._then);
+
+  // ignore: unused_field
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
+
+  /// Create a copy of CertificationInfo
+  /// with the given fields replaced by the non-null parameter values.
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? availableCertifications = null,
+    Object? recommendedCertification = freezed,
+    Object? certificationBody = freezed,
+  }) {
+    return _then(_value.copyWith(
+      availableCertifications: null == availableCertifications
+          ? _value.availableCertifications
+          : availableCertifications // ignore: cast_nullable_to_non_nullable
+              as List<String>,
+      recommendedCertification: freezed == recommendedCertification
+          ? _value.recommendedCertification
+          : recommendedCertification // ignore: cast_nullable_to_non_nullable
+              as String?,
+      certificationBody: freezed == certificationBody
+          ? _value.certificationBody
+          : certificationBody // ignore: cast_nullable_to_non_nullable
+              as String?,
+    ) as $Val);
+  }
+}
+
+/// @nodoc
+abstract class _$$CertificationInfoImplCopyWith<$Res>
+    implements $CertificationInfoCopyWith<$Res> {
+  factory _$$CertificationInfoImplCopyWith(_$CertificationInfoImpl value,
+          $Res Function(_$CertificationInfoImpl) then) =
+      __$$CertificationInfoImplCopyWithImpl<$Res>;
+  @override
+  @useResult
+  $Res call(
+      {List<String> availableCertifications,
+      String? recommendedCertification,
+      String? certificationBody});
+}
+
+/// @nodoc
+class __$$CertificationInfoImplCopyWithImpl<$Res>
+    extends _$CertificationInfoCopyWithImpl<$Res, _$CertificationInfoImpl>
+    implements _$$CertificationInfoImplCopyWith<$Res> {
+  __$$CertificationInfoImplCopyWithImpl(_$CertificationInfoImpl _value,
+      $Res Function(_$CertificationInfoImpl) _then)
+      : super(_value, _then);
+
+  /// Create a copy of CertificationInfo
+  /// with the given fields replaced by the non-null parameter values.
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? availableCertifications = null,
+    Object? recommendedCertification = freezed,
+    Object? certificationBody = freezed,
+  }) {
+    return _then(_$CertificationInfoImpl(
+      availableCertifications: null == availableCertifications
+          ? _value._availableCertifications
+          : availableCertifications // ignore: cast_nullable_to_non_nullable
+              as List<String>,
+      recommendedCertification: freezed == recommendedCertification
+          ? _value.recommendedCertification
+          : recommendedCertification // ignore: cast_nullable_to_non_nullable
+              as String?,
+      certificationBody: freezed == certificationBody
+          ? _value.certificationBody
+          : certificationBody // ignore: cast_nullable_to_non_nullable
+              as String?,
+    ));
+  }
+}
+
+/// @nodoc
+@JsonSerializable()
+class _$CertificationInfoImpl implements _CertificationInfo {
+  const _$CertificationInfoImpl(
+      {final List<String> availableCertifications = const [],
+      this.recommendedCertification,
+      this.certificationBody})
+      : _availableCertifications = availableCertifications;
+
+  factory _$CertificationInfoImpl.fromJson(Map<String, dynamic> json) =>
+      _$$CertificationInfoImplFromJson(json);
+
+  final List<String> _availableCertifications;
+  @override
+  @JsonKey()
+  List<String> get availableCertifications {
+    if (_availableCertifications is EqualUnmodifiableListView)
+      return _availableCertifications;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_availableCertifications);
+  }
+
+  @override
+  final String? recommendedCertification;
+  @override
+  final String? certificationBody;
+
+  @override
+  String toString() {
+    return 'CertificationInfo(availableCertifications: $availableCertifications, recommendedCertification: $recommendedCertification, certificationBody: $certificationBody)';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$CertificationInfoImpl &&
+            const DeepCollectionEquality().equals(
+                other._availableCertifications, _availableCertifications) &&
+            (identical(
+                    other.recommendedCertification, recommendedCertification) ||
+                other.recommendedCertification == recommendedCertification) &&
+            (identical(other.certificationBody, certificationBody) ||
+                other.certificationBody == certificationBody));
+  }
+
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @override
+  int get hashCode => Object.hash(
+      runtimeType,
+      const DeepCollectionEquality().hash(_availableCertifications),
+      recommendedCertification,
+      certificationBody);
+
+  /// Create a copy of CertificationInfo
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$CertificationInfoImplCopyWith<_$CertificationInfoImpl> get copyWith =>
+      __$$CertificationInfoImplCopyWithImpl<_$CertificationInfoImpl>(
+          this, _$identity);
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$$CertificationInfoImplToJson(
+      this,
+    );
+  }
+}
+
+abstract class _CertificationInfo implements CertificationInfo {
+  const factory _CertificationInfo(
+      {final List<String> availableCertifications,
+      final String? recommendedCertification,
+      final String? certificationBody}) = _$CertificationInfoImpl;
+
+  factory _CertificationInfo.fromJson(Map<String, dynamic> json) =
+      _$CertificationInfoImpl.fromJson;
+
+  @override
+  List<String> get availableCertifications;
+  @override
+  String? get recommendedCertification;
+  @override
+  String? get certificationBody;
+
+  /// Create a copy of CertificationInfo
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  _$$CertificationInfoImplCopyWith<_$CertificationInfoImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
@@ -320,7 +712,12 @@ mixin _$ModuleModel {
   int get difficultyScore => throw _privateConstructorUsedError;
   int get verificationAlignmentScore => throw _privateConstructorUsedError;
   int get estimatedHours => throw _privateConstructorUsedError;
-  String? get pedagogicalBasis => throw _privateConstructorUsedError;
+  String? get pedagogicalBasis =>
+      throw _privateConstructorUsedError; // Enhanced fields
+  List<String> get learningObjectives => throw _privateConstructorUsedError;
+  List<String> get skillsGained => throw _privateConstructorUsedError;
+  List<String> get projects => throw _privateConstructorUsedError;
+  String? get assessmentCriteria => throw _privateConstructorUsedError;
   List<ResearchSourceModel> get sources => throw _privateConstructorUsedError;
 
   /// Serializes this ModuleModel to a JSON map.
@@ -348,6 +745,10 @@ abstract class $ModuleModelCopyWith<$Res> {
       int verificationAlignmentScore,
       int estimatedHours,
       String? pedagogicalBasis,
+      List<String> learningObjectives,
+      List<String> skillsGained,
+      List<String> projects,
+      String? assessmentCriteria,
       List<ResearchSourceModel> sources});
 }
 
@@ -374,6 +775,10 @@ class _$ModuleModelCopyWithImpl<$Res, $Val extends ModuleModel>
     Object? verificationAlignmentScore = null,
     Object? estimatedHours = null,
     Object? pedagogicalBasis = freezed,
+    Object? learningObjectives = null,
+    Object? skillsGained = null,
+    Object? projects = null,
+    Object? assessmentCriteria = freezed,
     Object? sources = null,
   }) {
     return _then(_value.copyWith(
@@ -409,6 +814,22 @@ class _$ModuleModelCopyWithImpl<$Res, $Val extends ModuleModel>
           ? _value.pedagogicalBasis
           : pedagogicalBasis // ignore: cast_nullable_to_non_nullable
               as String?,
+      learningObjectives: null == learningObjectives
+          ? _value.learningObjectives
+          : learningObjectives // ignore: cast_nullable_to_non_nullable
+              as List<String>,
+      skillsGained: null == skillsGained
+          ? _value.skillsGained
+          : skillsGained // ignore: cast_nullable_to_non_nullable
+              as List<String>,
+      projects: null == projects
+          ? _value.projects
+          : projects // ignore: cast_nullable_to_non_nullable
+              as List<String>,
+      assessmentCriteria: freezed == assessmentCriteria
+          ? _value.assessmentCriteria
+          : assessmentCriteria // ignore: cast_nullable_to_non_nullable
+              as String?,
       sources: null == sources
           ? _value.sources
           : sources // ignore: cast_nullable_to_non_nullable
@@ -434,6 +855,10 @@ abstract class _$$ModuleModelImplCopyWith<$Res>
       int verificationAlignmentScore,
       int estimatedHours,
       String? pedagogicalBasis,
+      List<String> learningObjectives,
+      List<String> skillsGained,
+      List<String> projects,
+      String? assessmentCriteria,
       List<ResearchSourceModel> sources});
 }
 
@@ -458,6 +883,10 @@ class __$$ModuleModelImplCopyWithImpl<$Res>
     Object? verificationAlignmentScore = null,
     Object? estimatedHours = null,
     Object? pedagogicalBasis = freezed,
+    Object? learningObjectives = null,
+    Object? skillsGained = null,
+    Object? projects = null,
+    Object? assessmentCriteria = freezed,
     Object? sources = null,
   }) {
     return _then(_$ModuleModelImpl(
@@ -493,6 +922,22 @@ class __$$ModuleModelImplCopyWithImpl<$Res>
           ? _value.pedagogicalBasis
           : pedagogicalBasis // ignore: cast_nullable_to_non_nullable
               as String?,
+      learningObjectives: null == learningObjectives
+          ? _value._learningObjectives
+          : learningObjectives // ignore: cast_nullable_to_non_nullable
+              as List<String>,
+      skillsGained: null == skillsGained
+          ? _value._skillsGained
+          : skillsGained // ignore: cast_nullable_to_non_nullable
+              as List<String>,
+      projects: null == projects
+          ? _value._projects
+          : projects // ignore: cast_nullable_to_non_nullable
+              as List<String>,
+      assessmentCriteria: freezed == assessmentCriteria
+          ? _value.assessmentCriteria
+          : assessmentCriteria // ignore: cast_nullable_to_non_nullable
+              as String?,
       sources: null == sources
           ? _value._sources
           : sources // ignore: cast_nullable_to_non_nullable
@@ -513,8 +958,15 @@ class _$ModuleModelImpl implements _ModuleModel {
       this.verificationAlignmentScore = 0,
       this.estimatedHours = 0,
       this.pedagogicalBasis,
+      final List<String> learningObjectives = const [],
+      final List<String> skillsGained = const [],
+      final List<String> projects = const [],
+      this.assessmentCriteria,
       final List<ResearchSourceModel> sources = const []})
-      : _sources = sources;
+      : _learningObjectives = learningObjectives,
+        _skillsGained = skillsGained,
+        _projects = projects,
+        _sources = sources;
 
   factory _$ModuleModelImpl.fromJson(Map<String, dynamic> json) =>
       _$$ModuleModelImplFromJson(json);
@@ -538,6 +990,38 @@ class _$ModuleModelImpl implements _ModuleModel {
   final int estimatedHours;
   @override
   final String? pedagogicalBasis;
+// Enhanced fields
+  final List<String> _learningObjectives;
+// Enhanced fields
+  @override
+  @JsonKey()
+  List<String> get learningObjectives {
+    if (_learningObjectives is EqualUnmodifiableListView)
+      return _learningObjectives;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_learningObjectives);
+  }
+
+  final List<String> _skillsGained;
+  @override
+  @JsonKey()
+  List<String> get skillsGained {
+    if (_skillsGained is EqualUnmodifiableListView) return _skillsGained;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_skillsGained);
+  }
+
+  final List<String> _projects;
+  @override
+  @JsonKey()
+  List<String> get projects {
+    if (_projects is EqualUnmodifiableListView) return _projects;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_projects);
+  }
+
+  @override
+  final String? assessmentCriteria;
   final List<ResearchSourceModel> _sources;
   @override
   @JsonKey()
@@ -549,7 +1033,7 @@ class _$ModuleModelImpl implements _ModuleModel {
 
   @override
   String toString() {
-    return 'ModuleModel(id: $id, roadmapId: $roadmapId, moduleName: $moduleName, level: $level, difficultyScore: $difficultyScore, verificationAlignmentScore: $verificationAlignmentScore, estimatedHours: $estimatedHours, pedagogicalBasis: $pedagogicalBasis, sources: $sources)';
+    return 'ModuleModel(id: $id, roadmapId: $roadmapId, moduleName: $moduleName, level: $level, difficultyScore: $difficultyScore, verificationAlignmentScore: $verificationAlignmentScore, estimatedHours: $estimatedHours, pedagogicalBasis: $pedagogicalBasis, learningObjectives: $learningObjectives, skillsGained: $skillsGained, projects: $projects, assessmentCriteria: $assessmentCriteria, sources: $sources)';
   }
 
   @override
@@ -573,6 +1057,13 @@ class _$ModuleModelImpl implements _ModuleModel {
                 other.estimatedHours == estimatedHours) &&
             (identical(other.pedagogicalBasis, pedagogicalBasis) ||
                 other.pedagogicalBasis == pedagogicalBasis) &&
+            const DeepCollectionEquality()
+                .equals(other._learningObjectives, _learningObjectives) &&
+            const DeepCollectionEquality()
+                .equals(other._skillsGained, _skillsGained) &&
+            const DeepCollectionEquality().equals(other._projects, _projects) &&
+            (identical(other.assessmentCriteria, assessmentCriteria) ||
+                other.assessmentCriteria == assessmentCriteria) &&
             const DeepCollectionEquality().equals(other._sources, _sources));
   }
 
@@ -588,6 +1079,10 @@ class _$ModuleModelImpl implements _ModuleModel {
       verificationAlignmentScore,
       estimatedHours,
       pedagogicalBasis,
+      const DeepCollectionEquality().hash(_learningObjectives),
+      const DeepCollectionEquality().hash(_skillsGained),
+      const DeepCollectionEquality().hash(_projects),
+      assessmentCriteria,
       const DeepCollectionEquality().hash(_sources));
 
   /// Create a copy of ModuleModel
@@ -616,6 +1111,10 @@ abstract class _ModuleModel implements ModuleModel {
       final int verificationAlignmentScore,
       final int estimatedHours,
       final String? pedagogicalBasis,
+      final List<String> learningObjectives,
+      final List<String> skillsGained,
+      final List<String> projects,
+      final String? assessmentCriteria,
       final List<ResearchSourceModel> sources}) = _$ModuleModelImpl;
 
   factory _ModuleModel.fromJson(Map<String, dynamic> json) =
@@ -636,7 +1135,15 @@ abstract class _ModuleModel implements ModuleModel {
   @override
   int get estimatedHours;
   @override
-  String? get pedagogicalBasis;
+  String? get pedagogicalBasis; // Enhanced fields
+  @override
+  List<String> get learningObjectives;
+  @override
+  List<String> get skillsGained;
+  @override
+  List<String> get projects;
+  @override
+  String? get assessmentCriteria;
   @override
   List<ResearchSourceModel> get sources;
 
@@ -659,7 +1166,13 @@ mixin _$ResearchSourceModel {
   String? get title => throw _privateConstructorUsedError;
   String? get doi => throw _privateConstructorUsedError;
   String? get url => throw _privateConstructorUsedError;
-  String? get abstract_ => throw _privateConstructorUsedError;
+  String? get abstract_ =>
+      throw _privateConstructorUsedError; // Enhanced fields
+  String? get sourceType => throw _privateConstructorUsedError;
+  String? get author => throw _privateConstructorUsedError;
+  int get relevanceScore => throw _privateConstructorUsedError;
+  int? get videoDuration => throw _privateConstructorUsedError;
+  String? get thumbnail => throw _privateConstructorUsedError;
 
   /// Serializes this ResearchSourceModel to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -683,7 +1196,12 @@ abstract class $ResearchSourceModelCopyWith<$Res> {
       String? title,
       String? doi,
       String? url,
-      String? abstract_});
+      String? abstract_,
+      String? sourceType,
+      String? author,
+      int relevanceScore,
+      int? videoDuration,
+      String? thumbnail});
 }
 
 /// @nodoc
@@ -707,6 +1225,11 @@ class _$ResearchSourceModelCopyWithImpl<$Res, $Val extends ResearchSourceModel>
     Object? doi = freezed,
     Object? url = freezed,
     Object? abstract_ = freezed,
+    Object? sourceType = freezed,
+    Object? author = freezed,
+    Object? relevanceScore = null,
+    Object? videoDuration = freezed,
+    Object? thumbnail = freezed,
   }) {
     return _then(_value.copyWith(
       id: null == id
@@ -733,6 +1256,26 @@ class _$ResearchSourceModelCopyWithImpl<$Res, $Val extends ResearchSourceModel>
           ? _value.abstract_
           : abstract_ // ignore: cast_nullable_to_non_nullable
               as String?,
+      sourceType: freezed == sourceType
+          ? _value.sourceType
+          : sourceType // ignore: cast_nullable_to_non_nullable
+              as String?,
+      author: freezed == author
+          ? _value.author
+          : author // ignore: cast_nullable_to_non_nullable
+              as String?,
+      relevanceScore: null == relevanceScore
+          ? _value.relevanceScore
+          : relevanceScore // ignore: cast_nullable_to_non_nullable
+              as int,
+      videoDuration: freezed == videoDuration
+          ? _value.videoDuration
+          : videoDuration // ignore: cast_nullable_to_non_nullable
+              as int?,
+      thumbnail: freezed == thumbnail
+          ? _value.thumbnail
+          : thumbnail // ignore: cast_nullable_to_non_nullable
+              as String?,
     ) as $Val);
   }
 }
@@ -751,7 +1294,12 @@ abstract class _$$ResearchSourceModelImplCopyWith<$Res>
       String? title,
       String? doi,
       String? url,
-      String? abstract_});
+      String? abstract_,
+      String? sourceType,
+      String? author,
+      int relevanceScore,
+      int? videoDuration,
+      String? thumbnail});
 }
 
 /// @nodoc
@@ -773,6 +1321,11 @@ class __$$ResearchSourceModelImplCopyWithImpl<$Res>
     Object? doi = freezed,
     Object? url = freezed,
     Object? abstract_ = freezed,
+    Object? sourceType = freezed,
+    Object? author = freezed,
+    Object? relevanceScore = null,
+    Object? videoDuration = freezed,
+    Object? thumbnail = freezed,
   }) {
     return _then(_$ResearchSourceModelImpl(
       id: null == id
@@ -799,6 +1352,26 @@ class __$$ResearchSourceModelImplCopyWithImpl<$Res>
           ? _value.abstract_
           : abstract_ // ignore: cast_nullable_to_non_nullable
               as String?,
+      sourceType: freezed == sourceType
+          ? _value.sourceType
+          : sourceType // ignore: cast_nullable_to_non_nullable
+              as String?,
+      author: freezed == author
+          ? _value.author
+          : author // ignore: cast_nullable_to_non_nullable
+              as String?,
+      relevanceScore: null == relevanceScore
+          ? _value.relevanceScore
+          : relevanceScore // ignore: cast_nullable_to_non_nullable
+              as int,
+      videoDuration: freezed == videoDuration
+          ? _value.videoDuration
+          : videoDuration // ignore: cast_nullable_to_non_nullable
+              as int?,
+      thumbnail: freezed == thumbnail
+          ? _value.thumbnail
+          : thumbnail // ignore: cast_nullable_to_non_nullable
+              as String?,
     ));
   }
 }
@@ -812,7 +1385,12 @@ class _$ResearchSourceModelImpl implements _ResearchSourceModel {
       this.title,
       this.doi,
       this.url,
-      this.abstract_});
+      this.abstract_,
+      this.sourceType,
+      this.author,
+      this.relevanceScore = 5,
+      this.videoDuration,
+      this.thumbnail});
 
   factory _$ResearchSourceModelImpl.fromJson(Map<String, dynamic> json) =>
       _$$ResearchSourceModelImplFromJson(json);
@@ -829,10 +1407,22 @@ class _$ResearchSourceModelImpl implements _ResearchSourceModel {
   final String? url;
   @override
   final String? abstract_;
+// Enhanced fields
+  @override
+  final String? sourceType;
+  @override
+  final String? author;
+  @override
+  @JsonKey()
+  final int relevanceScore;
+  @override
+  final int? videoDuration;
+  @override
+  final String? thumbnail;
 
   @override
   String toString() {
-    return 'ResearchSourceModel(id: $id, moduleId: $moduleId, title: $title, doi: $doi, url: $url, abstract_: $abstract_)';
+    return 'ResearchSourceModel(id: $id, moduleId: $moduleId, title: $title, doi: $doi, url: $url, abstract_: $abstract_, sourceType: $sourceType, author: $author, relevanceScore: $relevanceScore, videoDuration: $videoDuration, thumbnail: $thumbnail)';
   }
 
   @override
@@ -847,13 +1437,22 @@ class _$ResearchSourceModelImpl implements _ResearchSourceModel {
             (identical(other.doi, doi) || other.doi == doi) &&
             (identical(other.url, url) || other.url == url) &&
             (identical(other.abstract_, abstract_) ||
-                other.abstract_ == abstract_));
+                other.abstract_ == abstract_) &&
+            (identical(other.sourceType, sourceType) ||
+                other.sourceType == sourceType) &&
+            (identical(other.author, author) || other.author == author) &&
+            (identical(other.relevanceScore, relevanceScore) ||
+                other.relevanceScore == relevanceScore) &&
+            (identical(other.videoDuration, videoDuration) ||
+                other.videoDuration == videoDuration) &&
+            (identical(other.thumbnail, thumbnail) ||
+                other.thumbnail == thumbnail));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, id, moduleId, title, doi, url, abstract_);
+  int get hashCode => Object.hash(runtimeType, id, moduleId, title, doi, url,
+      abstract_, sourceType, author, relevanceScore, videoDuration, thumbnail);
 
   /// Create a copy of ResearchSourceModel
   /// with the given fields replaced by the non-null parameter values.
@@ -879,7 +1478,12 @@ abstract class _ResearchSourceModel implements ResearchSourceModel {
       final String? title,
       final String? doi,
       final String? url,
-      final String? abstract_}) = _$ResearchSourceModelImpl;
+      final String? abstract_,
+      final String? sourceType,
+      final String? author,
+      final int relevanceScore,
+      final int? videoDuration,
+      final String? thumbnail}) = _$ResearchSourceModelImpl;
 
   factory _ResearchSourceModel.fromJson(Map<String, dynamic> json) =
       _$ResearchSourceModelImpl.fromJson;
@@ -895,7 +1499,17 @@ abstract class _ResearchSourceModel implements ResearchSourceModel {
   @override
   String? get url;
   @override
-  String? get abstract_;
+  String? get abstract_; // Enhanced fields
+  @override
+  String? get sourceType;
+  @override
+  String? get author;
+  @override
+  int get relevanceScore;
+  @override
+  int? get videoDuration;
+  @override
+  String? get thumbnail;
 
   /// Create a copy of ResearchSourceModel
   /// with the given fields replaced by the non-null parameter values.

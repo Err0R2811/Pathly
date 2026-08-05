@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:pathly_app/core/theme/app_colors.dart';
 import 'package:pathly_app/core/constants/app_constants.dart';
+import 'package:pathly_app/features/dashboard/presentation/widgets/custom_course_dialog.dart';
 
 class AppShell extends StatelessWidget {
   final Widget child;
@@ -20,12 +21,16 @@ class AppShell extends StatelessWidget {
     switch (index) {
       case 0:
         context.go('/home');
+        return;
       case 1:
         context.go('/explore');
+        return;
       case 2:
         context.go('/progress');
+        return;
       case 3:
         context.go('/profile');
+        return;
     }
   }
 
@@ -36,7 +41,10 @@ class AppShell extends StatelessWidget {
       body: child,
       // Massive pink floating action button in the center
       floatingActionButton: FloatingActionButton(
-        onPressed: () {}, // e.g., create new lesson / add
+        onPressed: () => showDialog(
+          context: context,
+          builder: (context) => const CustomCourseDialog(),
+        ),
         backgroundColor: AppColors.neonPink,
         foregroundColor: isDark ? Colors.white : AppColors.strokeLight,
         elevation: 0,

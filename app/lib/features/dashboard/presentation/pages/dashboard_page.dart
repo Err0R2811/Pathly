@@ -7,6 +7,7 @@ import 'package:pathly_app/core/constants/app_constants.dart';
 import 'package:percent_indicator/linear_percent_indicator.dart';
 import 'package:pathly_app/features/auth/providers/auth_provider.dart';
 import 'package:pathly_app/features/dashboard/providers/dashboard_provider.dart';
+import 'package:pathly_app/features/dashboard/presentation/widgets/custom_course_dialog.dart';
 
 class DashboardPage extends StatelessWidget {
   const DashboardPage({super.key});
@@ -25,8 +26,8 @@ class DashboardPage extends StatelessWidget {
               _GreetingHeader(isDark: isDark),
               const SizedBox(height: AppConstants.spacingLg),
 
-              // ─── Current Skill Card ───────────────────────
-              _CurrentSkillCard(isDark: isDark),
+              // ─── Current Skill Card or Create Course Card ───────────────────────
+              _CurrentSkillOrCreateCard(isDark: isDark),
               const SizedBox(height: AppConstants.spacingMd),
 
               // ─── Daily Goal Card ──────────────────────────
@@ -60,10 +61,17 @@ class DashboardPage extends StatelessWidget {
                       letterSpacing: 1.5,
                     ),
                   ),
-                  Text(
-                    'VIEW ALL',
-                    style: AppTextStyles.labelSmall.copyWith(
-                      color: AppColors.neonPink,
+                  GestureDetector(
+                    onTap: () {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        const SnackBar(content: Text('Full achievements page coming soon!')),
+                      );
+                    },
+                    child: Text(
+                      'VIEW ALL',
+                      style: AppTextStyles.labelSmall.copyWith(
+                        color: AppColors.neonPink,
+                      ),
                     ),
                   ),
                 ],
@@ -147,17 +155,161 @@ class _GreetingHeader extends ConsumerWidget {
   }
 }
 
-// ─── Current Skill Card ───────────────────────────────────────
-class _CurrentSkillCard extends ConsumerWidget {
+// ─── Current Skill Card or Create Course Card ───────────────────────────────
+class _CurrentSkillOrCreateCard extends ConsumerWidget {
   final bool isDark;
-  const _CurrentSkillCard({required this.isDark});
+  const _CurrentSkillOrCreateCard({required this.isDark});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final progress = ref.watch(userProgressProvider);
+    final progressAsync = ref.watch(userProgressProvider);
     
+    return progressAsync.when(
+      data: (progress) {
+        // Show create course card if no active course
+        if (progress.currentSkill == 'No active course' || progress.totalLessons == 0) {
+          return _CreateCourseCard(isDark: isDark);
+        }
+        // Otherwise show current skill card
+        return _CurrentSkillCard(isDark: isDark, progress: progress);
+      },
+      loading: () => const Center(child: CircularProgressIndicator()),
+      error: (error, stack) => Center(child: Text('Error: $error')),
+    );
+  }
+}
+
+// ─── Create Course Card ───────────────────────────────────────
+class _CreateCourseCard extends StatelessWidget {
+  final bool isDark;
+  const _CreateCourseCard({required this.isDark});
+
+  @override
+  Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () => context.push('/curriculum/preview'),
+      onTap: () => _showCustomCourseDialog(context),
+      child: Container(
+        width: double.infinity,
+        padding: const EdgeInsets.all(AppConstants.spacingLg),
+        decoration: BoxDecoration(
+          color: isDark ? const Color(0xFF1E2A28) : AppColors.pastelMint,
+          borderRadius: BorderRadius.circular(AppConstants.radiusLg),
+          border: Border.all(
+            color: isDark ? AppColors.strokeDark : AppColors.strokeLight,
+            width: AppConstants.cardBorderWidth,
+          ),
+        ),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Container(
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 12, vertical: 4),
+                  decoration: BoxDecoration(
+                    color: isDark
+                        ? AppColors.neonBlackSurface.withValues(alpha: 0.5)
+                        : Colors.white.withValues(alpha: 0.5),
+                    borderRadius: BorderRadius.circular(AppConstants.radiusRound),
+                    border: Border.all(
+                      color:
+                          isDark ? AppColors.strokeDark : AppColors.strokeLight,
+                    ),
+                  ),
+                  child: Text(
+                    'GET STARTED',
+                    style: AppTextStyles.labelSmall.copyWith(
+                      color: isDark
+                          ? AppColors.neonTeal
+                          : AppColors.textPrimaryLight,
+                      letterSpacing: 1.2,
+                    ),
+                  ),
+                ),
+                Container(
+                  width: 48,
+                  height: 48,
+                  decoration: BoxDecoration(
+                    color: isDark ? AppColors.neonBlackBg : Colors.white,
+                    borderRadius: BorderRadius.circular(AppConstants.radiusSm),
+                    border: Border.all(
+                      color:
+                          isDark ? AppColors.strokeDark : AppColors.strokeLight,
+                      width: 2,
+                    ),
+                  ),
+                  child: Icon(
+                    Icons.add_circle_rounded,
+                    color:
+                        isDark ? AppColors.neonTeal : AppColors.textPrimaryLight,
+                    size: 24,
+                  ),
+                ),
+              ],
+            ),
+            const SizedBox(height: AppConstants.spacingMd),
+            Text(
+              'Create Your First Course',
+              style: AppTextStyles.h2.copyWith(
+                color: isDark
+                    ? AppColors.textPrimaryDark
+                    : AppColors.textPrimaryLight,
+                fontStyle: FontStyle.italic,
+              ),
+            ),
+            const SizedBox(height: AppConstants.spacingSm),
+            Text(
+              'Choose a skill and start your learning journey today',
+              style: AppTextStyles.bodySmall.copyWith(
+                color: isDark
+                    ? AppColors.textSecondaryDark
+                    : AppColors.textSecondaryLight,
+              ),
+            ),
+            const SizedBox(height: AppConstants.spacingMd),
+            Container(
+              padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+              decoration: BoxDecoration(
+                color: AppColors.neonPink,
+                borderRadius: BorderRadius.circular(AppConstants.radiusRound),
+                border: Border.all(
+                  color: isDark ? AppColors.strokeDark : AppColors.strokeLight,
+                  width: 2,
+                ),
+              ),
+              child: Text(
+                'EXPLORE SKILLS',
+                style: AppTextStyles.labelLarge.copyWith(
+                  color: isDark ? Colors.white : AppColors.strokeLight,
+                ),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  void _showCustomCourseDialog(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (context) => const CustomCourseDialog(),
+    );
+  }
+}
+
+// ─── Current Skill Card ───────────────────────────────────────
+class _CurrentSkillCard extends StatelessWidget {
+  final bool isDark;
+  final UserProgress progress;
+  const _CurrentSkillCard({required this.isDark, required this.progress});
+
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onTap: () => context.go('/explore'),
       child: Container(
         width: double.infinity,
         padding: const EdgeInsets.all(AppConstants.spacingLg),
@@ -276,85 +428,92 @@ class _DailyGoalCard extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final dailyGoal = ref.watch(dailyGoalProvider);
-    final timeString = '${dailyGoal.targetMinutes}:00';
+    final dailyGoalAsync = ref.watch(dailyGoalProvider);
     
-    return Container(
-      width: double.infinity,
-      padding: const EdgeInsets.all(AppConstants.spacingMd),
-      decoration: BoxDecoration(
-        color: isDark ? AppColors.dailyGoalBg : AppColors.dailyGoalBgLight,
-        borderRadius: BorderRadius.circular(AppConstants.radiusLg),
-        border: Border.all(
-          color: isDark ? const Color(0xFF3A3C5E) : const Color(0xFF2D2F4E),
-          width: AppConstants.cardBorderWidth,
-        ),
-      ),
-      child: Row(
-        children: [
-          Container(
-            width: 44,
-            height: 44,
-            decoration: BoxDecoration(
-              color:
-                  isDark ? AppColors.neonBlackBg : AppColors.neonLightSurface,
-              borderRadius: BorderRadius.circular(AppConstants.radiusSm),
-              border: Border.all(
-                color: isDark ? AppColors.strokeDark : AppColors.strokeLight,
-                width: 2,
-              ),
-            ),
-            child: const Center(
-              child: Text('⏱️', style: TextStyle(fontSize: 20)),
+    return dailyGoalAsync.when(
+      data: (dailyGoal) {
+        final timeString = '${dailyGoal.targetMinutes}:00';
+        
+        return Container(
+          width: double.infinity,
+          padding: const EdgeInsets.all(AppConstants.spacingMd),
+          decoration: BoxDecoration(
+            color: isDark ? AppColors.dailyGoalBg : AppColors.dailyGoalBgLight,
+            borderRadius: BorderRadius.circular(AppConstants.radiusLg),
+            border: Border.all(
+              color: isDark ? const Color(0xFF3A3C5E) : const Color(0xFF2D2F4E),
+              width: AppConstants.cardBorderWidth,
             ),
           ),
-          const SizedBox(width: 12),
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  'DAILY GOAL',
-                  style: AppTextStyles.labelSmall.copyWith(
-                    color: isDark
-                        ? AppColors.textSecondaryDark
-                        : AppColors.textSecondaryLight,
-                    letterSpacing: 1.2,
+          child: Row(
+            children: [
+              Container(
+                width: 44,
+                height: 44,
+                decoration: BoxDecoration(
+                  color:
+                      isDark ? AppColors.neonBlackBg : AppColors.neonLightSurface,
+                  borderRadius: BorderRadius.circular(AppConstants.radiusSm),
+                  border: Border.all(
+                    color: isDark ? AppColors.strokeDark : AppColors.strokeLight,
+                    width: 2,
                   ),
                 ),
-                Text(
-                  timeString,
-                  style: AppTextStyles.h2.copyWith(
-                    color: isDark
-                        ? AppColors.textPrimaryDark
-                        : AppColors.textPrimaryLight,
+                child: const Center(
+                  child: Text('⏱️', style: TextStyle(fontSize: 20)),
+                ),
+              ),
+              const SizedBox(width: 12),
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      'DAILY GOAL',
+                      style: AppTextStyles.labelSmall.copyWith(
+                        color: isDark
+                            ? AppColors.textSecondaryDark
+                            : AppColors.textSecondaryLight,
+                        letterSpacing: 1.2,
+                      ),
+                    ),
+                    Text(
+                      timeString,
+                      style: AppTextStyles.h2.copyWith(
+                        color: isDark
+                            ? AppColors.textPrimaryDark
+                            : AppColors.textPrimaryLight,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              GestureDetector(
+                onTap: () => context.go('/explore'),
+                child: Container(
+                  padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+                  decoration: BoxDecoration(
+                    color: AppColors.neonPink,
+                    borderRadius: BorderRadius.circular(AppConstants.radiusRound),
+                    border: Border.all(
+                      color: isDark ? AppColors.strokeDark : AppColors.strokeLight,
+                      width: 2,
+                    ),
+                  ),
+                  child: Text(
+                    dailyGoal.isGoalMet ? 'CONTINUE' : 'START',
+                    style: AppTextStyles.labelLarge.copyWith(
+                      color: isDark ? Colors.white : AppColors.strokeLight,
+                    ),
                   ),
                 ),
-              ],
-            ),
-          ),
-          GestureDetector(
-            onTap: () => context.push('/curriculum/preview'),
-            child: Container(
-              padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-              decoration: BoxDecoration(
-                color: AppColors.neonPink,
-                borderRadius: BorderRadius.circular(AppConstants.radiusRound),
-                border: Border.all(
-                  color: isDark ? AppColors.strokeDark : AppColors.strokeLight,
-                  width: 2,
-                ),
               ),
-              child: Text(
-                dailyGoal.isGoalMet ? 'CONTINUE' : 'START',
-                style: AppTextStyles.labelLarge.copyWith(
-                  color: isDark ? Colors.white : AppColors.strokeLight,
-                ),
-              ),
-            ),
+            ],
           ),
-        ],
-      ),
+        );
+      },
+      loading: () => const Center(child: CircularProgressIndicator()),
+      error: (error, stack) => Center(child: Text('Error: $error')),
     );
   }
 }
@@ -382,14 +541,22 @@ class _QuickActionsRow extends StatelessWidget {
             icon: Icons.edit_note_rounded,
             label: 'Practice',
             isDark: isDark,
-            onTap: () {},
+            onTap: () {
+              ScaffoldMessenger.of(context).showSnackBar(
+                const SnackBar(content: Text('Practice mode coming soon!')),
+              );
+            },
           ),
           const SizedBox(width: 12),
           _QuickActionChip(
             icon: Icons.emoji_events_rounded,
             label: 'Challenges',
             isDark: isDark,
-            onTap: () {},
+            onTap: () {
+              ScaffoldMessenger.of(context).showSnackBar(
+                const SnackBar(content: Text('Challenges coming soon!')),
+              );
+            },
           ),
         ],
       ),

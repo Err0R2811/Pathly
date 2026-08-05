@@ -1,0 +1,76 @@
+name: Pathly CI
+
+on:
+  push:
+    branches: [ main, develop ]
+  pull_request:
+    branches: [ main, develop ]
+
+jobs:
+  backend-test:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - uses: actions/checkout@v4
+    
+    - name: Set up Python
+      uses: actions/setup-python@v5
+      with:
+        python-version: '3.12'
+    
+    - name: Install Poetry
+      uses: snok/install-poetry@v1
+      with:
+        version: latest
+        virtualenvs-create: true
+        virtualenvs-in-project: true
+    
+    - name: Install dependencies
+      working-directory: ./backend
+      run: poetry install --no-interaction --no-root
+    
+    - name: Run linter
+      working-directory: ./backend
+      run: |
+        poetry run ruff check .
+        poetry run ruff format --check .
+    
+    - name: Run tests
+      working-directory: ./backend
+      run: poetry run pytest tests/ -v --cov=app --cov-report=xml
+    
+    - name: Upload coverage
+      uses: codecov/codecov-action@v4
+      with:
+        file: ./backend/coverage.xml
+        flags: backend
+
+  flutter-test:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - uses: actions/checkout@v4
+    
+    - name: Set up Flutter
+      uses: subosito/flutter-action@v2
+      with:
+        flutter-version: '3.24.0'
+        channel: 'stable'
+    
+    - name: Install dependencies
+      working-directory: ./app
+      run: flutter pub get
+    
+    - name: Analyze code
+      working-directory: ./app
+      run: flutter analyze
+    
+    - name: Run tests
+      working-directory: ./app
+      run: flutter test --coverage
+    
+    - name: Upload coverage
+      uses: codecov/codecov-action@v4
+      with:
+        file: ./app/coverage/lcov.info
+        flags: flutter

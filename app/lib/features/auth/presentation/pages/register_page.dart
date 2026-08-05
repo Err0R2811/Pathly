@@ -1,25 +1,26 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:pathly_app/core/theme/app_colors.dart';
 import 'package:pathly_app/core/theme/app_text_styles.dart';
 import 'package:pathly_app/core/constants/app_constants.dart';
 import 'package:pathly_app/shared/widgets/pathly_button.dart';
+import 'package:pathly_app/features/auth/providers/auth_provider.dart';
 
-class RegisterPage extends StatefulWidget {
+class RegisterPage extends ConsumerStatefulWidget {
   const RegisterPage({super.key});
 
   @override
-  State<RegisterPage> createState() => _RegisterPageState();
+  ConsumerState<RegisterPage> createState() => _RegisterPageState();
 }
 
-class _RegisterPageState extends State<RegisterPage> {
+class _RegisterPageState extends ConsumerState<RegisterPage> {
   final _nameController = TextEditingController();
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
   final _confirmController = TextEditingController();
   bool _obscurePassword = true;
   bool _obscureConfirm = true;
-  bool _loading = false;
 
   @override
   void dispose() {
@@ -31,18 +32,41 @@ class _RegisterPageState extends State<RegisterPage> {
   }
 
   void _register() async {
-    if (_passwordController.text != _confirmController.text) {
+    final name = _nameController.text.trim();
+    final email = _emailController.text.trim();
+    final password = _passwordController.text;
+    final confirm = _confirmController.text;
+
+    if (name.isEmpty || email.isEmpty || password.isEmpty) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Please fill all fields')),
+      );
+      return;
+    }
+
+    if (password != confirm) {
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(content: Text("Passwords don't match")),
       );
       return;
     }
-    setState(() => _loading = true);
-    // Simulate registration — replace with real API call
-    await Future.delayed(const Duration(milliseconds: 900));
-    if (mounted) {
-      setState(() => _loading = false);
+
+    if (password.length < 6) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Password must be at least 6 characters')),
+      );
+      return;
+    }
+
+    final success = await ref.read(authStateProvider.notifier).register(name, email, password);
+    
+    if (success && mounted) {
       context.go('/home');
+    } else if (mounted) {
+      final error = ref.read(authStateProvider).error;
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text(error ?? 'Registration failed')),
+      );
     }
   }
 
@@ -210,10 +234,15 @@ class _RegisterPageState extends State<RegisterPage> {
               const SizedBox(height: AppConstants.spacingXl),
 
               // ── Register Button ───────────────────────────
-              PathlyButton(
-                label: 'Create Account',
-                isLoading: _loading,
-                onPressed: _loading ? null : _register,
+              Consumer(
+                builder: (context, ref, _) {
+                  final isLoading = ref.watch(authStateProvider).isLoading;
+                  return PathlyButton(
+                    label: 'Create Account',
+                    isLoading: isLoading,
+                    onPressed: isLoading ? null : _register,
+                  );
+                },
               ),
               const SizedBox(height: AppConstants.spacingLg),
 

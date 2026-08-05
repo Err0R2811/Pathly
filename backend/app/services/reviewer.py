@@ -10,7 +10,7 @@ import httpx
 from copy import deepcopy
 
 OPENROUTER_API_KEY = os.getenv("OPENROUTER_API_KEY", "")
-OPENAI_MODEL = os.getenv("OPENROUTER_MODEL", "google/gemini-2.0-flash-001")
+OPENAI_MODEL = os.getenv("OPENROUTER_MODEL", "gpt-oss-120b")
 OPENAI_BASE_URL = os.getenv("OPENROUTER_BASE_URL", "https://openrouter.ai/api/v1")
 
 _SYSTEM_PROMPT = (

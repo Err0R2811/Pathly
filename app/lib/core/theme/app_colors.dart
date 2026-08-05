@@ -29,6 +29,7 @@ abstract final class AppColors {
   static const neonTeal = Color(0xFF2BDBCA);
   static const neonYellow = Color(0xFFFFD700);
   static const neonPurple = Color(0xFF9E65FF);
+  static const neonBlue = Color(0xFF4FC1E9);
 
   // ─── Skill Card Pastels (More vibrant for V3/V4) ────────────
   static const pastelPurple = Color(0xFFC7A3FF); // Magic Tricks

@@ -18,6 +18,7 @@ _$UserModelImpl _$$UserModelImplFromJson(Map<String, dynamic> json) =>
       streakDays: (json['streakDays'] as num?)?.toInt() ?? 0,
       totalMinutes: (json['totalMinutes'] as num?)?.toInt() ?? 0,
       lessonsCompleted: (json['lessonsCompleted'] as num?)?.toInt() ?? 0,
+      isDemo: json['isDemo'] as bool? ?? false,
       createdAt: json['createdAt'] == null
           ? null
           : DateTime.parse(json['createdAt'] as String),
@@ -35,5 +36,6 @@ Map<String, dynamic> _$$UserModelImplToJson(_$UserModelImpl instance) =>
       'streakDays': instance.streakDays,
       'totalMinutes': instance.totalMinutes,
       'lessonsCompleted': instance.lessonsCompleted,
+      'isDemo': instance.isDemo,
       'createdAt': instance.createdAt?.toIso8601String(),
     };

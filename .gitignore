@@ -1,0 +1,52 @@
+# Environment variables & secrets
+.env
+*.env
+backend/.env
+
+# Databases & Zip archives
+*.db
+*.sqlite
+*.zip
+.remember/
+AVAILABLE_SKILLS.txt
+session_summary.txt
+
+# Generated reports & temporary docs
+TESTING_SETUP.md
+BACKEND_FEATURE_REVIEW.md
+claude-fable-5.md
+FLUTTER_INTEGRATION_TESTS.md
+E2E_VERIFICATION_CHECKLIST.md
+
+# Flutter
+.dart_tool/
+.flutter-plugins
+.flutter-plugins-dependencies
+.packages
+.pub-cache/
+.pub/
+build/
+
+# IDEs
+.idea/
+.vscode/
+*.iml
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Graphify output
+graphify-out/
+
+# Python
+__pycache__/
+*.py[cod]
+.pytest_cache/
+
+# Temporary files
+.tmp/
+*.tmp

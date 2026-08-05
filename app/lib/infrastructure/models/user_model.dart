@@ -16,6 +16,7 @@ class UserModel with _$UserModel {
     @Default(0) int streakDays,
     @Default(0) int totalMinutes,
     @Default(0) int lessonsCompleted,
+    @Default(false) bool isDemo,
     DateTime? createdAt,
   }) = _UserModel;
 

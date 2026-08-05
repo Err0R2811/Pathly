@@ -1,14 +1,19 @@
-import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:pathly_app/features/auth/presentation/pages/login_page.dart';
 import 'package:pathly_app/features/auth/presentation/pages/register_page.dart';
 import 'package:pathly_app/features/onboarding/presentation/pages/onboarding_page.dart';
 import 'package:pathly_app/features/dashboard/presentation/pages/dashboard_page.dart';
 import 'package:pathly_app/features/explore/presentation/pages/explore_page.dart';
-import 'package:pathly_app/features/lesson/presentation/pages/lesson_player_page.dart';
 import 'package:pathly_app/features/profile/presentation/pages/profile_page.dart';
+import 'package:pathly_app/features/progress/presentation/pages/progress_page.dart';
 import 'package:pathly_app/features/curriculum/presentation/pages/roadmap_preview_page.dart';
 import 'package:pathly_app/features/curriculum/presentation/pages/roadmap_page.dart';
+import 'package:pathly_app/features/lessons/presentation/pages/lesson_list_page.dart';
+import 'package:pathly_app/features/lessons/presentation/pages/lesson_detail_page.dart';
+import 'package:pathly_app/features/lessons/presentation/pages/quiz_page.dart';
+import 'package:pathly_app/features/achievements/presentation/pages/badges_page.dart';
+import 'package:pathly_app/features/leaderboard/presentation/pages/leaderboard_page.dart';
+import 'package:pathly_app/features/search/presentation/pages/search_page.dart';
 import 'package:pathly_app/shared/widgets/app_shell.dart';
 
 final goRouter = GoRouter(
@@ -45,23 +50,29 @@ final goRouter = GoRouter(
         GoRoute(
           path: '/progress',
           name: 'progress',
-          builder: (context, state) => const Scaffold(
-            body: Center(child: Text('Progress — Coming Soon')),
-          ),
+          builder: (context, state) => const ProgressPage(),
         ),
         GoRoute(
           path: '/profile',
           name: 'profile',
           builder: (context, state) => const ProfilePage(),
         ),
+        GoRoute(
+          path: '/badges',
+          name: 'badges',
+          builder: (context, state) => const BadgesPage(),
+        ),
+        GoRoute(
+          path: '/leaderboard',
+          name: 'leaderboard',
+          builder: (context, state) => const LeaderboardPage(),
+        ),
+        GoRoute(
+          path: '/search',
+          name: 'search',
+          builder: (context, state) => const SearchPage(),
+        ),
       ],
-    ),
-    GoRoute(
-      path: '/lesson/:lessonId',
-      name: 'lesson',
-      builder: (context, state) => LessonPlayerPage(
-        lessonId: state.pathParameters['lessonId'] ?? '',
-      ),
     ),
     // ── Curriculum routes ──────────────────────────────────────────
     GoRoute(
@@ -76,6 +87,39 @@ final goRouter = GoRouter(
       name: 'curriculum-roadmap',
       builder: (context, state) => RoadmapPage(
         jobId: state.pathParameters['jobId'] ?? '',
+      ),
+    ),
+    GoRoute(
+      path: '/roadmap/:roadmapId',
+      name: 'saved-roadmap',
+      builder: (context, state) => RoadmapPage(
+        roadmapId: state.pathParameters['roadmapId'] ?? '',
+      ),
+    ),
+    // ── Lesson routes ───────────────────────────────────────────────
+    GoRoute(
+      path: '/lessons/:moduleId',
+      name: 'lessons',
+      builder: (context, state) {
+        final extra = state.extra as Map<String, dynamic>? ?? {};
+        return LessonListPage(
+          moduleId: state.pathParameters['moduleId'] ?? '',
+          moduleName: extra['moduleName'] as String? ?? 'Module',
+        );
+      },
+    ),
+    GoRoute(
+      path: '/lesson/:lessonId',
+      name: 'lesson',
+      builder: (context, state) => LessonDetailPage(
+        lessonId: state.pathParameters['lessonId'] ?? '',
+      ),
+    ),
+    GoRoute(
+      path: '/modules/:moduleId/quiz',
+      name: 'quiz',
+      builder: (context, state) => QuizPage(
+        moduleId: state.pathParameters['moduleId'] ?? '',
       ),
     ),
   ],
