@@ -4,6 +4,7 @@ import asyncio
 
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
+from prometheus_fastapi_instrumentator import Instrumentator
 from slowapi import Limiter, _rate_limit_exceeded_handler
 from slowapi.errors import RateLimitExceeded
 from slowapi.middleware import SlowAPIMiddleware
@@ -50,6 +51,8 @@ app.include_router(search.router)
 app.include_router(ai.router)
 app.include_router(adaptive.router)
 app.include_router(lessons.router)
+
+Instrumentator().instrument(app).expose(app, include_in_schema=False)
 
 
 def _check_database() -> bool:
