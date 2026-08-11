@@ -7,6 +7,7 @@ from datetime import datetime, timezone
 
 from fastapi import APIRouter, Depends, HTTPException
 from pydantic import BaseModel
+from sqlalchemy import distinct, func
 from sqlalchemy.orm import Session
 
 from ..database import get_db
@@ -246,14 +247,13 @@ async def get_user_progress(current_user: User = Depends(get_current_user), db: 
 
     # Count unique roadmaps and modules
     total_roadmaps = (
-        db.query(UserProgress).filter(UserProgress.user_id == current_user.id).distinct(UserProgress.roadmap_id).count()
+        db.query(func.count(distinct(UserProgress.roadmap_id))).filter(UserProgress.user_id == current_user.id).scalar()
     )
 
     total_modules_completed = (
-        db.query(UserProgress)
+        db.query(func.count(distinct(UserProgress.module_id)))
         .filter(UserProgress.user_id == current_user.id, UserProgress.module_id.isnot(None))
-        .distinct(UserProgress.module_id)
-        .count()
+        .scalar()
     )
 
     total_lessons_completed = current_user.lessons_completed
