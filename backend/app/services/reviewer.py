@@ -3,11 +3,14 @@
 Scores the generated roadmap for pedagogical quality and citation alignment.
 Retries externally if score < 85. Falls back to default scoring if API unavailable.
 """
+
 from __future__ import annotations
-import os
+
 import json
-import httpx
+import os
 from copy import deepcopy
+
+import httpx
 
 OPENROUTER_API_KEY = os.getenv("OPENROUTER_API_KEY", "")
 OPENAI_MODEL = os.getenv("OPENROUTER_MODEL", "gpt-oss-120b")
@@ -61,9 +64,7 @@ async def review_roadmap(roadmap: dict, max_retries: int = 3) -> dict:
             {"role": "system", "content": _SYSTEM_PROMPT},
             {
                 "role": "user",
-                "content": _REVIEWER_PROMPT.format(
-                    roadmap_json=json.dumps(roadmap, indent=2)
-                ),
+                "content": _REVIEWER_PROMPT.format(roadmap_json=json.dumps(roadmap, indent=2)),
             },
         ],
         "temperature": 0.3,
@@ -83,13 +84,10 @@ async def review_roadmap(roadmap: dict, max_retries: int = 3) -> dict:
 
             reviewed["verification_score"] = review_data.get("overall_alignment_score", 72)
             module_scores = {
-                ms["module_name"]: ms.get("alignment_score", 72)
-                for ms in review_data.get("module_scores", [])
+                ms["module_name"]: ms.get("alignment_score", 72) for ms in review_data.get("module_scores", [])
             }
             for module in reviewed.get("modules", []):
-                module["verification_alignment_score"] = module_scores.get(
-                    module["module_name"], 72
-                )
+                module["verification_alignment_score"] = module_scores.get(module["module_name"], 72)
             return reviewed
 
     except Exception as exc:

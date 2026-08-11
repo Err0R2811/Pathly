@@ -1,5 +1,6 @@
-import sys
 import os
+import sys
+
 import pytest
 from fastapi.testclient import TestClient
 
@@ -22,4 +23,3 @@ def reset_database():
     """Reset database before each test."""
     # Skip database reset for now - tests use unique emails
     yield
-

@@ -1,15 +1,10 @@
 import 'dart:convert';
-import 'package:flutter/foundation.dart';
 import 'package:http/http.dart' as http;
 import 'package:hive_flutter/hive_flutter.dart';
+import 'package:pathly_app/core/config/api_config.dart';
 
 class LessonService {
-  static String get baseUrl {
-    if (kIsWeb) {
-      return 'http://127.0.0.1:8000';
-    }
-    return 'http://10.0.2.2:8000';
-  }
+  static String get baseUrl => ApiConfig.baseUrl;
   static const String _tokenBox = 'auth_token';
 
   static Future<String?> _getToken() async {
@@ -22,7 +17,7 @@ class LessonService {
     try {
       final token = await _getToken();
       final uri = Uri.parse('$baseUrl/lessons/module/$moduleId');
-      
+
       final headers = <String, String>{
         'Content-Type': 'application/json',
       };
@@ -30,7 +25,9 @@ class LessonService {
         headers['Authorization'] = 'Bearer $token';
       }
 
-      final response = await http.get(uri, headers: headers).timeout(const Duration(seconds: 15));
+      final response = await http
+          .get(uri, headers: headers)
+          .timeout(const Duration(seconds: 15));
       if (response.statusCode == 200) {
         return jsonDecode(response.body) as Map<String, dynamic>;
       }
@@ -45,7 +42,7 @@ class LessonService {
     try {
       final token = await _getToken();
       final uri = Uri.parse('$baseUrl/lessons/$lessonId');
-      
+
       final headers = <String, String>{
         'Content-Type': 'application/json',
       };
@@ -53,7 +50,9 @@ class LessonService {
         headers['Authorization'] = 'Bearer $token';
       }
 
-      final response = await http.get(uri, headers: headers).timeout(const Duration(seconds: 15));
+      final response = await http
+          .get(uri, headers: headers)
+          .timeout(const Duration(seconds: 15));
       if (response.statusCode == 200) {
         return jsonDecode(response.body) as Map<String, dynamic>;
       }
@@ -94,7 +93,7 @@ class LessonService {
     try {
       final token = await _getToken();
       final uri = Uri.parse('$baseUrl/lessons/module/$moduleId/quiz');
-      
+
       final headers = <String, String>{
         'Content-Type': 'application/json',
       };
@@ -102,7 +101,9 @@ class LessonService {
         headers['Authorization'] = 'Bearer $token';
       }
 
-      final response = await http.get(uri, headers: headers).timeout(const Duration(seconds: 30));
+      final response = await http
+          .get(uri, headers: headers)
+          .timeout(const Duration(seconds: 30));
       if (response.statusCode == 200) {
         return jsonDecode(response.body) as Map<String, dynamic>;
       }

@@ -47,11 +47,13 @@ class _RoadmapPageState extends State<RoadmapPage> {
     setState(() => _status = 'LOADING');
     try {
       final roadmap = await CurriculumService.fetchRoadmap(roadmapId);
-      if (mounted) setState(() {
+      if (mounted) {
+        setState(() {
         _roadmap = roadmap;
         _status = 'COMPLETED';
         _progress = 100;
       });
+      }
     } catch (e) {
       if (mounted) {
         setState(() => _error = 'Failed to load roadmap: $e');

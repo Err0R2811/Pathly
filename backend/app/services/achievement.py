@@ -1,28 +1,30 @@
 """Achievement service — badge rule engine and event triggers."""
+
 from __future__ import annotations
+
 import uuid
 from datetime import datetime, timezone
-from typing import List, Optional
+
 from sqlalchemy.orm import Session
 
-from ..models import User, Badge, UserBadge
+from ..models import Badge, User, UserBadge
 
 
-def check_and_award_badges(user: User, db: Session) -> List[Badge]:
+def check_and_award_badges(user: User, db: Session) -> list[Badge]:
     """Check user stats against badge requirements and award new badges."""
     # Get all active badges
-    badges = db.query(Badge).filter(Badge.is_active == True).all()
-    
+    badges = db.query(Badge).filter(Badge.is_active).all()
+
     # Get user's existing badges
     existing_badge_ids = {ub.badge_id for ub in user.badges}
-    
+
     newly_awarded = []
-    
+
     for badge in badges:
         # Skip if user already has this badge
         if badge.id in existing_badge_ids:
             continue
-        
+
         # Check if badge requirements are met
         if _check_badge_requirement(badge, user):
             # Award the badge
@@ -34,10 +36,10 @@ def check_and_award_badges(user: User, db: Session) -> List[Badge]:
             )
             db.add(user_badge)
             newly_awarded.append(badge)
-    
+
     if newly_awarded:
         db.commit()
-    
+
     return newly_awarded
 
 
@@ -55,7 +57,7 @@ def _check_badge_requirement(badge: Badge, user: User) -> bool:
         # Custom rules would be evaluated here
         # For now, return False as custom rules need more complex logic
         return False
-    
+
     return False
 
 
@@ -153,11 +155,11 @@ def seed_default_badges(db: Session) -> None:
             "requirement_value": 10,
         },
     ]
-    
+
     for badge_data in default_badges:
         existing = db.query(Badge).filter(Badge.id == badge_data["id"]).first()
         if not existing:
             badge = Badge(**badge_data)
             db.add(badge)
-    
+
     db.commit()

@@ -3,18 +3,20 @@
 Each job has: status (PENDING|RUNNING|COMPLETED|FAILED), progress (0-100),
 an optional roadmap_id once completed, and an optional error message.
 """
+
 from __future__ import annotations
-from dataclasses import dataclass, field
-from typing import Optional
+
 import threading
+from dataclasses import dataclass
+
 
 @dataclass
 class JobState:
     job_id: str
     status: str = "PENDING"  # PENDING | RUNNING | COMPLETED | FAILED
     progress: int = 0
-    roadmap_id: Optional[str] = None
-    error: Optional[str] = None
+    roadmap_id: str | None = None
+    error: str | None = None
 
 
 class JobStore:
@@ -28,7 +30,7 @@ class JobStore:
             self._store[job_id] = state
         return state
 
-    def get(self, job_id: str) -> Optional[JobState]:
+    def get(self, job_id: str) -> JobState | None:
         with self._lock:
             return self._store.get(job_id)
 

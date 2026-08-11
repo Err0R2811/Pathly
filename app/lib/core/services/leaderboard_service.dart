@@ -24,7 +24,7 @@ class LeaderboardService {
         'leaderboard_type': type,
         'limit': limit.toString(),
         'offset': offset.toString(),
-      });
+      },);
 
       final response = await http.get(
         uri,
@@ -57,7 +57,7 @@ class LeaderboardService {
       final uri = Uri.parse('${AuthService.baseUrl}/leaderboard/my-rank')
           .replace(queryParameters: {
         'leaderboard_type': type,
-      });
+      },);
 
       final response = await http.get(
         uri,

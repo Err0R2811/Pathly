@@ -143,7 +143,7 @@ class _LessonListPageState extends State<LessonListPage> {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Icon(
+          const Icon(
             Icons.error_outline,
             size: 64,
             color: AppColors.neonPink,
@@ -269,7 +269,7 @@ class _LessonCard extends StatelessWidget {
               height: 40,
               decoration: BoxDecoration(
                 color: isCompleted
-                    ? AppColors.neonGreen.withOpacity(0.2)
+                    ? AppColors.neonGreen.withValues(alpha: 0.2)
                     : isDark
                         ? AppColors.neonBlackSurface
                         : AppColors.neonLightSurface,
@@ -320,7 +320,7 @@ class _LessonCard extends StatelessWidget {
                       Container(
                         padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
                         decoration: BoxDecoration(
-                          color: _getDifficultyColor(lesson['difficulty_level']).withOpacity(0.2),
+                          color: _getDifficultyColor(lesson['difficulty_level']).withValues(alpha: 0.2),
                           borderRadius: BorderRadius.circular(8),
                         ),
                         child: Text(
@@ -381,8 +381,8 @@ class _PracticeQuizCard extends StatelessWidget {
         decoration: BoxDecoration(
           gradient: LinearGradient(
             colors: [
-              AppColors.neonPurple.withOpacity(0.2),
-              AppColors.neonBlue.withOpacity(0.2),
+              AppColors.neonPurple.withValues(alpha: 0.2),
+              AppColors.neonBlue.withValues(alpha: 0.2),
             ],
             begin: Alignment.topLeft,
             end: Alignment.bottomRight,
@@ -399,14 +399,14 @@ class _PracticeQuizCard extends StatelessWidget {
               width: 48,
               height: 48,
               decoration: BoxDecoration(
-                color: AppColors.neonPurple.withOpacity(0.3),
+                color: AppColors.neonPurple.withValues(alpha: 0.3),
                 shape: BoxShape.circle,
                 border: Border.all(
                   color: AppColors.neonPurple,
                   width: 2,
                 ),
               ),
-              child: Icon(
+              child: const Icon(
                 Icons.quiz_rounded,
                 color: AppColors.neonPurple,
                 size: 28,
@@ -434,7 +434,7 @@ class _PracticeQuizCard extends StatelessWidget {
                 ],
               ),
             ),
-            Icon(
+            const Icon(
               Icons.chevron_right_rounded,
               color: AppColors.neonPurple,
               size: 32,

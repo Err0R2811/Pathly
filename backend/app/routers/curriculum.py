@@ -7,29 +7,28 @@ Endpoints:
   GET  /curriculum/status/{id} → poll job status
   GET  /curriculum/{id}        → fetch completed roadmap from DB
 """
+
 from __future__ import annotations
+
 import uuid
 from datetime import datetime, timezone
-from typing import List
 
 from fastapi import APIRouter, BackgroundTasks, Depends, HTTPException, Query
 from sqlalchemy.orm import Session
 
 from ..database import get_db
+from ..models import Lesson, LessonStep, Module, QuizQuestion, ResearchSource, Roadmap, User, UserProgress
 from ..schemas import (
     CurriculumRequestBody,
     JobStatusResponse,
+    ModuleSchema,
     RoadmapResponse,
     RoadmapSummaryResponse,
-    ModuleSchema,
     SourceSchema,
 )
-from ..models import Roadmap, Module, ResearchSource, User, Lesson, LessonStep, QuizQuestion, UserProgress
 from ..services.generator import generate_roadmap
-from ..services.reviewer import review_roadmap
 from ..services.job_store import job_store
-from ..services.lesson_generator import generate_module_lessons
-from .auth import get_current_user, get_current_user_optional
+from .auth import get_current_user_optional
 
 router = APIRouter(prefix="/curriculum", tags=["curriculum"])
 
@@ -40,7 +39,7 @@ async def get_preview(skill_name: str = Query(..., description="Skill name to ge
     try:
         # Generate a quick roadmap without the review loop
         roadmap = await generate_roadmap(skill_name)
-        
+
         # Convert to response format
         modules = []
         for mod in roadmap.get("modules", []):
@@ -73,7 +72,7 @@ async def get_preview(skill_name: str = Query(..., description="Skill name to ge
                     sources=sources,
                 )
             )
-        
+
         return RoadmapResponse(
             id="preview",  # Preview ID
             skill_name=roadmap.get("skill_name", skill_name),
@@ -93,6 +92,7 @@ async def get_preview(skill_name: str = Query(..., description="Skill name to ge
 
 # ─── Background task ──────────────────────────────────────────────────────────
 
+
 async def _run_generation_pipeline(
     job_id: str,
     skill_name: str,
@@ -104,11 +104,12 @@ async def _run_generation_pipeline(
     """Full generate → review → retry loop. Saves result to DB on success."""
     # Create a new DB session for background task
     from ..database import SessionLocal
+
     db = SessionLocal()
-    
+
     try:
         job_store.update(job_id, status="RUNNING", progress=10)
-        
+
         roadmap = await generate_roadmap(skill_name, difficulty=difficulty, deadline_weeks=deadline_weeks)
         job_store.update(job_id, progress=40)
 
@@ -165,24 +166,26 @@ async def _run_generation_pipeline(
                 db.add(db_mod)
 
                 for src in mod.get("sources", []):
-                    db.add(ResearchSource(
-                        id=str(uuid.uuid4()),
-                        module_id=mod_id,
-                        title=src.get("title", ""),
-                        doi=src.get("doi"),
-                        url=src.get("url"),
-                        abstract=src.get("abstract"),
-                        # Enhanced fields
-                        source_type=src.get("type"),
-                        author=src.get("author"),
-                        relevance_score=src.get("relevance_score"),
-                        video_duration=src.get("video_duration"),
-                        thumbnail=src.get("thumbnail"),
-                    ))
-                
+                    db.add(
+                        ResearchSource(
+                            id=str(uuid.uuid4()),
+                            module_id=mod_id,
+                            title=src.get("title", ""),
+                            doi=src.get("doi"),
+                            url=src.get("url"),
+                            abstract=src.get("abstract"),
+                            # Enhanced fields
+                            source_type=src.get("type"),
+                            author=src.get("author"),
+                            relevance_score=src.get("relevance_score"),
+                            video_duration=src.get("video_duration"),
+                            thumbnail=src.get("thumbnail"),
+                        )
+                    )
+
                 # Lessons are now generated lazily on-demand when user opens a module
                 # This significantly speeds up initial roadmap generation
-                    
+
             except Exception as e:
                 print(f"Error saving module: {e}")
                 continue
@@ -199,11 +202,12 @@ async def _run_generation_pipeline(
 
 # ─── Endpoints ────────────────────────────────────────────────────────────────
 
+
 @router.post("/request", response_model=JobStatusResponse, status_code=202)
 async def request_curriculum(
     body: CurriculumRequestBody,
     background_tasks: BackgroundTasks,
-    current_user: Optional[User] = Depends(get_current_user_optional),
+    current_user: User | None = Depends(get_current_user_optional),
 ):
     """Kick off a full generate-review pipeline in the background."""
     job_id = str(uuid.uuid4())
@@ -237,10 +241,10 @@ async def get_job_status(job_id: str):
     )
 
 
-@router.get("/", response_model=List[RoadmapSummaryResponse])
+@router.get("/", response_model=list[RoadmapSummaryResponse])
 async def list_roadmaps(
     db: Session = Depends(get_db),
-    current_user: Optional[User] = Depends(get_current_user_optional),
+    current_user: User | None = Depends(get_current_user_optional),
 ):
     """List roadmaps for the current user, or all roadmaps for demo users."""
     query = db.query(Roadmap)
@@ -321,7 +325,7 @@ async def get_roadmap(roadmap_id: str, db: Session = Depends(get_db)):
 async def delete_roadmap(
     roadmap_id: str,
     db: Session = Depends(get_db),
-    current_user: Optional[User] = Depends(get_current_user_optional),
+    current_user: User | None = Depends(get_current_user_optional),
 ):
     """Delete a roadmap and all of its associated data."""
     roadmap = db.query(Roadmap).filter(Roadmap.id == roadmap_id).first()
@@ -334,29 +338,14 @@ async def delete_roadmap(
     module_ids = [mod.id for mod in roadmap.modules]
 
     if module_ids:
-        db.query(QuizQuestion).filter(QuizQuestion.module_id.in_(module_ids)).delete(
-            synchronize_session=False
-        )
-        db.query(ResearchSource).filter(ResearchSource.module_id.in_(module_ids)).delete(
-            synchronize_session=False
-        )
-        lesson_ids = [
-            row[0]
-            for row in db.query(Lesson.id).filter(Lesson.module_id.in_(module_ids))
-        ]
+        db.query(QuizQuestion).filter(QuizQuestion.module_id.in_(module_ids)).delete(synchronize_session=False)
+        db.query(ResearchSource).filter(ResearchSource.module_id.in_(module_ids)).delete(synchronize_session=False)
+        lesson_ids = [row[0] for row in db.query(Lesson.id).filter(Lesson.module_id.in_(module_ids))]
         if lesson_ids:
-            db.query(LessonStep).filter(LessonStep.lesson_id.in_(lesson_ids)).delete(
-                synchronize_session=False
-            )
-            db.query(Lesson).filter(Lesson.module_id.in_(module_ids)).delete(
-                synchronize_session=False
-            )
-        db.query(Module).filter(Module.roadmap_id == roadmap_id).delete(
-            synchronize_session=False
-        )
+            db.query(LessonStep).filter(LessonStep.lesson_id.in_(lesson_ids)).delete(synchronize_session=False)
+            db.query(Lesson).filter(Lesson.module_id.in_(module_ids)).delete(synchronize_session=False)
+        db.query(Module).filter(Module.roadmap_id == roadmap_id).delete(synchronize_session=False)
 
-    db.query(UserProgress).filter(UserProgress.roadmap_id == roadmap_id).delete(
-        synchronize_session=False
-    )
+    db.query(UserProgress).filter(UserProgress.roadmap_id == roadmap_id).delete(synchronize_session=False)
     db.delete(roadmap)
     db.commit()

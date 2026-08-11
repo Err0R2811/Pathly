@@ -202,7 +202,7 @@ class _QuizPageState extends State<QuizPage> {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Icon(
+          const Icon(
             Icons.error_outline,
             size: 64,
             color: AppColors.neonPink,
@@ -254,7 +254,7 @@ class _QuizPageState extends State<QuizPage> {
           LinearProgressIndicator(
             value: (_currentQuestionIndex + 1) / _questions.length,
             backgroundColor: isDark ? AppColors.neonBlackSurface : AppColors.neonLightSurface,
-            valueColor: AlwaysStoppedAnimation<Color>(AppColors.neonPurple),
+            valueColor: const AlwaysStoppedAnimation<Color>(AppColors.neonPurple),
           ),
           const SizedBox(height: 24),
           // Question
@@ -296,8 +296,8 @@ class _QuizPageState extends State<QuizPage> {
               padding: const EdgeInsets.all(16),
               decoration: BoxDecoration(
                 color: _answeredCorrectly[_currentQuestionIndex]
-                    ? AppColors.neonGreen.withOpacity(0.1)
-                    : AppColors.neonPink.withOpacity(0.1),
+                    ? AppColors.neonGreen.withValues(alpha: 0.1)
+                    : AppColors.neonPink.withValues(alpha: 0.1),
                 borderRadius: BorderRadius.circular(12),
                 border: Border.all(
                   color: _answeredCorrectly[_currentQuestionIndex]
@@ -362,7 +362,7 @@ class _QuizPageState extends State<QuizPage> {
             Container(
               width: 150,
               height: 150,
-              decoration: BoxDecoration(
+              decoration: const BoxDecoration(
                 shape: BoxShape.circle,
                 gradient: LinearGradient(
                   colors: [
@@ -412,10 +412,10 @@ class _QuizPageState extends State<QuizPage> {
               padding: const EdgeInsets.all(16),
               decoration: BoxDecoration(
                 color: percentage >= 75
-                    ? AppColors.neonGreen.withOpacity(0.1)
+                    ? AppColors.neonGreen.withValues(alpha: 0.1)
                     : percentage >= 50
-                        ? AppColors.neonBlue.withOpacity(0.1)
-                        : AppColors.neonPink.withOpacity(0.1),
+                        ? AppColors.neonBlue.withValues(alpha: 0.1)
+                        : AppColors.neonPink.withValues(alpha: 0.1),
                 borderRadius: BorderRadius.circular(12),
                 border: Border.all(
                   color: percentage >= 75
@@ -498,10 +498,10 @@ class _OptionCard extends StatelessWidget {
       backgroundColor = isDark ? AppColors.neonBlackCard : AppColors.neonLightCard;
     } else if (isCorrect) {
       borderColor = AppColors.neonGreen;
-      backgroundColor = AppColors.neonGreen.withOpacity(0.1);
+      backgroundColor = AppColors.neonGreen.withValues(alpha: 0.1);
     } else {
       borderColor = AppColors.neonPink;
-      backgroundColor = AppColors.neonPink.withOpacity(0.1);
+      backgroundColor = AppColors.neonPink.withValues(alpha: 0.1);
     }
 
     return GestureDetector(
@@ -524,7 +524,7 @@ class _OptionCard extends StatelessWidget {
               height: 32,
               decoration: BoxDecoration(
                 color: isSelected
-                    ? borderColor.withOpacity(0.3)
+                    ? borderColor.withValues(alpha: 0.3)
                     : isDark
                         ? AppColors.neonBlackSurface
                         : AppColors.neonLightSurface,

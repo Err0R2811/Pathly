@@ -75,7 +75,7 @@ class _BadgesPageState extends State<BadgesPage> {
                               badge: badge,
                               isDark: isDark,
                               unlocked: true,
-                            )).toList(),
+                            ),).toList(),
                       ),
                     const SizedBox(height: AppConstants.spacingXl),
                     Text(

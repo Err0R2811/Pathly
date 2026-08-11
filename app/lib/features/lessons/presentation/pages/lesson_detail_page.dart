@@ -172,13 +172,13 @@ class _LessonDetailPageState extends State<LessonDetailPage> with SingleTickerPr
             Container(
               padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
               decoration: BoxDecoration(
-                color: AppColors.neonGreen.withOpacity(0.2),
+                color: AppColors.neonGreen.withValues(alpha: 0.2),
                 borderRadius: BorderRadius.circular(20),
                 border: Border.all(color: AppColors.neonGreen, width: 1),
               ),
               child: Row(
                 children: [
-                  Icon(
+                  const Icon(
                     Icons.check_circle_rounded,
                     size: 16,
                     color: AppColors.neonGreen,
@@ -209,7 +209,7 @@ class _LessonDetailPageState extends State<LessonDetailPage> with SingleTickerPr
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Icon(
+          const Icon(
             Icons.error_outline,
             size: 64,
             color: AppColors.neonPink,
@@ -326,7 +326,7 @@ class _LessonDetailPageState extends State<LessonDetailPage> with SingleTickerPr
               child: Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Icon(
+                  const Icon(
                     Icons.check_circle_rounded,
                     size: 16,
                     color: AppColors.neonBlue,
@@ -342,7 +342,7 @@ class _LessonDetailPageState extends State<LessonDetailPage> with SingleTickerPr
                   ),
                 ],
               ),
-            )),
+            ),),
             const SizedBox(height: 24),
           ],
           // Skills gained
@@ -360,7 +360,7 @@ class _LessonDetailPageState extends State<LessonDetailPage> with SingleTickerPr
               children: skillsGained.map((skill) => Container(
                 padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
                 decoration: BoxDecoration(
-                  color: AppColors.neonPurple.withOpacity(0.2),
+                  color: AppColors.neonPurple.withValues(alpha: 0.2),
                   borderRadius: BorderRadius.circular(20),
                   border: Border.all(color: AppColors.neonPurple, width: 1),
                 ),
@@ -370,7 +370,7 @@ class _LessonDetailPageState extends State<LessonDetailPage> with SingleTickerPr
                     color: AppColors.neonPurple,
                   ),
                 ),
-              )).toList(),
+              ),).toList(),
             ),
             const SizedBox(height: 24),
           ],
@@ -388,7 +388,7 @@ class _LessonDetailPageState extends State<LessonDetailPage> with SingleTickerPr
               child: Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Icon(
+                  const Icon(
                     Icons.bookmark_rounded,
                     size: 16,
                     color: AppColors.neonBlue,
@@ -404,7 +404,7 @@ class _LessonDetailPageState extends State<LessonDetailPage> with SingleTickerPr
                   ),
                 ],
               ),
-            )),
+            ),),
             const SizedBox(height: 24),
           ],
           // Text content from steps
@@ -485,7 +485,7 @@ class _LessonDetailPageState extends State<LessonDetailPage> with SingleTickerPr
           onPressed: isCompleted ? null : _isCompleting ? null : _completeLesson,
           style: ElevatedButton.styleFrom(
             backgroundColor: isCompleted ? AppColors.neonGreen : AppColors.neonBlue,
-            disabledBackgroundColor: isCompleted ? AppColors.neonGreen.withOpacity(0.5) : Colors.grey,
+            disabledBackgroundColor: isCompleted ? AppColors.neonGreen.withValues(alpha: 0.5) : Colors.grey,
             padding: const EdgeInsets.symmetric(vertical: 16),
           ),
           child: _isCompleting
@@ -541,7 +541,7 @@ class _LessonDetailPageState extends State<LessonDetailPage> with SingleTickerPr
                 child: Row(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Icon(
+                    const Icon(
                       Icons.check_circle_rounded,
                       size: 16,
                       color: AppColors.neonBlue,
@@ -557,7 +557,7 @@ class _LessonDetailPageState extends State<LessonDetailPage> with SingleTickerPr
                     ),
                   ],
                 ),
-              )),
+              ),),
           const SizedBox(height: 16),
         ],
         if (examples.isNotEmpty) ...[
@@ -585,7 +585,7 @@ class _LessonDetailPageState extends State<LessonDetailPage> with SingleTickerPr
                     color: isDark ? Colors.white : Colors.black,
                   ),
                 ),
-              )),
+              ),),
           const SizedBox(height: 16),
         ],
         if (exercise.isNotEmpty) ...[
@@ -628,7 +628,7 @@ class _LessonDetailPageState extends State<LessonDetailPage> with SingleTickerPr
             margin: const EdgeInsets.only(bottom: 8),
             padding: const EdgeInsets.all(12),
             decoration: BoxDecoration(
-              color: (isDark ? AppColors.neonBlackSurface : AppColors.neonLightSurface).withOpacity(0.7),
+              color: (isDark ? AppColors.neonBlackSurface : AppColors.neonLightSurface).withValues(alpha: 0.7),
               borderRadius: BorderRadius.circular(8),
               border: Border.all(
                 color: isDark ? AppColors.strokeDark : AppColors.strokeLight,
@@ -735,7 +735,7 @@ class _LessonDetailPageState extends State<LessonDetailPage> with SingleTickerPr
                 child: Row(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Icon(
+                    const Icon(
                       Icons.lightbulb_rounded,
                       size: 16,
                       color: AppColors.neonPurple,
@@ -751,7 +751,7 @@ class _LessonDetailPageState extends State<LessonDetailPage> with SingleTickerPr
                     ),
                   ],
                 ),
-              )),
+              ),),
         ],
       ],
     );

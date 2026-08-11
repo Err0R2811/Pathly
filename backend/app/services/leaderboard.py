@@ -1,9 +1,10 @@
 """Leaderboard service — Redis-based ranking system."""
+
 from __future__ import annotations
+
 import os
-from typing import List, Optional
+
 import redis
-from datetime import datetime, timezone, timedelta
 
 # Redis connection
 REDIS_HOST = os.getenv("REDIS_HOST", "localhost")
@@ -35,15 +36,15 @@ def update_leaderboard(user_id: str, xp: int) -> None:
     r = get_redis_client()
     if not r:
         return  # Skip if Redis is not available
-    
+
     try:
         # Update all-time leaderboard
         r.zadd(ALL_TIME_LEADERBOARD_KEY, {user_id: xp})
-        
+
         # Update weekly leaderboard (expires after 7 days)
         r.zadd(WEEKLY_LEADERBOARD_KEY, {user_id: xp})
         r.expire(WEEKLY_LEADERBOARD_KEY, 7 * 24 * 60 * 60)
-        
+
         # Update monthly leaderboard (expires after 30 days)
         r.zadd(MONTHLY_LEADERBOARD_KEY, {user_id: xp})
         r.expire(MONTHLY_LEADERBOARD_KEY, 30 * 24 * 60 * 60)
@@ -52,26 +53,22 @@ def update_leaderboard(user_id: str, xp: int) -> None:
         pass
 
 
-def get_leaderboard(
-    leaderboard_type: str = "all_time",
-    limit: int = 100,
-    offset: int = 0
-) -> List[dict]:
+def get_leaderboard(leaderboard_type: str = "all_time", limit: int = 100, offset: int = 0) -> list[dict]:
     """Get leaderboard entries sorted by score (descending)."""
     r = get_redis_client()
     if not r:
         return []  # Return empty if Redis is not available
-    
+
     try:
         key = {
             "weekly": WEEKLY_LEADERBOARD_KEY,
             "monthly": MONTHLY_LEADERBOARD_KEY,
             "all_time": ALL_TIME_LEADERBOARD_KEY,
         }.get(leaderboard_type, ALL_TIME_LEADERBOARD_KEY)
-        
+
         # Get top users with scores (descending order)
         results = r.zrevrange(key, offset, offset + limit - 1, withscores=True)
-        
+
         return [
             {"user_id": user_id, "score": int(score), "rank": offset + i + 1}
             for i, (user_id, score) in enumerate(results)
@@ -80,19 +77,19 @@ def get_leaderboard(
         return []
 
 
-def get_user_rank(user_id: str, leaderboard_type: str = "all_time") -> Optional[int]:
+def get_user_rank(user_id: str, leaderboard_type: str = "all_time") -> int | None:
     """Get user's rank in a specific leaderboard."""
     r = get_redis_client()
     if not r:
         return None
-    
+
     try:
         key = {
             "weekly": WEEKLY_LEADERBOARD_KEY,
             "monthly": MONTHLY_LEADERBOARD_KEY,
             "all_time": ALL_TIME_LEADERBOARD_KEY,
         }.get(leaderboard_type, ALL_TIME_LEADERBOARD_KEY)
-        
+
         rank = r.zrevrank(key, user_id)
         return rank + 1 if rank is not None else None
     except Exception:

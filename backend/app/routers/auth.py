@@ -1,30 +1,32 @@
 """Authentication router — login, register, user management."""
+
 from __future__ import annotations
-import os
+
 import uuid
-from datetime import datetime, timezone, timedelta
-from typing import Optional
-from passlib.context import CryptContext
+from datetime import datetime, timedelta, timezone
+
+from fastapi import APIRouter, Depends, HTTPException, status
+from fastapi.security import OAuth2PasswordBearer
 from jose import JWTError, jwt
-from fastapi import APIRouter, HTTPException, Depends, status
-from fastapi.security import OAuth2PasswordBearer, OAuth2PasswordRequestForm
+from passlib.context import CryptContext
 from sqlalchemy.orm import Session
 
 from ..database import get_db
+from ..models import User
 from ..schemas import (
-    UserRegisterRequest,
-    UserLoginRequest,
     AuthResponse,
+    UserLoginRequest,
+    UserRegisterRequest,
     UserResponse,
 )
-from ..models import User
+from ..settings import get_settings
 
 pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
 oauth2_scheme = OAuth2PasswordBearer(tokenUrl="auth/token")
 
-# JWT Configuration
-SECRET_KEY = "your-secret-key-change-in-production"  # TODO: Move to environment variable
-ALGORITHM = "HS256"
+settings = get_settings()
+SECRET_KEY = settings.jwt_secret_key
+ALGORITHM = settings.jwt_algorithm
 ACCESS_TOKEN_EXPIRE_MINUTES = 30
 REFRESH_TOKEN_EXPIRE_DAYS = 7
 
@@ -39,7 +41,7 @@ def verify_password(plain_password: str, hashed_password: str) -> bool:
     return pwd_context.verify(plain_password, hashed_password)
 
 
-def create_access_token(data: dict, expires_delta: Optional[timedelta] = None) -> str:
+def create_access_token(data: dict, expires_delta: timedelta | None = None) -> str:
     to_encode = data.copy()
     if expires_delta:
         expire = datetime.now(timezone.utc) + expires_delta
@@ -58,7 +60,7 @@ def create_refresh_token(data: dict) -> str:
     return encoded_jwt
 
 
-def verify_token(token: str) -> Optional[str]:
+def verify_token(token: str) -> str | None:
     """Verify JWT token and return user_id if valid."""
     try:
         payload = jwt.decode(token, SECRET_KEY, algorithms=[ALGORITHM])
@@ -71,44 +73,41 @@ def verify_token(token: str) -> Optional[str]:
         return None
 
 
-async def get_current_user(
-    token: str = Depends(oauth2_scheme),
-    db: Session = Depends(get_db)
-) -> User:
+async def get_current_user(token: str = Depends(oauth2_scheme), db: Session = Depends(get_db)) -> User:
     """FastAPI dependency to get current authenticated user."""
     credentials_exception = HTTPException(
         status_code=status.HTTP_401_UNAUTHORIZED,
         detail="Could not validate credentials",
         headers={"WWW-Authenticate": "Bearer"},
     )
-    
+
     user_id = verify_token(token)
     if user_id is None:
         raise credentials_exception
-    
+
     user = db.query(User).filter(User.id == user_id).first()
     if user is None:
         raise credentials_exception
-    
+
     return user
 
 
 async def get_current_user_optional(
-    token: Optional[str] = Depends(OAuth2PasswordBearer(tokenUrl="auth/token", auto_error=False)),
-    db: Session = Depends(get_db)
-) -> Optional[User]:
+    token: str | None = Depends(OAuth2PasswordBearer(tokenUrl="auth/token", auto_error=False)),
+    db: Session = Depends(get_db),
+) -> User | None:
     """Optional authentication - returns None if no valid token provided."""
     if token is None:
         return None
-    
+
     try:
         user_id = verify_token(token)
         if user_id is None:
             return None
-        
+
         user = db.query(User).filter(User.id == user_id).first()
         return user
-    except:
+    except Exception:
         return None
 
 
@@ -123,7 +122,7 @@ async def register(body: UserRegisterRequest, db: Session = Depends(get_db)):
     # Create new user
     user_id = str(uuid.uuid4())
     hashed_password = get_password_hash(body.password)
-    
+
     db_user = User(
         id=user_id,
         email=body.email,
@@ -131,7 +130,7 @@ async def register(body: UserRegisterRequest, db: Session = Depends(get_db)):
         hashed_password=hashed_password,
         created_at=datetime.now(timezone.utc).isoformat(),
     )
-    
+
     db.add(db_user)
     db.commit()
     db.refresh(db_user)
@@ -156,7 +155,7 @@ async def register(body: UserRegisterRequest, db: Session = Depends(get_db)):
             total_minutes=db_user.total_minutes,
             lessons_completed=db_user.lessons_completed,
             created_at=db_user.created_at,
-        )
+        ),
     )
 
 
@@ -167,11 +166,11 @@ async def login(body: UserLoginRequest, db: Session = Depends(get_db)):
     user = db.query(User).filter(User.email == body.email).first()
     if not user:
         raise HTTPException(status_code=401, detail="Invalid email or password")
-    
+
     # Verify password
     if not verify_password(body.password, user.hashed_password):
         raise HTTPException(status_code=401, detail="Invalid email or password")
-    
+
     # Generate JWT tokens
     access_token = create_access_token(data={"sub": user.id})
     refresh_token = create_refresh_token(data={"sub": user.id})
@@ -192,7 +191,7 @@ async def login(body: UserLoginRequest, db: Session = Depends(get_db)):
             total_minutes=user.total_minutes,
             lessons_completed=user.lessons_completed,
             created_at=user.created_at,
-        )
+        ),
     )
 
 
@@ -228,15 +227,15 @@ async def refresh_token(body: dict, db: Session = Depends(get_db)):
             raise HTTPException(status_code=401, detail="Invalid refresh token")
     except JWTError:
         raise HTTPException(status_code=401, detail="Invalid refresh token")
-    
+
     user = db.query(User).filter(User.id == user_id).first()
     if not user:
         raise HTTPException(status_code=401, detail="User not found")
-    
+
     # Generate new tokens
     access_token = create_access_token(data={"sub": user_id})
     new_refresh_token = create_refresh_token(data={"sub": user_id})
-    
+
     return AuthResponse(
         access_token=access_token,
         token_type="bearer",
@@ -253,5 +252,5 @@ async def refresh_token(body: dict, db: Session = Depends(get_db)):
             total_minutes=user.total_minutes,
             lessons_completed=user.lessons_completed,
             created_at=user.created_at,
-        )
+        ),
     )

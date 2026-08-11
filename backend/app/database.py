@@ -1,14 +1,16 @@
-"""Database engine and session factory.
+"""Database engine and session factory."""
 
-Uses SQLite locally (file: pathly.db) and falls back to DATABASE_URL env var
-for production Postgres.
-"""
-import os
+from __future__ import annotations
+
+from collections.abc import Generator
+
 from sqlalchemy import create_engine
-from sqlalchemy.orm import sessionmaker, Session
-from typing import Generator
+from sqlalchemy.orm import Session, sessionmaker
 
-DATABASE_URL = os.getenv("DATABASE_URL", "sqlite:///./pathly.db")
+from .settings import get_settings
+
+settings = get_settings()
+DATABASE_URL = settings.database_url
 
 # SQLite needs check_same_thread=False
 connect_args = {"check_same_thread": False} if DATABASE_URL.startswith("sqlite") else {}

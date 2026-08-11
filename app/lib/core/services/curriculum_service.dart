@@ -1,23 +1,16 @@
 /// HTTP client for the Pathly Curriculum API.
 ///
-/// All calls target the FastAPI backend running on localhost:8000.
-/// Override [baseUrl] via a build flavor or environment variable if needed.
+/// Pass `--dart-define=PATHLY_API_BASE_URL=https://api.example.com` for builds.
 library;
 
 import 'dart:convert';
-import 'package:flutter/foundation.dart';
+
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:http/http.dart' as http;
+import 'package:pathly_app/core/config/api_config.dart';
 
 class CurriculumService {
-  static String get baseUrl {
-    if (kIsWeb) {
-      return 'http://127.0.0.1:8000';
-    }
-    return 'http://10.0.2.2:8000'; // Android emulator → host localhost
-  }
-
-  // ── Preview (synchronous) ──────────────────────────────────────────────────
+  static String get baseUrl => ApiConfig.baseUrl;
 
   /// Lists saved roadmaps for the current user.
   static Future<List<Map<String, dynamic>>> listRoadmaps() async {
@@ -27,7 +20,9 @@ class CurriculumService {
       headers['Authorization'] = 'Bearer $token';
     }
     final uri = Uri.parse('$baseUrl/curriculum/');
-    final response = await http.get(uri, headers: headers).timeout(const Duration(seconds: 15));
+    final response = await http
+        .get(uri, headers: headers)
+        .timeout(const Duration(seconds: 15));
     if (response.statusCode == 200) {
       final body = jsonDecode(response.body) as List<dynamic>;
       return body.cast<Map<String, dynamic>>();
@@ -47,8 +42,6 @@ class CurriculumService {
     }
     throw Exception('Preview failed: ${response.statusCode} ${response.body}');
   }
-
-  // ── Full generation (async job) ────────────────────────────────────────────
 
   /// Kicks off a full generate-review pipeline and returns the job_id.
   static Future<String> requestFullCurriculum(
@@ -110,7 +103,9 @@ class CurriculumService {
       headers['Authorization'] = 'Bearer $token';
     }
     final uri = Uri.parse('$baseUrl/curriculum/$roadmapId');
-    final response = await http.delete(uri, headers: headers).timeout(const Duration(seconds: 15));
+    final response = await http
+        .delete(uri, headers: headers)
+        .timeout(const Duration(seconds: 15));
     if (response.statusCode == 204 || response.statusCode == 200) {
       return;
     }

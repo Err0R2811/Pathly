@@ -1,5 +1,5 @@
-import pytest
 from sqlalchemy import create_engine, inspect
+
 from app.models import Base
 
 # Use a temporary SQLite DB for test purposes

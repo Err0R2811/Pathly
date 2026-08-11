@@ -1,14 +1,18 @@
+# ruff: noqa: E501
 """NVIDIA NIM-powered curriculum generator with YouTube integration.
 
 Uses NVIDIA NIM API for fast, efficient curriculum generation.
 Falls back to a rich static roadmap if the API call fails.
 """
+
 from __future__ import annotations
-import os
-import json
-import re
-import httpx
+
 import asyncio
+import json
+import os
+
+import httpx
+
 from .youtube_search import search_youtube_videos
 
 NVIDIA_API_KEY = os.getenv("NVIDIA_API_KEY", "")
@@ -84,20 +88,16 @@ Rules:
 async def generate_roadmap(skill_name: str, difficulty: str = "beginner", deadline_weeks: int = 4) -> dict:
     """Call NVIDIA API / OpenAI-compatible client to generate a curriculum roadmap with YouTube integration.
     Falls back to static data on error."""
-    
+
     # Calculate difficulty-specific parameters
     difficulty_focus_map = {
         "beginner": "foundational concepts, gentle learning curve, hands-on basics",
         "intermediate": "practical application, real-world projects, deeper understanding",
-        "advanced": "complex topics, optimization, best practices, architecture"
+        "advanced": "complex topics, optimization, best practices, architecture",
     }
-    
-    hours_per_week_map = {
-        "beginner": 5,
-        "intermediate": 8,
-        "advanced": 12
-    }
-    
+
+    hours_per_week_map = {"beginner": 5, "intermediate": 8, "advanced": 12}
+
     difficulty_focus = difficulty_focus_map.get(difficulty, difficulty_focus_map["beginner"])
     hours_per_week = hours_per_week_map.get(difficulty, hours_per_week_map["beginner"])
     total_hours = deadline_weeks * hours_per_week
@@ -114,13 +114,16 @@ async def generate_roadmap(skill_name: str, difficulty: str = "beginner", deadli
         "model": NVIDIA_MODEL,
         "messages": [
             {"role": "system", "content": _SYSTEM_PROMPT},
-            {"role": "user", "content": _USER_PROMPT.format(
-                skill_name=skill_name,
-                difficulty=difficulty,
-                deadline_weeks=deadline_weeks,
-                difficulty_focus=difficulty_focus,
-                total_hours=total_hours
-            )},
+            {
+                "role": "user",
+                "content": _USER_PROMPT.format(
+                    skill_name=skill_name,
+                    difficulty=difficulty,
+                    deadline_weeks=deadline_weeks,
+                    difficulty_focus=difficulty_focus,
+                    total_hours=total_hours,
+                ),
+            },
         ],
         "temperature": 0.7,
         "response_format": {"type": "json_object"},
@@ -137,38 +140,40 @@ async def generate_roadmap(skill_name: str, difficulty: str = "beginner", deadli
             content = response.json()["choices"][0]["message"]["content"]
             roadmap = json.loads(content)
             roadmap.setdefault("verification_score", 0)
-            
+
             # Enhance with YouTube videos for each module (parallelized)
             async def enrich_module_with_videos(module):
                 module_name = module.get("module_name", "")
                 search_query = f"{skill_name} {module_name} tutorial course"
                 videos = await search_youtube_videos(search_query, max_results=3)
-                
+
                 # Add videos as additional sources
                 for video in videos:
-                    module["sources"].append({
-                        "title": video["title"],
-                        "type": "video",
-                        "url": video["url"],
-                        "author": video["channel"],
-                        "abstract": f"Video tutorial ({video['duration_formatted']})",
-                        "relevance_score": 8,
-                        "video_duration": video["duration"],
-                        "thumbnail": video["thumbnail"]
-                    })
+                    module["sources"].append(
+                        {
+                            "title": video["title"],
+                            "type": "video",
+                            "url": video["url"],
+                            "author": video["channel"],
+                            "abstract": f"Video tutorial ({video['duration_formatted']})",
+                            "relevance_score": 8,
+                            "video_duration": video["duration"],
+                            "thumbnail": video["thumbnail"],
+                        }
+                    )
                 return module
-            
+
             # Process modules in parallel with concurrency limit
             semaphore = asyncio.Semaphore(5)  # Limit concurrent YouTube API calls
+
             async def enrich_with_semaphore(module):
                 async with semaphore:
                     return await enrich_module_with_videos(module)
-            
+
             enriched_modules = await asyncio.gather(
-                *[enrich_with_semaphore(module) for module in roadmap.get("modules", [])],
-                return_exceptions=True
+                *[enrich_with_semaphore(module) for module in roadmap.get("modules", [])], return_exceptions=True
             )
-            
+
             # Replace modules with enriched versions (filter out exceptions)
             valid_modules = [m for m in enriched_modules if not isinstance(m, Exception)]
             for idx, mod in enumerate(valid_modules, start=1):
@@ -176,7 +181,7 @@ async def generate_roadmap(skill_name: str, difficulty: str = "beginner", deadli
                 mod.setdefault("verification_alignment_score", 0)
                 mod.setdefault("sources", [])
             roadmap["modules"] = valid_modules
-            
+
             return roadmap
     except Exception as exc:
         print(f"[generator] OpenRouter/NVIDIA call failed ({exc}), using fallback.")
@@ -190,22 +195,19 @@ async def _static_fallback(skill_name: str) -> dict:
         "domain_type": "technical",
         "verification_score": 0,
         "certification_info": {
-            "available_certifications": [
-                f"Certified {skill_name} Professional",
-                f"Advanced {skill_name} Specialist"
-            ],
+            "available_certifications": [f"Certified {skill_name} Professional", f"Advanced {skill_name} Specialist"],
             "recommended_certification": f"Certified {skill_name} Professional",
-            "certification_body": "International Skill Certification Board"
+            "certification_body": "International Skill Certification Board",
         },
         "prerequisites": [
             "Basic computer literacy",
             "Internet access for research",
-            "Willingness to practice regularly"
+            "Willingness to practice regularly",
         ],
         "learning_objectives": [
             f"Master fundamental concepts of {skill_name}",
             "Apply {skill_name} techniques in real-world scenarios",
-            "Develop problem-solving skills in {skill_name}"
+            "Develop problem-solving skills in {skill_name}",
         ],
         "modules": [
             {
@@ -216,18 +218,11 @@ async def _static_fallback(skill_name: str) -> dict:
                 "learning_objectives": [
                     f"Understand core concepts of {skill_name}",
                     "Learn basic terminology and principles",
-                    "Set up development environment for {skill_name}"
+                    "Set up development environment for {skill_name}",
                 ],
-                "skills_gained": [
-                    "Fundamental knowledge",
-                    "Basic tool usage",
-                    "Problem-solving mindset"
-                ],
+                "skills_gained": ["Fundamental knowledge", "Basic tool usage", "Problem-solving mindset"],
                 "pedagogical_basis": "Bloom's Taxonomy — knowledge and comprehension",
-                "projects": [
-                    f"Build a simple {skill_name} project",
-                    "Complete beginner exercises"
-                ],
+                "projects": [f"Build a simple {skill_name} project", "Complete beginner exercises"],
                 "assessment_criteria": "Pass basic knowledge quiz and complete first project",
                 "sources": [
                     {
@@ -237,7 +232,7 @@ async def _static_fallback(skill_name: str) -> dict:
                         "url": f"https://en.wikipedia.org/wiki/{skill_name.replace(' ', '_')}",
                         "author": "Wikipedia Contributors",
                         "abstract": f"A comprehensive introduction to {skill_name}.",
-                        "relevance_score": 7
+                        "relevance_score": 7,
                     },
                     {
                         "title": "Learning How to Learn",
@@ -246,7 +241,7 @@ async def _static_fallback(skill_name: str) -> dict:
                         "url": "https://www.coursera.org/learn/learning-how-to-learn",
                         "author": "Dr. Barbara Oakley",
                         "abstract": "Evidence-based strategies for effective learning and memory retention.",
-                        "relevance_score": 9
+                        "relevance_score": 9,
                     },
                     {
                         "title": f"{skill_name} Fundamentals",
@@ -255,9 +250,9 @@ async def _static_fallback(skill_name: str) -> dict:
                         "url": "https://docs.google.com",
                         "author": "Official Documentation",
                         "abstract": f"Official documentation for {skill_name} basics.",
-                        "relevance_score": 8
-                    }
-                ]
+                        "relevance_score": 8,
+                    },
+                ],
             },
             {
                 "module_name": f"Core Techniques in {skill_name}",
@@ -267,18 +262,11 @@ async def _static_fallback(skill_name: str) -> dict:
                 "learning_objectives": [
                     f"Master intermediate {skill_name} techniques",
                     "Apply best practices and patterns",
-                    "Build medium-complexity projects"
+                    "Build medium-complexity projects",
                 ],
-                "skills_gained": [
-                    "Intermediate techniques",
-                    "Best practices",
-                    "Project development"
-                ],
+                "skills_gained": ["Intermediate techniques", "Best practices", "Project development"],
                 "pedagogical_basis": "Project-based learning with deliberate practice",
-                "projects": [
-                    f"Build a complete {skill_name} application",
-                    "Contribute to open-source projects"
-                ],
+                "projects": [f"Build a complete {skill_name} application", "Contribute to open-source projects"],
                 "assessment_criteria": "Complete intermediate project and pass practical assessment",
                 "sources": [
                     {
@@ -288,7 +276,7 @@ async def _static_fallback(skill_name: str) -> dict:
                         "url": None,
                         "author": "K. Anders Ericsson",
                         "abstract": "Ericsson's foundational research on expert skill acquisition.",
-                        "relevance_score": 9
+                        "relevance_score": 9,
                     },
                     {
                         "title": f"Mastering {skill_name}: A Practical Guide",
@@ -297,7 +285,7 @@ async def _static_fallback(skill_name: str) -> dict:
                         "url": f"https://www.khanacademy.org/search?search_again=1&page_search_query={skill_name}",
                         "author": "Khan Academy",
                         "abstract": f"Hands-on exercises for building proficiency in {skill_name}.",
-                        "relevance_score": 8
+                        "relevance_score": 8,
                     },
                     {
                         "title": f"{skill_name} Best Practices",
@@ -306,9 +294,9 @@ async def _static_fallback(skill_name: str) -> dict:
                         "url": "https://stackoverflow.com",
                         "author": "Community",
                         "abstract": "Community-driven best practices and solutions.",
-                        "relevance_score": 7
-                    }
-                ]
+                        "relevance_score": 7,
+                    },
+                ],
             },
             {
                 "module_name": f"Advanced Applications of {skill_name}",
@@ -318,18 +306,11 @@ async def _static_fallback(skill_name: str) -> dict:
                 "learning_objectives": [
                     f"Master advanced {skill_name} concepts",
                     "Optimize performance and scalability",
-                    "Architect complex systems"
+                    "Architect complex systems",
                 ],
-                "skills_gained": [
-                    "Advanced techniques",
-                    "Performance optimization",
-                    "System architecture"
-                ],
+                "skills_gained": ["Advanced techniques", "Performance optimization", "System architecture"],
                 "pedagogical_basis": "Constructivism — building complex mental models",
-                "projects": [
-                    f"Build enterprise-level {skill_name} system",
-                    "Optimize existing applications"
-                ],
+                "projects": [f"Build enterprise-level {skill_name} system", "Optimize existing applications"],
                 "assessment_criteria": "Complete advanced project and pass technical interview",
                 "sources": [
                     {
@@ -339,7 +320,7 @@ async def _static_fallback(skill_name: str) -> dict:
                         "url": None,
                         "author": "John Sweller",
                         "abstract": "Sweller's theory on managing cognitive load for complex skill acquisition.",
-                        "relevance_score": 8
+                        "relevance_score": 8,
                     },
                     {
                         "title": f"Expert Performance in {skill_name}",
@@ -348,7 +329,7 @@ async def _static_fallback(skill_name: str) -> dict:
                         "url": "https://scholar.google.com",
                         "author": "Research Community",
                         "abstract": f"Research on expert-level {skill_name} performance patterns.",
-                        "relevance_score": 7
+                        "relevance_score": 7,
                     },
                     {
                         "title": f"{skill_name} Architecture Patterns",
@@ -357,9 +338,9 @@ async def _static_fallback(skill_name: str) -> dict:
                         "url": "https://www.oreilly.com",
                         "author": "Industry Experts",
                         "abstract": "Comprehensive guide to architectural patterns.",
-                        "relevance_score": 9
-                    }
-                ]
+                        "relevance_score": 9,
+                    },
+                ],
             },
             {
                 "module_name": f"Expert Mastery in {skill_name}",
@@ -369,18 +350,14 @@ async def _static_fallback(skill_name: str) -> dict:
                 "learning_objectives": [
                     f"Become a recognized expert in {skill_name}",
                     "Contribute to the field",
-                    "Mentor others"
+                    "Mentor others",
                 ],
-                "skills_gained": [
-                    "Expert-level knowledge",
-                    "Leadership skills",
-                    "Mentoring ability"
-                ],
+                "skills_gained": ["Expert-level knowledge", "Leadership skills", "Mentoring ability"],
                 "pedagogical_basis": "Social learning theory and mentorship",
                 "projects": [
                     f"Create innovative {skill_name} solutions",
                     "Publish research or tutorials",
-                    "Mentor junior developers"
+                    "Mentor junior developers",
                 ],
                 "assessment_criteria": "Demonstrate expertise through portfolio and community contribution",
                 "sources": [
@@ -391,7 +368,7 @@ async def _static_fallback(skill_name: str) -> dict:
                         "url": "https://www.amazon.com",
                         "author": "Industry Leaders",
                         "abstract": "Master-level insights from industry experts.",
-                        "relevance_score": 9
+                        "relevance_score": 9,
                     },
                     {
                         "title": f"{skill_name} Research Papers",
@@ -400,7 +377,7 @@ async def _static_fallback(skill_name: str) -> dict:
                         "url": "https://arxiv.org",
                         "author": "Academic Community",
                         "abstract": "Latest research and developments in {skill_name}.",
-                        "relevance_score": 8
+                        "relevance_score": 8,
                     },
                     {
                         "title": f"{skill_name} Conference Proceedings",
@@ -409,21 +386,21 @@ async def _static_fallback(skill_name: str) -> dict:
                         "url": "https://youtube.com",
                         "author": "Conference Organizers",
                         "abstract": "Conference talks and presentations from experts.",
-                        "relevance_score": 8
-                    }
-                ]
-            }
+                        "relevance_score": 8,
+                    },
+                ],
+            },
         ],
         "career_outcomes": [
             f"{skill_name} Developer",
             f"{skill_name} Consultant",
             f"{skill_name} Architect",
-            f"{skill_name} Specialist"
+            f"{skill_name} Specialist",
         ],
         "salary_range": "$60,000 - $150,000+ depending on experience and location",
-        "market_demand": "High demand across multiple industries"
+        "market_demand": "High demand across multiple industries",
     }
-    
+
     # Add YouTube videos and default fields to each module
     for idx, module in enumerate(roadmap["modules"], start=1):
         module.setdefault("id", f"mod-{idx}")
@@ -431,17 +408,19 @@ async def _static_fallback(skill_name: str) -> dict:
         module_name = module.get("module_name", "")
         search_query = f"{skill_name} {module_name} tutorial course"
         videos = await search_youtube_videos(search_query, max_results=2)
-        
+
         for video in videos:
-            module["sources"].append({
-                "title": video["title"],
-                "type": "video",
-                "url": video["url"],
-                "author": video["channel"],
-                "abstract": f"Video tutorial ({video['duration_formatted']})",
-                "relevance_score": 8,
-                "video_duration": video["duration"],
-                "thumbnail": video["thumbnail"]
-            })
-    
+            module["sources"].append(
+                {
+                    "title": video["title"],
+                    "type": "video",
+                    "url": video["url"],
+                    "author": video["channel"],
+                    "abstract": f"Video tutorial ({video['duration_formatted']})",
+                    "relevance_score": 8,
+                    "video_duration": video["duration"],
+                    "thumbnail": video["thumbnail"],
+                }
+            )
+
     return roadmap

@@ -1,13 +1,16 @@
+# ruff: noqa: E501
 """Quiz content generator service for module-level practice quizzes.
 
 Generates 3-5 question practice quizzes for each module to test
 understanding of the module's learning objectives and key concepts.
 """
+
 from __future__ import annotations
-import os
+
 import json
+import os
+
 import httpx
-from typing import List, Dict
 
 NVIDIA_API_KEY = os.getenv("NVIDIA_API_KEY", "")
 NVIDIA_MODEL = os.getenv("NVIDIA_MODEL", "gpt-oss-120b")
@@ -56,12 +59,12 @@ async def generate_module_quiz(
     module_name: str,
     skill_name: str,
     difficulty: str = "beginner",
-    learning_objectives: List[str] = None,
-    skills_gained: List[str] = None,
-    num_questions: int = 4
-) -> List[Dict]:
+    learning_objectives: list[str] = None,
+    skills_gained: list[str] = None,
+    num_questions: int = 4,
+) -> list[dict]:
     """Generate a practice quiz for a specific module.
-    
+
     Args:
         module_name: Name of the module
         skill_name: Overall skill being learned
@@ -69,7 +72,7 @@ async def generate_module_quiz(
         learning_objectives: List of module learning objectives
         skills_gained: List of skills students will gain
         num_questions: Number of questions to generate (3-5 recommended)
-        
+
     Returns:
         List of question dictionaries with question, options, correct_answer, explanation
     """
@@ -77,7 +80,7 @@ async def generate_module_quiz(
         learning_objectives = []
     if skills_gained is None:
         skills_gained = []
-    
+
     if not NVIDIA_API_KEY:
         print("[quiz_generator] NVIDIA_API_KEY not set, using fallback.")
         return _static_quiz_fallback(module_name, skill_name, num_questions)
@@ -86,19 +89,22 @@ async def generate_module_quiz(
         "Authorization": f"Bearer {NVIDIA_API_KEY}",
         "Content-Type": "application/json",
     }
-    
+
     payload = {
         "model": NVIDIA_MODEL,
         "messages": [
             {"role": "system", "content": _QUIZ_SYSTEM_PROMPT},
-            {"role": "user", "content": _QUIZ_USER_PROMPT.format(
-                module_name=module_name,
-                skill_name=skill_name,
-                difficulty=difficulty,
-                learning_objectives=json.dumps(learning_objectives),
-                skills_gained=json.dumps(skills_gained),
-                num_questions=num_questions
-            )},
+            {
+                "role": "user",
+                "content": _QUIZ_USER_PROMPT.format(
+                    module_name=module_name,
+                    skill_name=skill_name,
+                    difficulty=difficulty,
+                    learning_objectives=json.dumps(learning_objectives),
+                    skills_gained=json.dumps(skills_gained),
+                    num_questions=num_questions,
+                ),
+            },
         ],
         "temperature": 0.7,
         "response_format": {"type": "json_object"},
@@ -114,22 +120,22 @@ async def generate_module_quiz(
             response.raise_for_status()
             content = response.json()["choices"][0]["message"]["content"]
             quiz_data = json.loads(content)
-            
+
             questions = quiz_data.get("questions", [])
             # Add question_order to each question
             for i, question in enumerate(questions):
                 question["question_order"] = i + 1
-            
+
             return questions
-            
+
     except Exception as e:
         print(f"[quiz_generator] Generation failed: {e}, using fallback")
         return _static_quiz_fallback(module_name, skill_name, num_questions)
 
 
-def _static_quiz_fallback(module_name: str, skill_name: str, num_questions: int) -> List[Dict]:
+def _static_quiz_fallback(module_name: str, skill_name: str, num_questions: int) -> list[dict]:
     """Fallback quiz questions when AI generation fails."""
-    
+
     base_questions = [
         {
             "question": f"What is the primary purpose of learning {module_name}?",
@@ -137,10 +143,10 @@ def _static_quiz_fallback(module_name: str, skill_name: str, num_questions: int)
                 "To memorize facts",
                 f"To build foundational skills for {skill_name}",
                 "To get certified",
-                "To complete a course requirement"
+                "To complete a course requirement",
             ],
             "correct_answer": "B",
-            "explanation": f"{module_name} provides essential foundational skills that support advanced learning in {skill_name}."
+            "explanation": f"{module_name} provides essential foundational skills that support advanced learning in {skill_name}.",
         },
         {
             "question": f"Which of the following best describes the relationship between {module_name} and {skill_name}?",
@@ -148,10 +154,10 @@ def _static_quiz_fallback(module_name: str, skill_name: str, num_questions: int)
                 "They are unrelated concepts",
                 f"{module_name} is a subset of {skill_name}",
                 f"{skill_name} is a prerequisite for {module_name}",
-                "They are the same thing"
+                "They are the same thing",
             ],
             "correct_answer": "B",
-            "explanation": f"{module_name} represents a specific area within the broader skill of {skill_name}."
+            "explanation": f"{module_name} represents a specific area within the broader skill of {skill_name}.",
         },
         {
             "question": f"When applying {module_name} concepts, what is the most important factor?",
@@ -159,10 +165,10 @@ def _static_quiz_fallback(module_name: str, skill_name: str, num_questions: int)
                 "Speed of execution",
                 "Understanding the underlying principles",
                 "Using the most complex tools",
-                "Following a strict template"
+                "Following a strict template",
             ],
             "correct_answer": "B",
-            "explanation": "Understanding underlying principles is crucial for effective application and problem-solving."
+            "explanation": "Understanding underlying principles is crucial for effective application and problem-solving.",
         },
         {
             "question": f"What is a common misconception about {module_name}?",
@@ -170,10 +176,10 @@ def _static_quiz_fallback(module_name: str, skill_name: str, num_questions: int)
                 "It requires practice to master",
                 "It can be learned without any prerequisites",
                 "It has real-world applications",
-                "It builds on fundamental concepts"
+                "It builds on fundamental concepts",
             ],
             "correct_answer": "B",
-            "explanation": f"{module_name} typically requires some foundational knowledge and cannot be learned in isolation."
+            "explanation": f"{module_name} typically requires some foundational knowledge and cannot be learned in isolation.",
         },
         {
             "question": f"How would you evaluate your understanding of {module_name}?",
@@ -181,11 +187,11 @@ def _static_quiz_fallback(module_name: str, skill_name: str, num_questions: int)
                 "By memorizing definitions",
                 "By explaining concepts to others",
                 "By completing exercises quickly",
-                "By reading about it"
+                "By reading about it",
             ],
             "correct_answer": "B",
-            "explanation": "Being able to explain concepts to others demonstrates deep understanding and mastery."
-        }
+            "explanation": "Being able to explain concepts to others demonstrates deep understanding and mastery.",
+        },
     ]
-    
+
     return base_questions[:num_questions]

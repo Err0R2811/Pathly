@@ -1,25 +1,25 @@
 """Pydantic schemas for all API request and response bodies."""
+
 from __future__ import annotations
+
 from pydantic import BaseModel, Field
-from typing import List, Optional
-from datetime import datetime
 
 
 class SourceSchema(BaseModel):
     title: str
-    doi: Optional[str] = None
-    url: Optional[str] = None
-    abstract: Optional[str] = None
+    doi: str | None = None
+    url: str | None = None
+    abstract: str | None = None
     # Enhanced fields
-    source_type: Optional[str] = None  # book|course|article|documentation|video
-    author: Optional[str] = None
-    relevance_score: Optional[int] = Field(default=5, ge=1, le=10)
-    video_duration: Optional[int] = None  # Duration in seconds for videos
-    thumbnail: Optional[str] = None  # Video thumbnail URL
+    source_type: str | None = None  # book|course|article|documentation|video
+    author: str | None = None
+    relevance_score: int | None = Field(default=5, ge=1, le=10)
+    video_duration: int | None = None  # Duration in seconds for videos
+    thumbnail: str | None = None  # Video thumbnail URL
 
 
 class ModuleSchema(BaseModel):
-    id: Optional[str] = ""
+    id: str | None = ""
     module_name: str
     level: str
     difficulty_score: int = Field(ge=0, le=100)
@@ -27,17 +27,17 @@ class ModuleSchema(BaseModel):
     estimated_hours: int
     pedagogical_basis: str
     # Enhanced fields
-    learning_objectives: Optional[List[str]] = []
-    skills_gained: Optional[List[str]] = []
-    projects: Optional[List[str]] = []
-    assessment_criteria: Optional[str] = None
-    sources: List[SourceSchema] = []
+    learning_objectives: list[str] | None = []
+    skills_gained: list[str] | None = []
+    projects: list[str] | None = []
+    assessment_criteria: str | None = None
+    sources: list[SourceSchema] = []
 
 
 class CertificationInfo(BaseModel):
-    available_certifications: List[str] = []
-    recommended_certification: Optional[str] = None
-    certification_body: Optional[str] = None
+    available_certifications: list[str] = []
+    recommended_certification: str | None = None
+    certification_body: str | None = None
 
 
 class RoadmapPreviewResponse(BaseModel):
@@ -45,13 +45,13 @@ class RoadmapPreviewResponse(BaseModel):
     domain_type: str
     verification_score: int = 0
     # Enhanced fields
-    certification_info: Optional[CertificationInfo] = None
-    prerequisites: Optional[List[str]] = []
-    learning_objectives: Optional[List[str]] = []
-    career_outcomes: Optional[List[str]] = []
-    salary_range: Optional[str] = None
-    market_demand: Optional[str] = None
-    modules: List[ModuleSchema]
+    certification_info: CertificationInfo | None = None
+    prerequisites: list[str] | None = []
+    learning_objectives: list[str] | None = []
+    career_outcomes: list[str] | None = []
+    salary_range: str | None = None
+    market_demand: str | None = None
+    modules: list[ModuleSchema]
 
 
 class CurriculumRequestBody(BaseModel):
@@ -65,8 +65,8 @@ class JobStatusResponse(BaseModel):
     job_id: str
     status: str  # PENDING | RUNNING | COMPLETED | FAILED
     progress: int = Field(ge=0, le=100, default=0)
-    roadmap_id: Optional[str] = None
-    error: Optional[str] = None
+    roadmap_id: str | None = None
+    error: str | None = None
 
 
 class RoadmapSummaryResponse(BaseModel):
@@ -74,7 +74,7 @@ class RoadmapSummaryResponse(BaseModel):
     skill_name: str
     domain_type: str
     verification_score: int = 0
-    created_at: Optional[str] = None
+    created_at: str | None = None
 
 
 class RoadmapResponse(BaseModel):
@@ -83,13 +83,13 @@ class RoadmapResponse(BaseModel):
     domain_type: str
     verification_score: int
     # Enhanced fields
-    certification_info: Optional[CertificationInfo] = None
-    prerequisites: Optional[List[str]] = []
-    learning_objectives: Optional[List[str]] = []
-    career_outcomes: Optional[List[str]] = []
-    salary_range: Optional[str] = None
-    market_demand: Optional[str] = None
-    modules: List[ModuleSchema]
+    certification_info: CertificationInfo | None = None
+    prerequisites: list[str] | None = []
+    learning_objectives: list[str] | None = []
+    career_outcomes: list[str] | None = []
+    salary_range: str | None = None
+    market_demand: str | None = None
+    modules: list[ModuleSchema]
 
 
 # Auth Schemas
@@ -121,7 +121,7 @@ class UserResponse(BaseModel):
 class AuthResponse(BaseModel):
     access_token: str
     token_type: str = "bearer"
-    refresh_token: Optional[str] = None
+    refresh_token: str | None = None
     user: UserResponse
 
 
@@ -129,11 +129,11 @@ class AuthResponse(BaseModel):
 class BadgeSchema(BaseModel):
     id: str
     name: str
-    description: Optional[str] = None
-    icon_url: Optional[str] = None
-    category: Optional[str] = None
-    requirement_type: Optional[str] = None
-    requirement_value: Optional[int] = None
+    description: str | None = None
+    icon_url: str | None = None
+    category: str | None = None
+    requirement_type: str | None = None
+    requirement_value: int | None = None
     is_active: bool = True
 
 
@@ -141,7 +141,7 @@ class UserBadgeSchema(BaseModel):
     id: str
     badge_id: str
     earned_at: str
-    badge: Optional[BadgeSchema] = None
+    badge: BadgeSchema | None = None
 
 
 # Lesson Response Schemas
@@ -151,11 +151,11 @@ class LessonStepResponse(BaseModel):
     step_order: int
     step_type: str
     title: str
-    content: Optional[dict] = None
-    quiz_options: Optional[list] = None
-    correct_answer: Optional[str] = None
-    video_url: Optional[str] = None
-    video_duration: Optional[int] = None
+    content: dict | None = None
+    quiz_options: list | None = None
+    correct_answer: str | None = None
+    video_url: str | None = None
+    video_duration: int | None = None
 
 
 class LessonResponse(BaseModel):
@@ -165,15 +165,15 @@ class LessonResponse(BaseModel):
     lesson_order: int
     difficulty_level: str
     estimated_minutes: int
-    learning_objectives: Optional[list] = []
-    skills_gained: Optional[list] = []
-    prerequisites: Optional[list] = []
+    learning_objectives: list | None = []
+    skills_gained: list | None = []
+    prerequisites: list | None = []
     is_completed: bool = False
-    steps: List[LessonStepResponse] = []
+    steps: list[LessonStepResponse] = []
 
 
 class LessonListResponse(BaseModel):
-    lessons: List[dict] = []
+    lessons: list[dict] = []
     total: int
 
 
@@ -183,11 +183,11 @@ class QuizQuestionResponse(BaseModel):
     module_id: str
     question_order: int
     question: str
-    options: List[str] = []
+    options: list[str] = []
     correct_answer: str
-    explanation: Optional[str] = None
+    explanation: str | None = None
 
 
 class ModuleQuizResponse(BaseModel):
-    questions: List[QuizQuestionResponse] = []
+    questions: list[QuizQuestionResponse] = []
     total: int

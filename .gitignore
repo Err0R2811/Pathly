@@ -2,6 +2,8 @@
 .env
 *.env
 backend/.env
+app/android/key.properties
+app/android/*.jks
 
 # Databases & Zip archives
 *.db

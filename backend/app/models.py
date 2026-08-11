@@ -1,9 +1,10 @@
-from sqlalchemy.ext.declarative import declarative_base
-from sqlalchemy import Column, String, Integer, JSON, ForeignKey, DateTime, Boolean
-from sqlalchemy.orm import relationship
 from datetime import datetime, timezone
 
+from sqlalchemy import JSON, Boolean, Column, ForeignKey, Integer, String
+from sqlalchemy.orm import declarative_base, relationship
+
 Base = declarative_base()
+
 
 class Roadmap(Base):
     __tablename__ = "roadmaps"
@@ -22,6 +23,7 @@ class Roadmap(Base):
     market_demand = Column(String)  # Market demand level
     modules = relationship("Module", back_populates="roadmap")
 
+
 class Module(Base):
     __tablename__ = "modules"
     id = Column(String, primary_key=True)
@@ -39,6 +41,7 @@ class Module(Base):
     assessment_criteria = Column(String)  # How to verify mastery
     roadmap = relationship("Roadmap", back_populates="modules")
     sources = relationship("ResearchSource", back_populates="module")
+
 
 class ResearchSource(Base):
     __tablename__ = "research_sources"

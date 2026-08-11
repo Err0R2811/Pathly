@@ -1,7 +1,9 @@
 """Updated preview router — calls the real generator now."""
+
 from fastapi import APIRouter, Query
-from ..services.generator import generate_roadmap
+
 from ..schemas import RoadmapPreviewResponse
+from ..services.generator import generate_roadmap
 
 router = APIRouter(tags=["preview"])
 

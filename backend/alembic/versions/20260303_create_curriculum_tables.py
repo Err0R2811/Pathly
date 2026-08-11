@@ -2,8 +2,9 @@
 Generated automatically for task implementation.
 """
 
-from alembic import op
 import sqlalchemy as sa
+
+from alembic import op
 
 # revision identifiers, used by Alembic.
 revision = "20260303_create_curriculum_tables"

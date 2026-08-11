@@ -352,7 +352,7 @@ class _RoadmapCard extends StatelessWidget {
               if (onDelete != null)
                 GestureDetector(
                   onTap: onDelete,
-                  child: Icon(
+                  child: const Icon(
                     Icons.delete_rounded,
                     size: 20,
                     color: AppColors.error,
