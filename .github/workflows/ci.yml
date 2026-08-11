@@ -40,6 +40,7 @@ jobs:
       run: poetry run pytest tests/ -v --cov=app --cov-report=xml
     
     - name: Upload coverage
+      if: secrets.CODECOV_TOKEN != ''
       uses: codecov/codecov-action@v4
       with:
         file: ./backend/coverage.xml
@@ -70,6 +71,7 @@ jobs:
       run: flutter test --coverage
     
     - name: Upload coverage
+      if: secrets.CODECOV_TOKEN != ''
       uses: codecov/codecov-action@v4
       with:
         file: ./app/coverage/lcov.info
