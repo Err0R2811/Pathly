@@ -5,9 +5,10 @@ from __future__ import annotations
 import uuid
 from datetime import datetime, timedelta, timezone
 
+import jwt
 from fastapi import APIRouter, Depends, HTTPException, status
 from fastapi.security import OAuth2PasswordBearer
-from jose import JWTError, jwt
+from jwt.exceptions import PyJWTError
 from passlib.context import CryptContext
 from sqlalchemy.orm import Session
 
@@ -69,7 +70,7 @@ def verify_token(token: str) -> str | None:
         if user_id is None or token_type != "access":
             return None
         return user_id
-    except JWTError:
+    except PyJWTError:
         return None
 
 
@@ -225,7 +226,7 @@ async def refresh_token(body: dict, db: Session = Depends(get_db)):
         token_type: str = payload.get("type")
         if user_id is None or token_type != "refresh":
             raise HTTPException(status_code=401, detail="Invalid refresh token")
-    except JWTError:
+    except PyJWTError:
         raise HTTPException(status_code=401, detail="Invalid refresh token")
 
     user = db.query(User).filter(User.id == user_id).first()
