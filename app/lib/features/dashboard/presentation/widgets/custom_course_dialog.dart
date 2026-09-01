@@ -207,22 +207,26 @@ class _CustomCourseDialogState extends ConsumerState<CustomCourseDialog> {
                 ),
                 child: Column(
                   children: _difficultyLevels.map((level) {
-                    return RadioListTile<String>(
-                      title: Text(
-                        level,
-                        style: AppTextStyles.bodyMedium.copyWith(
-                          color: isDark
-                              ? AppColors.textPrimaryDark
-                              : AppColors.textPrimaryLight,
+                    return Material(
+                      color: Colors.transparent,
+                      type: MaterialType.transparency,
+                      child: RadioListTile<String>(
+                        title: Text(
+                          level,
+                          style: AppTextStyles.bodyMedium.copyWith(
+                            color: isDark
+                                ? AppColors.textPrimaryDark
+                                : AppColors.textPrimaryLight,
+                          ),
                         ),
+                        value: level,
+                        groupValue: _selectedDifficulty,
+                        onChanged: (value) {
+                          setState(() => _selectedDifficulty = value!);
+                        },
+                        activeColor: AppColors.neonTeal,
+                        contentPadding: EdgeInsets.zero,
                       ),
-                      value: level,
-                      groupValue: _selectedDifficulty,
-                      onChanged: (value) {
-                        setState(() => _selectedDifficulty = value!);
-                      },
-                      activeColor: AppColors.neonTeal,
-                      contentPadding: EdgeInsets.zero,
                     );
                   }).toList(),
                 ),
