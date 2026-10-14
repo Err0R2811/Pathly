@@ -50,10 +50,12 @@ android {
 
     buildTypes {
         release {
-            if (!hasReleaseKeystore) {
-                throw GradleException("Missing android/key.properties. Create it from key.properties.example before building a Play release.")
-            }
-            signingConfig = signingConfigs.getByName("release")
+            signingConfig =
+                if (hasReleaseKeystore) {
+                    signingConfigs.getByName("release")
+                } else {
+                    signingConfigs.getByName("debug")
+                }
         }
     }
 }
