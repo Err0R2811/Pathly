@@ -3,10 +3,11 @@
 from __future__ import annotations
 
 import os
+from typing import TYPE_CHECKING
 
-from qdrant_client import QdrantClient
-from qdrant_client.models import Distance, FieldCondition, Filter, MatchValue, PointStruct, VectorParams
-from sentence_transformers import SentenceTransformer
+if TYPE_CHECKING:
+    from qdrant_client import QdrantClient
+    from sentence_transformers import SentenceTransformer
 
 # Configuration
 QDRANT_HOST = os.getenv("QDRANT_HOST", "localhost")
@@ -16,24 +17,29 @@ COLLECTION_NAME = "pathly_content"
 # Embedding model (lightweight, fast)
 MODEL_NAME = "all-MiniLM-L6-v2"
 
-# Global variables (lazy initialization)
-_model: SentenceTransformer | None = None
-_qdrant_client: QdrantClient | None = None
+# Global variables (lazy initialization) — types are strings to avoid eager import
+_model: "SentenceTransformer | None" = None
+_qdrant_client: "QdrantClient | None" = None
 
 
-def get_embedding_model() -> SentenceTransformer:
-    """Get or initialize the sentence transformer model."""
+def get_embedding_model() -> "SentenceTransformer":
+    """Get or initialize the sentence transformer model (lazy import)."""
     global _model
     if _model is None:
-        _model = SentenceTransformer(MODEL_NAME)
+        try:
+            from sentence_transformers import SentenceTransformer  # noqa: PLC0415
+            _model = SentenceTransformer(MODEL_NAME)
+        except Exception:
+            return None  # type: ignore[return-value]
     return _model
 
 
-def get_qdrant_client() -> QdrantClient | None:
-    """Get or initialize the Qdrant client."""
+def get_qdrant_client() -> "QdrantClient | None":
+    """Get or initialize the Qdrant client (lazy import)."""
     global _qdrant_client
     if _qdrant_client is None:
         try:
+            from qdrant_client import QdrantClient  # noqa: PLC0415
             _qdrant_client = QdrantClient(host=QDRANT_HOST, port=QDRANT_PORT)
             # Ensure collection exists
             _ensure_collection()
@@ -54,6 +60,7 @@ def _ensure_collection() -> None:
         collection_names = [c.name for c in collections]
 
         if COLLECTION_NAME not in collection_names:
+            from qdrant_client.models import Distance, VectorParams  # noqa: PLC0415
             client.create_collection(
                 collection_name=COLLECTION_NAME,
                 vectors_config=VectorParams(size=384, distance=Distance.COSINE),
@@ -65,6 +72,8 @@ def _ensure_collection() -> None:
 def embed_text(text: str) -> list[float]:
     """Convert text to embedding vector."""
     model = get_embedding_model()
+    if model is None:
+        return []
     embedding = model.encode(text, convert_to_numpy=True)
     return embedding.tolist()
 
@@ -76,6 +85,14 @@ def index_roadmap(roadmap_id: str, skill_name: str, modules: list[dict]) -> None
         return
 
     model = get_embedding_model()
+    if model is None:
+        return
+
+    try:
+        from qdrant_client.models import PointStruct  # noqa: PLC0415
+    except Exception:
+        return
+
     points = []
 
     # Index the roadmap itself
@@ -139,6 +156,7 @@ def search(query: str, limit: int = 10, content_type: str | None = None) -> list
         # Build filter if content_type is specified
         query_filter = None
         if content_type:
+            from qdrant_client.models import FieldCondition, Filter, MatchValue  # noqa: PLC0415
             query_filter = Filter(must=[FieldCondition(key="type", match=MatchValue(value=content_type))])
 
         results = client.search(
